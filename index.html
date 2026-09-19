@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Backrooms</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #startScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      background:
+        radial-gradient(circle at center, rgba(170, 155, 65, 0.18), transparent 50%),
+        #070705;
+
+      color: #e5df9c;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #startScreen h1 {
+      margin: 0;
+      font-size: clamp(42px, 8vw, 100px);
+      letter-spacing: 8px;
+      color: #d6ce75;
+      text-shadow:
+        0 0 10px rgba(255, 242, 120, 0.2),
+        0 0 30px rgba(255, 242, 120, 0.1);
+    }
+
+    #startScreen p {
+      max-width: 700px;
+      color: #aaa66c;
+      line-height: 1.6;
+      margin: 18px 0 30px;
+    }
+
+    #startButton,
+    #restartButton {
+      border: 1px solid #b6ad5b;
+      background: #17170d;
+      color: #ddd683;
+      padding: 15px 35px;
+      font-size: 18px;
+      cursor: pointer;
+      letter-spacing: 2px;
+    }
+
+    #startButton:hover,
+    #restartButton:hover {
+      background: #292814;
+    }
+
+    #hud {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      color: white;
+      display: none;
+    }
+
+    #crosshair {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      transform: translate(-50%, -50%);
+    }
+
+    #crosshair::before,
+    #crosshair::after {
+      content: "";
+      position: absolute;
+      background: rgba(255,255,255,0.65);
+    }
+
+    #crosshair::before {
+      width: 8px;
+      height: 1px;
+      left: 0;
+      top: 3px;
+    }
+
+    #crosshair::after {
+      width: 1px;
+      height: 8px;
+      left: 3px;
+      top: 0;
+    }
+
+    #staminaBox {
+      position: absolute;
+      left: 25px;
+      bottom: 25px;
+      width: 220px;
+    }
+
+    #staminaText {
+      color: #ddd;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    #staminaOuter {
+      height: 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.45);
+    }
+
+    #staminaInner {
+      width: 100%;
+      height: 100%;
+      background: #d6d29a;
+      transition: width 0.06s linear;
+    }
+
+    #objective {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 14px;
+      background: rgba(0,0,0,0.3);
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    #danger {
+      position: absolute;
+      inset: 0;
+      background: rgba(130, 0, 0, 0);
+      transition: background 0.15s;
+    }
+
+    #pauseMessage {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+      background: rgba(0,0,0,0.55);
+      padding: 15px 22px;
+      display: none;
+    }
+
+    #endScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: #000;
+      color: white;
+      text-align: center;
+    }
+
+    #endTitle {
+      font-size: clamp(40px, 8vw, 90px);
+      letter-spacing: 8px;
+      margin-bottom: 10px;
+    }
+
+    #endText {
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+
+    #staticOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+
+      background-image:
+        repeating-radial-gradient(
+          circle at 20% 30%,
+          rgba(255,255,255,0.09) 0px,
+          rgba(255,255,255,0.02) 1px,
+          transparent 2px,
+          transparent 4px
+        );
+
+      mix-blend-mode: screen;
+    }
+
+    #vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+      box-shadow: inset 0 0 150px 40px rgba(0,0,0,0.8);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="startScreen">
+    <h1>THE BACKROOMS</h1>
+
+    <p>
+      You don't remember how you got here.
+      Find the exit.
+      Do not let it find you.
+      <br><br>
+      WASD = Move &nbsp; | &nbsp;
+      SHIFT = Sprint &nbsp; | &nbsp;
+      MOUSE = Look
+    </p>
+
+    <button id="startButton">ENTER</button>
+  </div>
+
+
+  <div id="hud">
+
+    <div id="danger"></div>
+
+    <div id="objective">
+      FIND THE EXIT
+    </div>
+
+    <div id="crosshair"></div>
+
+    <div id="staminaBox">
+      <div id="staminaText">STAMINA</div>
+
+      <div id="staminaOuter">
+        <div id="staminaInner"></div>
+      </div>
+    </div>
+
+    <div id="pauseMessage">
+      CLICK TO CONTINUE
+    </div>
+
+  </div>
+
+
+  <div id="staticOverlay"></div>
+  <div id="vignette"></div>
+
+
+  <div id="endScreen">
+    <div id="endTitle"></div>
+    <div id="endText"></div>
+    <button id="restartButton">RESTART</button>
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
+  <script>
+
+    // =========================================================
+    // SETTINGS
+    // =========================================================
+
+    const MAZE_WIDTH = 15;
+    const MAZE_HEIGHT = 15;
+
+    const CELL_SIZE = 6;
+
+    const WALL_HEIGHT = 3.8;
+    const WALL_THICKNESS = 0.22;
+
+    const PLAYER_HEIGHT = 1.65;
+    const PLAYER_RADIUS = 0.38;
+
+    const WALK_SPEED = 3.5;
+    const SPRINT_SPEED = 6.2;
+
+    const MONSTER_SPEED = 2.0;
+    const MONSTER_CHASE_DISTANCE = 40;
+
+    const EXIT_DISTANCE = 1.5;
+
+
+    // =========================================================
+    // THREE.JS
+    // =========================================================
+
+    const scene = new THREE.Scene();
+
+    scene.background = new THREE.Color(0x797536);
+
+    scene.fog = new THREE.Fog(
+      0x8a8440,
+      5,
+      42
+    );
+
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      150
+    );
+
+    camera.rotation.order = "YXZ";
+
+
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true
+    });
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+    renderer.setPixelRatio(
+      Math.min(window.devicePixelRatio, 2)
+    );
+
+    renderer.shadowMap.enabled = false;
+
+    document.body.appendChild(renderer.domElement);
+
+
+    // =========================================================
+    // UI
+    // =========================================================
+
+    const startScreen =
+      document.getElementById("startScreen");
+
+    const startButton =
+      document.getElementById("startButton");
+
+    const hud =
+      document.getElementById("hud");
+
+    const staminaInner =
+      document.getElementById("staminaInner");
+
+    const danger =
+      document.getElementById("danger");
+
+    const pauseMessage =
+      document.getElementById("pauseMessage");
+
+    const endScreen =
+      document.getElementById("endScreen");
+
+    const endTitle =
+      document.getElementById("endTitle");
+
+    const endText =
+      document.getElementById("endText");
+
+    const restartButton =
+      document.getElementById("restartButton");
+
+    const staticOverlay =
+      document.getElementById("staticOverlay");
+
+
+    // =========================================================
+    // MATERIALS
+    // =========================================================
+
+    const wallMaterial =
+      new THREE.MeshStandardMaterial({
+        color: 0xc8bf62,
+        roughness: 0.95
+      });
+
+
+    const floorMaterial =
+      new THREE.MeshStandardMaterial({
+        color: 0x777045,
+        roughness: 1
+      });
+
+
+    const ceilingMaterial =
+      new THREE.MeshStandardMaterial({
+        color: 0xb7af71,
+        roughness: 1
+      });
+
+
+    const lightMaterial =
+      new THREE.MeshBasicMaterial({
+        color: 0xffffcc
+      });
+
+
+    // =========================================================
+    // MAZE
+    // =========================================================
+
+    const maze = [];
+
+    for (let y = 0; y < MAZE_HEIGHT; y++) {
+
+      const row = [];
+
+      for (let x = 0; x < MAZE_WIDTH; x++) {
+
+        row.push({
+
+          visited: false,
+
+          walls: {
+            north: true,
+            south: true,
+            east: true,
+            west: true
+          }
+
+        });
+
+      }
+
+      maze.push(row);
+
+    }
+
+
+    function generateMaze() {
+
+      const stack = [];
+
+      let current = {
+        x: 0,
+        y: 0
+      };
+
+      maze[0][0].visited = true;
+
+      let visited = 1;
+
+      const total =
+        MAZE_WIDTH * MAZE_HEIGHT;
+
+
+      while (visited < total) {
+
+        const neighbors = [];
+
+        const x = current.x;
+        const y = current.y;
+
+
+        if (
+          y > 0 &&
+          !maze[y - 1][x].visited
+        ) {
+
+          neighbors.push({
+            x,
+            y: y - 1,
+            direction: "north"
+          });
+
+        }
+
+
+        if (
+          y < MAZE_HEIGHT - 1 &&
+          !maze[y + 1][x].visited
+        ) {
+
+          neighbors.push({
+            x,
+            y: y + 1,
+            direction: "south"
+          });
+
+        }
+
+
+        if (
+          x < MAZE_WIDTH - 1 &&
+          !maze[y][x + 1].visited
+        ) {
+
+          neighbors.push({
+            x: x + 1,
+            y,
+            direction: "east"
+          });
+
+        }
+
+
+        if (
+          x > 0 &&
+          !maze[y][x - 1].visited
+        ) {
+
+          neighbors.push({
+            x: x - 1,
+            y,
+            direction: "west"
+          });
+
+        }
+
+
+        if (neighbors.length > 0) {
+
+          const next =
+            neighbors[
+              Math.floor(
+                Math.random() *
+                neighbors.length
+              )
+            ];
+
+
+          stack.push({
+            x,
+            y
+          });
+
+
+          removeWall(
+            current,
+            next
+          );
+
+
+          current = {
+            x: next.x,
+            y: next.y
+          };
+
+
+          maze[current.y][current.x].visited =
+            true;
+
+          visited++;
+
+        }
+
+        else {
+
+          current = stack.pop();
+
+        }
+
+      }
+
+    }
+
+
+    function removeWall(current, next) {
+
+      const cell =
+        maze[current.y][current.x];
+
+      const nextCell =
+        maze[next.y][next.x];
+
+
+      if (next.direction === "north") {
+
+        cell.walls.north = false;
+        nextCell.walls.south = false;
+
+      }
+
+
+      if (next.direction === "south") {
+
+        cell.walls.south = false;
+        nextCell.walls.north = false;
+
+      }
+
+
+      if (next.direction === "east") {
+
+        cell.walls.east = false;
+        nextCell.walls.west = false;
+
+      }
+
+
+      if (next.direction === "west") {
+
+        cell.walls.west = false;
+        nextCell.walls.east = false;
+
+      }
+
+    }
+
+
+    generateMaze();
+
+
+    // =========================================================
+    // MAZE HELPERS
+    // =========================================================
+
+    function cellToWorld(x, y) {
+
+      return {
+
+        x:
+          x * CELL_SIZE -
+          ((MAZE_WIDTH - 1) * CELL_SIZE) / 2,
+
+        z:
+          y * CELL_SIZE -
+          ((MAZE_HEIGHT - 1) * CELL_SIZE) / 2
+
+      };
+
+    }
+
+
+    function worldToCell(x, z) {
+
+      const gridX =
+        Math.round(
+          (
+            x +
+            ((MAZE_WIDTH - 1) * CELL_SIZE) / 2
+          ) / CELL_SIZE
+        );
+
+
+      const gridY =
+        Math.round(
+          (
+            z +
+            ((MAZE_HEIGHT - 1) * CELL_SIZE) / 2
+          ) / CELL_SIZE
+        );
+
+
+      return {
+
+        x:
+          Math.max(
+            0,
+            Math.min(
+              MAZE_WIDTH - 1,
+              gridX
+            )
+          ),
+
+        y:
+          Math.max(
+            0,
+            Math.min(
+              MAZE_HEIGHT - 1,
+              gridY
+            )
+          )
+
+      };
+
+    }
+
+
+    // =========================================================
+    // BUILD LEVEL
+    // =========================================================
+
+    const level = new THREE.Group();
+
+    scene.add(level);
+
+
+    function makeWall(
+      x,
+      z,
+      width,
+      depth
+    ) {
+
+      const geometry =
+        new THREE.BoxGeometry(
+          width,
+          WALL_HEIGHT,
+          depth
+        );
+
+
+      const wall =
+        new THREE.Mesh(
+          geometry,
+          wallMaterial
+        );
+
+
+      wall.position.set(
+        x,
+        WALL_HEIGHT / 2,
+        z
+      );
+
+
+      level.add(wall);
+
+    }
+
+
+    function buildMaze() {
+
+      const fullWidth =
+        MAZE_WIDTH * CELL_SIZE;
+
+      const fullHeight =
+        MAZE_HEIGHT * CELL_SIZE;
+
+
+      // FLOOR
+
+      const floor =
+        new THREE.Mesh(
+
+          new THREE.PlaneGeometry(
+            fullWidth,
+            fullHeight
+          ),
+
+          floorMaterial
+
+        );
+
+
+      floor.rotation.x =
+        -Math.PI / 2;
+
+      level.add(floor);
+
+
+      // CEILING
+
+      const ceiling =
+        new THREE.Mesh(
+
+          new THREE.PlaneGeometry(
+            fullWidth,
+            fullHeight
+          ),
+
+          ceilingMaterial
+
+        );
+
+
+      ceiling.rotation.x =
+        Math.PI / 2;
+
+      ceiling.position.y =
+        WALL_HEIGHT;
+
+      level.add(ceiling);
+
+
+      // WALLS
+
+      for (
+        let y = 0;
+        y < MAZE_HEIGHT;
+        y++
+      ) {
+
+        for (
+          let x = 0;
+          x < MAZE_WIDTH;
+          x++
+        ) {
+
+          const cell =
+            maze[y][x];
+
+          const pos =
+            cellToWorld(x, y);
+
+
+          if (cell.walls.north) {
+
+            makeWall(
+              pos.x,
+              pos.z - CELL_SIZE / 2,
+              CELL_SIZE + WALL_THICKNESS,
+              WALL_THICKNESS
+            );
+
+          }
+
+
+          if (cell.walls.west) {
+
+            makeWall(
+              pos.x - CELL_SIZE / 2,
+              pos.z,
+              WALL_THICKNESS,
+              CELL_SIZE + WALL_THICKNESS
+            );
+
+          }
+
+
+          if (
+            y === MAZE_HEIGHT - 1 &&
+            cell.walls.south
+          ) {
+
+            makeWall(
+              pos.x,
+              pos.z + CELL_SIZE / 2,
+              CELL_SIZE + WALL_THICKNESS,
+              WALL_THICKNESS
+            );
+
+          }
+
+
+          if (
+            x === MAZE_WIDTH - 1 &&
+            cell.walls.east
+          ) {
+
+            makeWall(
+              pos.x + CELL_SIZE / 2,
+              pos.z,
+              WALL_THICKNESS,
+              CELL_SIZE + WALL_THICKNESS
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    buildMaze();
+
+
+    // =========================================================
+    // LIGHTING
+    // =========================================================
+
+    const ambient =
+      new THREE.AmbientLight(
+        0xb8b06b,
+        0.38
+      );
+
+    scene.add(ambient);
+
+
+    const lights = [];
+
+
+    function createLights() {
+
+      for (
+        let y = 0;
+        y < MAZE_HEIGHT;
+        y += 2
+      ) {
+
+        for (
+          let x = 0;
+          x < MAZE_WIDTH;
+          x += 2
+        ) {
+
+          const pos =
+            cellToWorld(x, y);
+
+
+          const lightPanel =
+            new THREE.Mesh(
+
+              new THREE.BoxGeometry(
+                2.2,
+                0.05,
+                0.5
+              ),
+
+              lightMaterial
+
+            );
+
+
+          lightPanel.position.set(
+            pos.x,
+            WALL_HEIGHT - 0.03,
+            pos.z
+          );
+
+
+          level.add(lightPanel);
+
+
+          const light =
+            new THREE.PointLight(
+              0xfff4a8,
+              0.65,
+              14
+            );
+
+
+          light.position.set(
+            pos.x,
+            WALL_HEIGHT - 0.4,
+            pos.z
+          );
+
+
+          scene.add(light);
+
+          lights.push(light);
+
+        }
+
+      }
+
+    }
+
+
+    createLights();
+
+
+    // =========================================================
+    // EXIT
+    // =========================================================
+
+    const exitCell = {
+      x: MAZE_WIDTH - 1,
+      y: MAZE_HEIGHT - 1
+    };
+
+
+    const exitPos =
+      cellToWorld(
+        exitCell.x,
+        exitCell.y
+      );
+
+
+    const exitGroup =
+      new THREE.Group();
+
+
+    const door =
+      new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+          1.6,
+          2.8,
+          0.12
+        ),
+
+        new THREE.MeshStandardMaterial({
+          color: 0x224422,
+          emissive: 0x102010
+        })
+
+      );
+
+
+    door.position.y =
+      1.4;
+
+
+    exitGroup.add(door);
+
+
+    const exitLight =
+      new THREE.PointLight(
+        0x77ff77,
+        1.8,
+        8
+      );
+
+
+    exitLight.position.set(
+      0,
+      2,
+      0.7
+    );
+
+
+    exitGroup.add(exitLight);
+
+
+    exitGroup.position.set(
+      exitPos.x,
+      0,
+      exitPos.z
+    );
+
+
+    scene.add(exitGroup);
+
+
+    // =========================================================
+    // PLAYER
+    // =========================================================
+
+    const startPos =
+      cellToWorld(0, 0);
+
+
+    camera.position.set(
+      startPos.x,
+      PLAYER_HEIGHT,
+      startPos.z
+    );
+
+
+    let yaw = 0;
+    let pitch = 0;
+
+    let stamina = 100;
+
+    let gameStarted = false;
+    let gameOver = false;
+
+
+    const keys = {};
+
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        keys[event.code] = true;
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keyup",
+      event => {
+
+        keys[event.code] = false;
+
+      }
+    );
+
+
+    document.addEventListener(
+      "mousemove",
+      event => {
+
+        if (
+          document.pointerLockElement !==
+          renderer.domElement
+        ) {
+
+          return;
+
+        }
+
+
+        const sensitivity = 0.002;
+
+
+        yaw -=
+          event.movementX *
+          sensitivity;
+
+
+        pitch -=
+          event.movementY *
+          sensitivity;
+
+
+        pitch =
+          Math.max(
+            -Math.PI / 2 + 0.05,
+            Math.min(
+              Math.PI / 2 - 0.05,
+              pitch
+            )
+          );
+
+
+        camera.rotation.y =
+          yaw;
+
+        camera.rotation.x =
+          pitch;
+
+      }
+    );
+
+
+    // =========================================================
+    // COLLISION
+    // =========================================================
+
+    function canMoveTo(x, z) {
+
+      const cell =
+        worldToCell(x, z);
+
+
+      const center =
+        cellToWorld(
+          cell.x,
+          cell.y
+        );
+
+
+      const localX =
+        x - center.x;
+
+      const localZ =
+        z - center.z;
+
+
+      const half =
+        CELL_SIZE / 2;
+
+
+      const walls =
+        maze[cell.y][cell.x].walls;
+
+
+      if (
+        walls.west &&
+        localX - PLAYER_RADIUS <
+        -half + WALL_THICKNESS
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        walls.east &&
+        localX + PLAYER_RADIUS >
+        half - WALL_THICKNESS
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        walls.north &&
+        localZ - PLAYER_RADIUS <
+        -half + WALL_THICKNESS
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        walls.south &&
+        localZ + PLAYER_RADIUS >
+        half - WALL_THICKNESS
+      ) {
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+
+
+    function movePlayer(delta) {
+
+      if (
+        document.pointerLockElement !==
+        renderer.domElement
+      ) {
+
+        return;
+
+      }
+
+
+      let forward = 0;
+      let right = 0;
+
+
+      if (keys["KeyW"]) {
+        forward += 1;
+      }
+
+      if (keys["KeyS"]) {
+        forward -= 1;
+      }
+
+      if (keys["KeyD"]) {
+        right += 1;
+      }
+
+      if (keys["KeyA"]) {
+        right -= 1;
+      }
+
+
+      const moving =
+        forward !== 0 ||
+        right !== 0;
+
+
+      let sprinting =
+        keys["ShiftLeft"] &&
+        stamina > 0 &&
+        moving;
+
+
+      let speed =
+        sprinting
+          ? SPRINT_SPEED
+          : WALK_SPEED;
+
+
+      if (sprinting) {
+
+        stamina -=
+          delta * 25;
+
+      }
+
+      else {
+
+        stamina +=
+          delta * 15;
+
+      }
+
+
+      stamina =
+        Math.max(
+          0,
+          Math.min(
+            100,
+            stamina
+          )
+        );
+
+
+      staminaInner.style.width =
+        stamina + "%";
+
+
+      if (!moving) {
+        return;
+      }
+
+
+      const length =
+        Math.sqrt(
+          forward * forward +
+          right * right
+        );
+
+
+      forward /= length;
+      right /= length;
+
+
+      const sin =
+        Math.sin(yaw);
+
+      const cos =
+        Math.cos(yaw);
+
+
+      const moveX =
+        (
+          -sin * forward +
+          cos * right
+        ) *
+        speed *
+        delta;
+
+
+      const moveZ =
+        (
+          -cos * forward -
+          sin * right
+        ) *
+        speed *
+        delta;
+
+
+      const nextX =
+        camera.position.x +
+        moveX;
+
+
+      const nextZ =
+        camera.position.z +
+        moveZ;
+
+
+      if (
+        canMoveTo(
+          nextX,
+          camera.position.z
+        )
+      ) {
+
+        camera.position.x =
+          nextX;
+
+      }
+
+
+      if (
+        canMoveTo(
+          camera.position.x,
+          nextZ
+        )
+      ) {
+
+        camera.position.z =
+          nextZ;
+
+      }
+
+    }
+
+
+    // =========================================================
+    // MONSTER
+    // =========================================================
+
+    const monster =
+      new THREE.Group();
+
+
+    const monsterMaterial =
+      new THREE.MeshStandardMaterial({
+        color: 0x080808,
+        roughness: 1
+      });
+
+
+    const monsterBody =
+      new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+          0.65,
+          2.5,
+          0.55
+        ),
+
+        monsterMaterial
+
+      );
+
+
+    monsterBody.position.y =
+      1.5;
+
+
+    monster.add(monsterBody);
+
+
+    const monsterHead =
+      new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+          0.4,
+          10,
+          10
+        ),
+
+        monsterMaterial
+
+      );
+
+
+    monsterHead.position.y =
+      3;
+
+
+    monster.add(monsterHead);
+
+
+    // Eyes
+
+    const eyeMaterial =
+      new THREE.MeshBasicMaterial({
+        color: 0xff2222
+      });
+
+
+    const leftEye =
+      new THREE.Mesh(
+        new THREE.SphereGeometry(
+          0.05,
+          6,
+          6
+        ),
+        eyeMaterial
+      );
+
+
+    const rightEye =
+      leftEye.clone();
+
+
+    leftEye.position.set(
+      -0.14,
+      3.05,
+      -0.37
+    );
+
+
+    rightEye.position.set(
+      0.14,
+      3.05,
+      -0.37
+    );
+
+
+    monster.add(leftEye);
+    monster.add(rightEye);
+
+
+    const monsterStart =
+      cellToWorld(
+        Math.floor(
+          MAZE_WIDTH / 2
+        ),
+        Math.floor(
+          MAZE_HEIGHT / 2
+        )
+      );
+
+
+    monster.position.set(
+      monsterStart.x,
+      0,
+      monsterStart.z
+    );
+
+
+    scene.add(monster);
+
+
+    let path = [];
+    let pathTimer = 0;
+
+
+    // =========================================================
+    // PATHFINDING
+    // =========================================================
+
+    function findPath(
+      startX,
+      startY,
+      targetX,
+      targetY
+    ) {
+
+      const queue = [];
+
+      const visited =
+        Array.from(
+          {
+            length: MAZE_HEIGHT
+          },
+          () =>
+            Array(
+              MAZE_WIDTH
+            ).fill(false)
+        );
+
+
+      queue.push({
+        x: startX,
+        y: startY,
+        path: []
+      });
+
+
+      visited[startY][startX] =
+        true;
+
+
+      while (queue.length > 0) {
+
+        const current =
+          queue.shift();
+
+
+        if (
+          current.x === targetX &&
+          current.y === targetY
+        ) {
+
+          return current.path;
+
+        }
+
+
+        const cell =
+          maze[current.y][current.x];
+
+
+        const options = [];
+
+
+        if (
+          !cell.walls.north &&
+          current.y > 0
+        ) {
+
+          options.push({
+            x: current.x,
+            y: current.y - 1
+          });
+
+        }
+
+
+        if (
+          !cell.walls.south &&
+          current.y <
+          MAZE_HEIGHT - 1
+        ) {
+
+          options.push({
+            x: current.x,
+            y: current.y + 1
+          });
+
+        }
+
+
+        if (
+          !cell.walls.east &&
+          current.x <
+          MAZE_WIDTH - 1
+        ) {
+
+          options.push({
+            x: current.x + 1,
+            y: current.y
+          });
+
+        }
+
+
+        if (
+          !cell.walls.west &&
+          current.x > 0
+        ) {
+
+          options.push({
+            x: current.x - 1,
+            y: current.y
+          });
+
+        }
+
+
+        for (
+          const next of options
+        ) {
+
+          if (
+            !visited[next.y][next.x]
+          ) {
+
+            visited[next.y][next.x] =
+              true;
+
+
+            queue.push({
+
+              x: next.x,
+
+              y: next.y,
+
+              path: [
+                ...current.path,
+                next
+              ]
+
+            });
+
+          }
+
+        }
+
+      }
+
+
+      return [];
+
+    }
+
+
+    function updateMonster(delta) {
+
+      const playerDistance =
+        monster.position.distanceTo(
+          camera.position
+        );
+
+
+      const playerCell =
+        worldToCell(
+          camera.position.x,
+          camera.position.z
+        );
+
+
+      const monsterCell =
+        worldToCell(
+          monster.position.x,
+          monster.position.z
+        );
+
+
+      pathTimer -= delta;
+
+
+      if (pathTimer <= 0) {
+
+        pathTimer = 0.6;
+
+
+        path =
+          findPath(
+            monsterCell.x,
+            monsterCell.y,
+            playerCell.x,
+            playerCell.y
+          );
+
+      }
+
+
+      if (
+        path.length > 0 &&
+        playerDistance <
+        MONSTER_CHASE_DISTANCE
+      ) {
+
+        const targetCell =
+          path[0];
+
+
+        const target =
+          cellToWorld(
+            targetCell.x,
+            targetCell.y
+          );
+
+
+        const direction =
+          new THREE.Vector3(
+            target.x -
+            monster.position.x,
+
+            0,
+
+            target.z -
+            monster.position.z
+          );
+
+
+        if (
+          direction.length() <
+          0.2
+        ) {
+
+          path.shift();
+
+        }
+
+        else {
+
+          direction.normalize();
+
+
+          monster.position.x +=
+            direction.x *
+            MONSTER_SPEED *
+            delta;
+
+
+          monster.position.z +=
+            direction.z *
+            MONSTER_SPEED *
+            delta;
+
+
+          monster.rotation.y =
+            Math.atan2(
+              direction.x,
+              direction.z
+            ) +
+            Math.PI;
+
+        }
+
+      }
+
+
+      // CREEPY HEAD BOB
+
+      monster.position.y =
+        Math.sin(
+          performance.now() *
+          0.004
+        ) *
+        0.05;
+
+
+      // DANGER OVERLAY
+
+      const dangerAmount =
+        Math.max(
+          0,
+          Math.min(
+            0.32,
+            (
+              10 -
+              playerDistance
+            ) / 30
+          )
+        );
+
+
+      danger.style.background =
+        `rgba(120, 0, 0, ${dangerAmount})`;
+
+
+      staticOverlay.style.opacity =
+        Math.max(
+          0,
+          Math.min(
+            0.15,
+            (
+              8 -
+              playerDistance
+            ) / 30
+          )
+        );
+
+
+      if (
+        playerDistance <
+        1.05
+      ) {
+
+        loseGame();
+
+      }
+
+    }
+
+
+    // =========================================================
+    // EXIT CHECK
+    // =========================================================
+
+    function checkExit() {
+
+      const dx =
+        camera.position.x -
+        exitGroup.position.x;
+
+
+      const dz =
+        camera.position.z -
+        exitGroup.position.z;
+
+
+      const distance =
+        Math.sqrt(
+          dx * dx +
+          dz * dz
+        );
+
+
+      if (
+        distance <
+        EXIT_DISTANCE
+      ) {
+
+        winGame();
+
+      }
+
+    }
+
+
+    // =========================================================
+    // AUDIO
+    // =========================================================
+
+    let audioContext;
+    let humGain;
+
+
+    function startAudio() {
+
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
+
+      const oscillator =
+        audioContext.createOscillator();
+
+
+      humGain =
+        audioContext.createGain();
+
+
+      oscillator.type =
+        "sawtooth";
+
+
+      oscillator.frequency.value =
+        60;
+
+
+      humGain.gain.value =
+        0.018;
+
+
+      oscillator.connect(
+        humGain
+      );
+
+
+      humGain.connect(
+        audioContext.destination
+      );
+
+
+      oscillator.start();
+
+
+      const secondOscillator =
+        audioContext.createOscillator();
+
+
+      const secondGain =
+        audioContext.createGain();
+
+
+      secondOscillator.type =
+        "sine";
+
+
+      secondOscillator.frequency.value =
+        120;
+
+
+      secondGain.gain.value =
+        0.012;
+
+
+      secondOscillator.connect(
+        secondGain
+      );
+
+
+      secondGain.connect(
+        audioContext.destination
+      );
+
+
+      secondOscillator.start();
+
+    }
+
+
+    // =========================================================
+    // LIGHT FLICKER
+    // =========================================================
+
+    let flickerTimer = 0;
+
+
+    function updateLights(delta) {
+
+      flickerTimer -= delta;
+
+
+      if (flickerTimer <= 0) {
+
+        flickerTimer =
+          0.05 +
+          Math.random() *
+          1.5;
+
+
+        if (
+          Math.random() <
+          0.18
+        ) {
+
+          const light =
+            lights[
+              Math.floor(
+                Math.random() *
+                lights.length
+              )
+            ];
+
+
+          const oldIntensity =
+            light.intensity;
+
+
+          light.intensity = 0;
+
+
+          setTimeout(
+            () => {
+
+              light.intensity =
+                oldIntensity;
+
+            },
+            50 +
+            Math.random() *
+            120
+          );
+
+        }
+
+      }
+
+    }
+
+
+    // =========================================================
+    // GAME STATES
+    // =========================================================
+
+    function startGame() {
+
+      if (!gameStarted) {
+
+        gameStarted = true;
+
+        startAudio();
+
+      }
+
+
+      startScreen.style.display =
+        "none";
+
+
+      hud.style.display =
+        "block";
+
+
+      renderer.domElement.requestPointerLock();
+
+    }
+
+
+    function winGame() {
+
+      if (gameOver) {
+        return;
+      }
+
+
+      gameOver = true;
+
+
+      document.exitPointerLock();
+
+
+      hud.style.display =
+        "none";
+
+
+      endScreen.style.display =
+        "flex";
+
+
+      endTitle.textContent =
+        "YOU ESCAPED";
+
+
+      endTitle.style.color =
+        "#9cff9c";
+
+
+      endText.textContent =
+        "For now.";
+
+    }
+
+
+    function loseGame() {
+
+      if (gameOver) {
+        return;
+      }
+
+
+      gameOver = true;
+
+
+      document.exitPointerLock();
+
+
+      staticOverlay.style.opacity =
+        "0.7";
+
+
+      document.body.style.background =
+        "#000";
+
+
+      setTimeout(
+        () => {
+
+          hud.style.display =
+            "none";
+
+
+          endScreen.style.display =
+            "flex";
+
+
+          endTitle.textContent =
+            "YOU WERE FOUND";
+
+
+          endTitle.style.color =
+            "#aa2222";
+
+
+          endText.textContent =
+            "Something was wandering the halls.";
+
+        },
+        300
+      );
+
+    }
+
+
+    startButton.addEventListener(
+      "click",
+      startGame
+    );
+
+
+    restartButton.addEventListener(
+      "click",
+      () => {
+
+        location.reload();
+
+      }
+    );
+
+
+    renderer.domElement.addEventListener(
+      "click",
+      () => {
+
+        if (
+          gameStarted &&
+          !gameOver &&
+          document.pointerLockElement !==
+          renderer.domElement
+        ) {
+
+          renderer.domElement.requestPointerLock();
+
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "pointerlockchange",
+      () => {
+
+        if (
+          !gameStarted ||
+          gameOver
+        ) {
+
+          return;
+
+        }
+
+
+        if (
+          document.pointerLockElement ===
+          renderer.domElement
+        ) {
+
+          pauseMessage.style.display =
+            "none";
+
+        }
+
+        else {
+
+          pauseMessage.style.display =
+            "block";
+
+        }
+
+      }
+    );
+
+
+    // =========================================================
+    // WINDOW RESIZE
+    // =========================================================
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        camera.aspect =
+          window.innerWidth /
+          window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+          window.innerWidth,
+          window.innerHeight
+        );
+
+      }
+    );
+
+
+    // =========================================================
+    // MAIN LOOP
+    // =========================================================
+
+    const clock =
+      new THREE.Clock();
+
+
+    function animate() {
+
+      requestAnimationFrame(
+        animate
+      );
+
+
+      const delta =
+        Math.min(
+          clock.getDelta(),
+          0.05
+        );
+
+
+      if (
+        gameStarted &&
+        !gameOver
+      ) {
+
+        movePlayer(delta);
+
+        updateMonster(delta);
+
+        updateLights(delta);
+
+        checkExit();
+
+      }
+
+
+      renderer.render(
+        scene,
+        camera
+      );
+
+    }
+
+
+    animate();
+
+  </script>
+
+</body>
+</html>
