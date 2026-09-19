@@ -17,13 +17,8 @@ body {
     width: 100%;
     height: 100%;
     overflow: hidden;
-
     background: #000;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 canvas {
@@ -36,35 +31,33 @@ canvas {
 
 #startScreen {
     position: fixed;
-
     inset: 0;
-
     z-index: 100;
-
     pointer-events: none;
 
     background:
         linear-gradient(
             90deg,
-            rgba(0,0,0,0.68) 0%,
-            rgba(0,0,0,0.28) 35%,
-            rgba(0,0,0,0) 65%
+            rgba(0,0,0,.68) 0%,
+            rgba(0,0,0,.27) 37%,
+            rgba(0,0,0,0) 70%
         );
 }
 
 #startContent {
     position: absolute;
-
     top: 34px;
     left: 34px;
-
-    max-width: 520px;
-
+    max-width: 560px;
     pointer-events: auto;
 }
 
 #title {
     margin: 0;
+
+    color: #eee7b0;
+
+    font-weight: 300;
 
     font-size:
         clamp(
@@ -73,14 +66,11 @@ canvas {
             92px
         );
 
-    font-weight: 300;
-
     letter-spacing: 12px;
 
-    color: #eee7b0;
-
     text-shadow:
-        0 0 16px rgba(255,240,160,0.18);
+        0 0 18px
+        rgba(255,240,160,.18);
 }
 
 #subtitle {
@@ -91,11 +81,10 @@ canvas {
             255,
             255,
             255,
-            0.78
+            .78
         );
 
     line-height: 1.55;
-
     font-size: 17px;
 }
 
@@ -107,12 +96,11 @@ canvas {
             255,
             255,
             255,
-            0.68
+            .62
         );
 
     font-family: monospace;
-
-    letter-spacing: 1px;
+    line-height: 1.55;
 }
 
 #startButton,
@@ -130,7 +118,7 @@ canvas {
             240,
             232,
             180,
-            0.85
+            .85
         );
 
     background:
@@ -138,7 +126,7 @@ canvas {
             0,
             0,
             0,
-            0.56
+            .58
         );
 
     color: white;
@@ -155,10 +143,10 @@ canvas {
 #restartButton:hover {
     background:
         rgba(
-            80,
-            75,
-            42,
-            0.68
+            78,
+            72,
+            40,
+            .72
         );
 }
 
@@ -174,7 +162,7 @@ canvas {
     width: 100%;
     height: 8%;
 
-    background: black;
+    background: #000;
 
     z-index: 120;
 
@@ -204,7 +192,7 @@ canvas {
             255,
             255,
             255,
-            0.78
+            .78
         );
 
     font-family: monospace;
@@ -217,7 +205,7 @@ canvas {
 
     transition:
         opacity
-        0.4s;
+        .4s;
 
     pointer-events: none;
 }
@@ -227,7 +215,7 @@ canvas {
 
     inset: 0;
 
-    background: black;
+    background: #000;
 
     opacity: 0;
 
@@ -237,7 +225,7 @@ canvas {
 
     transition:
         opacity
-        0.25s;
+        .25s;
 }
 
 /* =========================================================
@@ -257,15 +245,15 @@ canvas {
     justify-content: center;
     flex-direction: column;
 
-    color: white;
-
     text-align: center;
+
+    color: white;
 
     background:
         radial-gradient(
             circle,
-            rgba(0,0,0,0.15),
-            rgba(0,0,0,0.72)
+            rgba(0,0,0,.15),
+            rgba(0,0,0,.72)
         );
 }
 
@@ -275,7 +263,7 @@ canvas {
             255,
             255,
             255,
-            0.78
+            .78
         );
 
     letter-spacing: 3px;
@@ -317,7 +305,7 @@ canvas {
             255,
             255,
             255,
-            0.25
+            .24
         );
 
     background:
@@ -325,7 +313,7 @@ canvas {
             0,
             0,
             0,
-            0.38
+            .37
         );
 
     color: white;
@@ -352,7 +340,7 @@ canvas {
             -50%
         );
 
-    opacity: 0.75;
+    opacity: .76;
 }
 
 #crosshair::before {
@@ -413,7 +401,7 @@ canvas {
             255,
             255,
             255,
-            0.92
+            .92
         );
 
     background:
@@ -421,7 +409,7 @@ canvas {
             0,
             0,
             0,
-            0.34
+            .35
         );
 }
 
@@ -460,7 +448,7 @@ canvas {
             0,
             0,
             0,
-            0.72
+            .72
         );
 
     color: white;
@@ -491,7 +479,7 @@ canvas {
             0,
             0,
             0,
-            0.68
+            .68
         );
 }
 
@@ -504,13 +492,13 @@ canvas {
 
     pointer-events: none;
 
-    opacity: 0.075;
+    opacity: .065;
 
     background-image:
         repeating-radial-gradient(
             circle at 22% 21%,
-            rgba(255,255,255,0.22) 0px,
-            rgba(255,255,255,0.04) 1px,
+            rgba(255,255,255,.22) 0px,
+            rgba(255,255,255,.04) 1px,
             transparent 2px,
             transparent 4px
         );
@@ -520,7 +508,7 @@ canvas {
 
     animation:
         grainMove
-        0.12s
+        .12s
         infinite;
 }
 
@@ -581,8 +569,8 @@ canvas {
     background:
         radial-gradient(
             circle,
-            transparent 34%,
-            rgba(90,0,0,0.72)
+            transparent 35%,
+            rgba(75,0,0,.72)
         );
 }
 
@@ -603,12 +591,12 @@ canvas {
     justify-content: center;
     flex-direction: column;
 
+    text-align: center;
+
     background:
         #020202;
 
     color: white;
-
-    text-align: center;
 }
 
 #endTitle {
@@ -639,8 +627,8 @@ canvas {
 @media (max-width: 700px) {
 
     #startContent {
-        left: 20px;
         top: 20px;
+        left: 20px;
     }
 
     #title {
@@ -649,8 +637,8 @@ canvas {
 
     #objective {
         top: auto;
-        bottom: 110px;
         right: 18px;
+        bottom: 110px;
 
         font-size: 12px;
 
@@ -662,10 +650,9 @@ canvas {
     #staminaBox {
         left: 20px;
         right: 20px;
+        bottom: 20px;
 
         width: auto;
-
-        bottom: 20px;
     }
 }
 </style>
@@ -700,21 +687,26 @@ canvas {
 
 </div>
 
+
 <div
     id="topBar"
     class="cinematicBar">
 </div>
+
 
 <div
     id="bottomBar"
     class="cinematicBar">
 </div>
 
+
 <div id="cutsceneCaption">
     11:53 PM — OFFICE FLOOR 3
 </div>
 
+
 <div id="fadeLayer"></div>
+
 
 <div id="wakeScreen">
 
@@ -729,6 +721,7 @@ canvas {
     </button>
 
 </div>
+
 
 <div id="hud">
 
@@ -758,11 +751,13 @@ canvas {
 
 </div>
 
+
 <div id="vignette"></div>
 
 <div id="grain"></div>
 
 <div id="danger"></div>
+
 
 <div id="endScreen">
 
@@ -775,6 +770,7 @@ canvas {
     </button>
 
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 
@@ -827,75 +823,90 @@ const startScreen =
         "startScreen"
     );
 
+
 const startButton =
     document.getElementById(
         "startButton"
     );
+
 
 const topBar =
     document.getElementById(
         "topBar"
     );
 
+
 const bottomBar =
     document.getElementById(
         "bottomBar"
     );
+
 
 const cutsceneCaption =
     document.getElementById(
         "cutsceneCaption"
     );
 
+
 const fadeLayer =
     document.getElementById(
         "fadeLayer"
     );
+
 
 const wakeScreen =
     document.getElementById(
         "wakeScreen"
     );
 
+
 const wakeButton =
     document.getElementById(
         "wakeButton"
     );
+
 
 const hud =
     document.getElementById(
         "hud"
     );
 
+
 const staminaInner =
     document.getElementById(
         "staminaInner"
     );
+
 
 const pauseText =
     document.getElementById(
         "pauseText"
     );
 
+
 const danger =
     document.getElementById(
         "danger"
     );
+
 
 const endScreen =
     document.getElementById(
         "endScreen"
     );
 
+
 const endTitle =
     document.getElementById(
         "endTitle"
     );
 
+
 const endSub =
     document.getElementById(
         "endSub"
     );
+
 
 const restartButton =
     document.getElementById(
@@ -904,7 +915,7 @@ const restartButton =
 
 
 /* ============================================================
-   THREE SETUP
+   THREE
 ============================================================ */
 
 const scene =
@@ -1060,7 +1071,7 @@ function setBackroomsAtmosphere() {
 
 
 /* ============================================================
-   BACKROOMS WALLPAPER TEXTURE
+   WALLPAPER TEXTURE
 ============================================================ */
 
 function makeWallpaperTexture() {
@@ -1104,7 +1115,7 @@ function makeWallpaperTexture() {
     ) {
 
         ctx.fillStyle =
-            "rgba(60,55,18,0.14)";
+            "rgba(60,55,18,.14)";
 
 
         ctx.fillRect(
@@ -1122,7 +1133,7 @@ function makeWallpaperTexture() {
         ) {
 
             ctx.strokeStyle =
-                "rgba(66,60,22,0.23)";
+                "rgba(66,60,22,.23)";
 
 
             ctx.lineWidth =
@@ -1189,7 +1200,7 @@ function makeWallpaperTexture() {
 
         const value =
             Math.random() >
-            0.5
+            .5
 
                 ? 255
 
@@ -1197,7 +1208,7 @@ function makeWallpaperTexture() {
 
 
         ctx.fillStyle =
-            `rgba(${value},${value},${value},${Math.random() * 0.025})`;
+            `rgba(${value},${value},${value},${Math.random() * .025})`;
 
 
         ctx.fillRect(
@@ -1299,7 +1310,7 @@ function makeCarpetTexture() {
 
 
         ctx.fillStyle =
-            `rgba(${value},${value - 8},${value - 28},0.14)`;
+            `rgba(${value},${value - 8},${value - 28},.14)`;
 
 
         ctx.fillRect(
@@ -1312,11 +1323,11 @@ function makeCarpetTexture() {
 
             Math.random() *
             2 +
-            0.2,
+            .2,
 
             Math.random() *
             4 +
-            0.4
+            .4
 
         );
 
@@ -1367,7 +1378,7 @@ function makeCarpetTexture() {
 
             0,
 
-            "rgba(15,12,7,0.08)"
+            "rgba(15,12,7,.08)"
 
         );
 
@@ -1477,7 +1488,7 @@ function makeCeilingTexture() {
 
 
     ctx.strokeStyle =
-        "rgba(42,38,20,0.55)";
+        "rgba(42,38,20,.55)";
 
 
     ctx.lineWidth =
@@ -1521,7 +1532,7 @@ function makeCeilingTexture() {
     ) {
 
         ctx.fillStyle =
-            `rgba(0,0,0,${Math.random() * 0.025})`;
+            `rgba(0,0,0,${Math.random() * .025})`;
 
 
         ctx.fillRect(
@@ -1576,10 +1587,10 @@ function makeCeilingTexture() {
 
 
 /* ============================================================
-   UNCANNY HUMAN SKIN TEXTURE
+   ENTITY SKIN TEXTURE
 ============================================================ */
 
-function makeUncannySkinTexture() {
+function createEntitySkinTexture() {
 
     const canvas =
         document.createElement(
@@ -1588,11 +1599,11 @@ function makeUncannySkinTexture() {
 
 
     canvas.width =
-        256;
+        512;
 
 
     canvas.height =
-        256;
+        512;
 
 
     const ctx =
@@ -1601,128 +1612,104 @@ function makeUncannySkinTexture() {
         );
 
 
-    /* base sickly human skin */
-
     ctx.fillStyle =
-        "#b4a99a";
+        "#958878";
 
 
     ctx.fillRect(
         0,
         0,
-        256,
-        256
+        512,
+        512
     );
 
 
-    /* general skin variation */
+    /* Blotches */
 
     for (
         let i = 0;
-        i < 14000;
+        i < 750;
         i++
     ) {
 
+        const x =
+            Math.random() *
+            512;
+
+
+        const y =
+            Math.random() *
+            512;
+
+
+        const radius =
+            4 +
+            Math.random() *
+            30;
+
+
         const r =
-            175 +
+            92 +
             Math.floor(
                 Math.random() *
-                28
+                70
             );
 
 
         const g =
-            155 +
+            72 +
             Math.floor(
                 Math.random() *
-                24
+                55
             );
 
 
         const b =
-            138 +
+            62 +
             Math.floor(
                 Math.random() *
-                20
+                45
             );
 
 
-        ctx.fillStyle =
-            `rgba(${r},${g},${b},${Math.random() * 0.08})`;
+        const gradient =
+            ctx.createRadialGradient(
 
+                x,
 
-        ctx.fillRect(
+                y,
 
-            Math.random() *
-            256,
+                0,
 
-            Math.random() *
-            256,
+                x,
 
-            Math.random() *
-            3 +
-            1,
+                y,
 
-            Math.random() *
-            3 +
-            1
+                radius
 
-        );
-
-    }
-
-
-    /* gray unhealthy patches */
-
-    for (
-        let i = 0;
-        i < 5000;
-        i++
-    ) {
-
-        const value =
-            100 +
-            Math.floor(
-                Math.random() *
-                35
             );
 
 
-        ctx.fillStyle =
-            `rgba(${value},${value},${value},${Math.random() * 0.04})`;
+        gradient.addColorStop(
 
+            0,
 
-        ctx.fillRect(
-
-            Math.random() *
-            256,
-
-            Math.random() *
-            256,
-
-            Math.random() *
-            2 +
-            1,
-
-            Math.random() *
-            2 +
-            1
+            `rgba(${r},${g},${b},${.07 + Math.random() * .15})`
 
         );
 
-    }
 
+        gradient.addColorStop(
 
-    /* subtle red irritation */
+            1,
 
-    for (
-        let i = 0;
-        i < 1400;
-        i++
-    ) {
+            `rgba(${r},${g},${b},0)`
+
+        );
+
 
         ctx.fillStyle =
-            `rgba(120,70,65,${Math.random() * 0.08})`;
+            gradient;
 
 
         ctx.beginPath();
@@ -1730,15 +1717,11 @@ function makeUncannySkinTexture() {
 
         ctx.arc(
 
-            Math.random() *
-            256,
+            x,
 
-            Math.random() *
-            256,
+            y,
 
-            Math.random() *
-            3 +
-            1,
+            radius,
 
             0,
 
@@ -1753,217 +1736,82 @@ function makeUncannySkinTexture() {
     }
 
 
-    /* left eye darkness */
-
-    const eyeShadow1 =
-        ctx.createRadialGradient(
-
-            84,
-            105,
-
-            5,
-
-            84,
-            105,
-
-            36
-
-        );
-
-
-    eyeShadow1.addColorStop(
-
-        0,
-
-        "rgba(38,33,30,0.25)"
-
-    );
-
-
-    eyeShadow1.addColorStop(
-
-        1,
-
-        "rgba(38,33,30,0)"
-
-    );
-
-
-    ctx.fillStyle =
-        eyeShadow1;
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        84,
-
-        105,
-
-        36,
-
-        0,
-
-        Math.PI *
-        2
-
-    );
-
-
-    ctx.fill();
-
-
-    /* right eye darkness */
-
-    const eyeShadow2 =
-        ctx.createRadialGradient(
-
-            164,
-            109,
-
-            5,
-
-            164,
-            109,
-
-            34
-
-        );
-
-
-    eyeShadow2.addColorStop(
-
-        0,
-
-        "rgba(38,33,30,0.21)"
-
-    );
-
-
-    eyeShadow2.addColorStop(
-
-        1,
-
-        "rgba(38,33,30,0)"
-
-    );
-
-
-    ctx.fillStyle =
-        eyeShadow2;
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        164,
-
-        109,
-
-        34,
-
-        0,
-
-        Math.PI *
-        2
-
-    );
-
-
-    ctx.fill();
-
-
-    /* discoloration around mouth */
-
-    const mouthShadow =
-        ctx.createRadialGradient(
-
-            128,
-            177,
-
-            8,
-
-            128,
-            177,
-
-            46
-
-        );
-
-
-    mouthShadow.addColorStop(
-
-        0,
-
-        "rgba(70,45,42,0.16)"
-
-    );
-
-
-    mouthShadow.addColorStop(
-
-        1,
-
-        "rgba(70,45,42,0)"
-
-    );
-
-
-    ctx.fillStyle =
-        mouthShadow;
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-
-        128,
-
-        177,
-
-        46,
-
-        0,
-
-        Math.PI *
-        2
-
-    );
-
-
-    ctx.fill();
-
-
-    /* pores */
+    /* Fine skin noise */
 
     for (
         let i = 0;
-        i < 4500;
+        i < 38000;
         i++
     ) {
 
+        const darkness =
+            Math.floor(
+                Math.random() *
+                50
+            );
+
+
         ctx.fillStyle =
-            `rgba(0,0,0,${Math.random() * 0.03})`;
+            `rgba(${darkness},${darkness},${darkness},${Math.random() * .055})`;
 
 
         ctx.fillRect(
 
             Math.random() *
-            256,
+            512,
 
             Math.random() *
-            256,
+            512,
 
-            1,
+            Math.random() *
+            2 +
+            .4,
 
-            1
+            Math.random() *
+            2 +
+            .4
 
         );
+
+    }
+
+
+    /* reddish patches */
+
+    for (
+        let i = 0;
+        i < 90;
+        i++
+    ) {
+
+        ctx.fillStyle =
+            `rgba(95,42,35,${.025 + Math.random() * .055})`;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+
+            Math.random() *
+            512,
+
+            Math.random() *
+            512,
+
+            4 +
+            Math.random() *
+            18,
+
+            0,
+
+            Math.PI *
+            2
+
+        );
+
+
+        ctx.fill();
 
     }
 
@@ -1975,11 +1823,17 @@ function makeUncannySkinTexture() {
 
 
     texture.wrapS =
-        THREE.ClampToEdgeWrapping;
+        THREE.RepeatWrapping;
 
 
     texture.wrapT =
-        THREE.ClampToEdgeWrapping;
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        1.25,
+        1.25
+    );
 
 
     texture.encoding =
@@ -1992,10 +1846,10 @@ function makeUncannySkinTexture() {
 
 
 /* ============================================================
-   MONSTER CLOTH / BODY TEXTURE
+   ENTITY BUMP TEXTURE
 ============================================================ */
 
-function makeMonsterBodyTexture() {
+function createEntityBumpTexture() {
 
     const canvas =
         document.createElement(
@@ -2018,7 +1872,7 @@ function makeMonsterBodyTexture() {
 
 
     ctx.fillStyle =
-        "#161615";
+        "#808080";
 
 
     ctx.fillRect(
@@ -2031,20 +1885,20 @@ function makeMonsterBodyTexture() {
 
     for (
         let i = 0;
-        i < 16000;
+        i < 28000;
         i++
     ) {
 
-        const value =
-            20 +
+        const gray =
+            90 +
             Math.floor(
                 Math.random() *
-                25
+                70
             );
 
 
         ctx.fillStyle =
-            `rgba(${value},${value},${value},${Math.random() * 0.09})`;
+            `rgb(${gray},${gray},${gray})`;
 
 
         ctx.fillRect(
@@ -2057,40 +1911,11 @@ function makeMonsterBodyTexture() {
 
             Math.random() *
             2 +
-            1,
+            .5,
 
             Math.random() *
-            4 +
-            1
-
-        );
-
-    }
-
-
-    for (
-        let i = 0;
-        i < 900;
-        i++
-    ) {
-
-        ctx.fillStyle =
-            `rgba(90,85,80,${Math.random() * 0.035})`;
-
-
-        ctx.fillRect(
-
-            Math.random() *
-            256,
-
-            Math.random() *
-            256,
-
-            Math.random() *
-            6 +
-            1,
-
-            1
+            2 +
+            .5
 
         );
 
@@ -2117,6 +1942,108 @@ function makeMonsterBodyTexture() {
     );
 
 
+    return texture;
+
+}
+
+
+/* ============================================================
+   ENTITY DARK BODY TEXTURE
+============================================================ */
+
+function createEntityBodyTexture() {
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#11110f";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    for (
+        let i = 0;
+        i < 19000;
+        i++
+    ) {
+
+        const value =
+            10 +
+            Math.floor(
+                Math.random() *
+                35
+            );
+
+
+        ctx.fillStyle =
+            `rgba(${value},${value},${Math.max(0,value - 2)},${Math.random() * .13})`;
+
+
+        ctx.fillRect(
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            3 +
+            .4,
+
+            Math.random() *
+            5 +
+            .4
+
+        );
+
+    }
+
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        2,
+        3
+    );
+
+
     texture.encoding =
         THREE.sRGBEncoding;
 
@@ -2127,7 +2054,7 @@ function makeMonsterBodyTexture() {
 
 
 /* ============================================================
-   OFFICE CUTSCENE LEVEL
+   OFFICE
 ============================================================ */
 
 const officeLights =
@@ -2155,7 +2082,7 @@ function buildOffice() {
                 0xd4d1c9,
 
             roughness:
-                0.95
+                .95
 
         });
 
@@ -2167,7 +2094,7 @@ function buildOffice() {
                 0xcfcbbf,
 
             roughness:
-                0.92
+                .92
 
         });
 
@@ -2179,7 +2106,7 @@ function buildOffice() {
                 0x5a564d,
 
             roughness:
-                0.9
+                .9
 
         });
 
@@ -2245,7 +2172,7 @@ function buildOffice() {
 
             new THREE.BoxGeometry(
 
-                0.22,
+                .22,
 
                 3.4,
 
@@ -2287,7 +2214,7 @@ function buildOffice() {
     );
 
 
-    const endWall =
+    const farWall =
         new THREE.Mesh(
 
             new THREE.BoxGeometry(
@@ -2296,7 +2223,7 @@ function buildOffice() {
 
                 3.4,
 
-                0.22
+                .22
 
             ),
 
@@ -2305,7 +2232,7 @@ function buildOffice() {
         );
 
 
-    endWall.position.set(
+    farWall.position.set(
 
         0,
 
@@ -2317,7 +2244,7 @@ function buildOffice() {
 
 
     officeGroup.add(
-        endWall
+        farWall
     );
 
 
@@ -2332,7 +2259,7 @@ function buildOffice() {
 
                 new THREE.BoxGeometry(
 
-                    0.08,
+                    .08,
 
                     2.4,
 
@@ -2376,18 +2303,16 @@ function buildOffice() {
     }
 
 
-    const ambient =
+    officeGroup.add(
+
         new THREE.AmbientLight(
 
             0xc7cbcf,
 
-            0.42
+            .42
 
-        );
+        )
 
-
-    officeGroup.add(
-        ambient
     );
 
 
@@ -2404,9 +2329,9 @@ function buildOffice() {
 
                     2.2,
 
-                    0.04,
+                    .04,
 
-                    0.6
+                    .6
 
                 ),
 
@@ -2441,7 +2366,7 @@ function buildOffice() {
 
                 0xe9e8d8,
 
-                0.65,
+                .65,
 
                 10,
 
@@ -2489,7 +2414,7 @@ const wallMaterial =
             0xbfb45a,
 
         roughness:
-            0.95
+            .95
 
     });
 
@@ -2531,7 +2456,7 @@ const trimMaterial =
             0x91884a,
 
         roughness:
-            0.9
+            .9
 
     });
 
@@ -2552,7 +2477,7 @@ const lightPanelMaterial =
 
 
 /* ============================================================
-   MAZE DATA
+   MAZE
 ============================================================ */
 
 const maze =
@@ -2604,7 +2529,7 @@ for (
 
 
 /* ============================================================
-   OPEN MAZE CONNECTION
+   MAZE CONNECTIONS
 ============================================================ */
 
 function openBetween(
@@ -2814,10 +2739,8 @@ function generateMaze() {
             const next =
                 options[
                     Math.floor(
-
                         Math.random() *
                         options.length
-
                     )
                 ];
 
@@ -2873,9 +2796,9 @@ function generateMaze() {
     }
 
 
-    /* Open extra walls so this feels
-       like Backrooms rooms instead of
-       a hedge maze */
+    /* Open lots of extra walls.
+       Makes it look like rooms instead
+       of a hedge maze. */
 
     for (
         let y = 0;
@@ -2930,7 +2853,7 @@ function generateMaze() {
 
 
 /* ============================================================
-   CELL / WORLD CONVERSION
+   POSITION HELPERS
 ============================================================ */
 
 function cellToWorld(
@@ -2945,7 +2868,7 @@ function cellToWorld(
                 x -
                 GRID_WIDTH /
                 2 +
-                0.5
+                .5
             ) *
             CELL,
 
@@ -2954,7 +2877,7 @@ function cellToWorld(
                 y -
                 GRID_HEIGHT /
                 2 +
-                0.5
+                .5
             ) *
             CELL
 
@@ -3038,7 +2961,7 @@ function worldToCell(
 
 
 /* ============================================================
-   COLLISION DATA
+   WALL COLLISION
 ============================================================ */
 
 const collisionWalls =
@@ -3048,10 +2971,6 @@ const collisionWalls =
 const fluorescentLights =
     [];
 
-
-/* ============================================================
-   CREATE WALL
-============================================================ */
 
 function createWall(
     x,
@@ -3102,10 +3021,10 @@ function createWall(
 
                 width,
 
-                0.12,
+                .12,
 
                 depth +
-                0.04
+                .04
 
             ),
 
@@ -3118,7 +3037,7 @@ function createWall(
 
         x,
 
-        0.06,
+        .06,
 
         z
 
@@ -3158,7 +3077,7 @@ function createWall(
 
 
 /* ============================================================
-   CREATE COLUMN
+   COLUMN
 ============================================================ */
 
 function createColumn(
@@ -3171,11 +3090,11 @@ function createColumn(
 
             new THREE.BoxGeometry(
 
-                0.72,
+                .72,
 
                 WALL_HEIGHT,
 
-                0.72
+                .72
 
             ),
 
@@ -3205,19 +3124,19 @@ function createColumn(
 
         minX:
             x -
-            0.36,
+            .36,
 
         maxX:
             x +
-            0.36,
+            .36,
 
         minZ:
             z -
-            0.36,
+            .36,
 
         maxZ:
             z +
-            0.36
+            .36
 
     });
 
@@ -3225,7 +3144,7 @@ function createColumn(
 
 
 /* ============================================================
-   CREATE FLUORESCENT LIGHT
+   FLUORESCENT
 ============================================================ */
 
 function createFluorescent(
@@ -3241,9 +3160,9 @@ function createFluorescent(
 
                 2.15,
 
-                0.09,
+                .09,
 
-                0.62
+                .62
 
             ),
 
@@ -3253,7 +3172,7 @@ function createFluorescent(
                     0x666043,
 
                 roughness:
-                    0.8
+                    .8
 
             })
 
@@ -3265,7 +3184,7 @@ function createFluorescent(
         x,
 
         WALL_HEIGHT -
-        0.05,
+        .05,
 
         z
 
@@ -3288,9 +3207,9 @@ function createFluorescent(
 
                 1.9,
 
-                0.04,
+                .04,
 
-                0.42
+                .42
 
             ),
 
@@ -3304,7 +3223,7 @@ function createFluorescent(
         x,
 
         WALL_HEIGHT -
-        0.12,
+        .12,
 
         z
 
@@ -3325,7 +3244,7 @@ function createFluorescent(
 
             0xffe98d,
 
-            0.7,
+            .7,
 
             13,
 
@@ -3339,7 +3258,7 @@ function createFluorescent(
         x,
 
         WALL_HEIGHT -
-        0.45,
+        .45,
 
         z
 
@@ -3455,7 +3374,7 @@ function getNeighbors(
 
 
 /* ============================================================
-   FIND FARTHEST CELL
+   FARTHEST CELL
 ============================================================ */
 
 function findFarthestCell() {
@@ -3577,12 +3496,12 @@ function buildBackrooms() {
     generateMaze();
 
 
-    const worldWidth =
+    const width =
         GRID_WIDTH *
         CELL;
 
 
-    const worldDepth =
+    const depth =
         GRID_HEIGHT *
         CELL;
 
@@ -3592,9 +3511,9 @@ function buildBackrooms() {
 
             new THREE.PlaneGeometry(
 
-                worldWidth,
+                width,
 
-                worldDepth
+                depth
 
             ),
 
@@ -3618,9 +3537,9 @@ function buildBackrooms() {
 
             new THREE.PlaneGeometry(
 
-                worldWidth,
+                width,
 
-                worldDepth
+                depth
 
             ),
 
@@ -3765,8 +3684,6 @@ function buildBackrooms() {
     }
 
 
-    /* Random columns */
-
     for (
         let y = 1;
         y < GRID_HEIGHT - 1;
@@ -3781,7 +3698,7 @@ function buildBackrooms() {
 
             if (
                 Math.random() <
-                0.24
+                .24
             ) {
 
                 const position =
@@ -3818,7 +3735,7 @@ function buildBackrooms() {
 
             0x27230f,
 
-            0.58
+            .58
 
         )
 
@@ -3831,7 +3748,7 @@ function buildBackrooms() {
 
             0x5d5628,
 
-            0.5
+            .5
 
         )
 
@@ -3852,11 +3769,8 @@ function buildBackrooms() {
 
             const position =
                 cellToWorld(
-
                     x,
-
                     y
-
                 );
 
 
@@ -3867,7 +3781,7 @@ function buildBackrooms() {
                 position.z,
 
                 Math.random() >
-                0.5
+                .5
 
                     ? 0
 
@@ -3884,7 +3798,7 @@ function buildBackrooms() {
 
 
 /* ============================================================
-   BUILD BOTH LEVELS
+   BUILD LEVELS
 ============================================================ */
 
 buildOffice();
@@ -3914,7 +3828,7 @@ const exitGroup =
     new THREE.Group();
 
 
-const exitDoorFrame =
+const exitFrame =
     new THREE.Mesh(
 
         new THREE.BoxGeometry(
@@ -3923,7 +3837,7 @@ const exitDoorFrame =
 
             2.8,
 
-            0.18
+            .18
 
         ),
 
@@ -3933,19 +3847,19 @@ const exitDoorFrame =
                 0x3f3926,
 
             roughness:
-                0.9
+                .9
 
         })
 
     );
 
 
-exitDoorFrame.position.y =
+exitFrame.position.y =
     1.4;
 
 
 exitGroup.add(
-    exitDoorFrame
+    exitFrame
 );
 
 
@@ -3958,7 +3872,7 @@ const exitDoor =
 
             2.5,
 
-            0.22
+            .22
 
         ),
 
@@ -3971,7 +3885,7 @@ const exitDoor =
                 0x091509,
 
             roughness:
-                0.85
+                .85
 
         })
 
@@ -4005,7 +3919,7 @@ exitLight.position.set(
 
     1.7,
 
-    0.5
+    .5
 
 );
 
@@ -4066,22 +3980,50 @@ const keys =
    MONSTER MATERIALS
 ============================================================ */
 
-const monsterSkinTexture =
-    makeUncannySkinTexture();
+const entitySkinTexture =
+    createEntitySkinTexture();
 
 
-const monsterBodyTexture =
-    makeMonsterBodyTexture();
+const entityBumpTexture =
+    createEntityBumpTexture();
 
 
-const monsterBodyMaterial =
+const entityBodyTexture =
+    createEntityBodyTexture();
+
+
+const entitySkinMaterial =
     new THREE.MeshStandardMaterial({
 
         map:
-            monsterBodyTexture,
+            entitySkinTexture,
+
+        bumpMap:
+            entityBumpTexture,
+
+        bumpScale:
+            .028,
 
         color:
-            0xffffff,
+            0xaaa08e,
+
+        roughness:
+            .97,
+
+        metalness:
+            0
+
+    });
+
+
+const entityBodyMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            entityBodyTexture,
+
+        color:
+            0x20201d,
 
         roughness:
             1,
@@ -4092,35 +4034,29 @@ const monsterBodyMaterial =
     });
 
 
-const monsterSkinMaterial =
+const entityBlackMaterial =
     new THREE.MeshStandardMaterial({
 
-        map:
-            monsterSkinTexture,
-
         color:
-            0xffffff,
+            0x020202,
 
         roughness:
-            1,
-
-        metalness:
-            0,
-
-        emissive:
-            0x0d0b08,
-
-        emissiveIntensity:
-            0.04
+            1
 
     });
 
 
-const monsterDetailMaterial =
-    new THREE.MeshBasicMaterial({
+const entityEyeMaterial =
+    new THREE.MeshStandardMaterial({
 
         color:
-            0x080808
+            0x010101,
+
+        roughness:
+            .2,
+
+        metalness:
+            0
 
     });
 
@@ -4142,8 +4078,13 @@ monster.add(
 );
 
 
+backroomsGroup.add(
+    monster
+);
+
+
 /* ============================================================
-   MONSTER SHADOW
+   SHADOW
 ============================================================ */
 
 const monsterShadow =
@@ -4151,9 +4092,9 @@ const monsterShadow =
 
         new THREE.CircleGeometry(
 
-            0.62,
+            .54,
 
-            20
+            28
 
         ),
 
@@ -4166,7 +4107,7 @@ const monsterShadow =
                 true,
 
             opacity:
-                0.28
+                .26
 
         })
 
@@ -4179,7 +4120,7 @@ monsterShadow.rotation.x =
 
 
 monsterShadow.position.y =
-    0.02;
+    .012;
 
 
 monster.add(
@@ -4191,141 +4132,169 @@ monster.add(
    MONSTER PELVIS
 ============================================================ */
 
-const pelvis =
+const monsterPelvis =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.21,
+            .17,
 
-            10,
+            16,
+
+            12
+
+        ),
+
+        entityBodyMaterial
+
+    );
+
+
+monsterPelvis.scale.set(
+
+    1.15,
+
+    .72,
+
+    .82
+
+);
+
+
+monsterPelvis.position.set(
+
+    0,
+
+    1.03,
+
+    0
+
+);
+
+
+monsterRig.add(
+    monsterPelvis
+);
+
+
+/* ============================================================
+   ABDOMEN
+============================================================ */
+
+const monsterAbdomen =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+
+            .15,
+
+            .19,
+
+            .63,
+
+            12
+
+        ),
+
+        entityBodyMaterial
+
+    );
+
+
+monsterAbdomen.position.set(
+
+    0,
+
+    1.39,
+
+    0
+
+);
+
+
+monsterRig.add(
+    monsterAbdomen
+);
+
+
+/* ============================================================
+   CHEST
+============================================================ */
+
+const monsterChest =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+
+            .25,
+
+            .15,
+
+            .72,
+
+            12
+
+        ),
+
+        entityBodyMaterial
+
+    );
+
+
+monsterChest.position.set(
+
+    0,
+
+    1.93,
+
+    0
+
+);
+
+
+monsterChest.scale.z =
+    .64;
+
+
+monsterRig.add(
+    monsterChest
+);
+
+
+/* ============================================================
+   SHOULDERS
+============================================================ */
+
+const shoulderBar =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+
+            .095,
+
+            .095,
+
+            .79,
 
             10
 
         ),
 
-        monsterBodyMaterial
+        entityBodyMaterial
 
     );
 
 
-pelvis.scale.set(
-
-    1.08,
-
-    0.82,
-
-    0.92
-
-);
+shoulderBar.rotation.z =
+    Math.PI /
+    2;
 
 
-pelvis.position.y =
-    1.02;
+shoulderBar.position.set(
 
+    0,
 
-monsterRig.add(
-    pelvis
-);
-
-
-/* ============================================================
-   MONSTER TORSO
-============================================================ */
-
-const torso =
-    new THREE.Mesh(
-
-        new THREE.CylinderGeometry(
-
-            0.17,
-
-            0.27,
-
-            1.48,
-
-            8
-
-        ),
-
-        monsterBodyMaterial
-
-    );
-
-
-torso.position.y =
-    1.70;
-
-
-torso.rotation.z =
-    -0.03;
-
-
-monsterRig.add(
-    torso
-);
-
-
-/* ============================================================
-   MONSTER SHOULDERS
-============================================================ */
-
-const shoulders =
-    new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-
-            0.84,
-
-            0.14,
-
-            0.24
-
-        ),
-
-        monsterBodyMaterial
-
-    );
-
-
-shoulders.position.y =
-    2.30;
-
-
-monsterRig.add(
-    shoulders
-);
-
-
-/* ============================================================
-   MONSTER NECK
-============================================================ */
-
-const neck =
-    new THREE.Mesh(
-
-        new THREE.CylinderGeometry(
-
-            0.07,
-
-            0.075,
-
-            0.30,
-
-            8
-
-        ),
-
-        monsterSkinMaterial
-
-    );
-
-
-neck.position.set(
-
-    -0.015,
-
-    2.52,
+    2.22,
 
     0
 
@@ -4333,48 +4302,44 @@ neck.position.set(
 
 
 monsterRig.add(
-    neck
+    shoulderBar
 );
 
 
-/* ============================================================
-   MONSTER HEAD
-============================================================ */
-
-const cranium =
+const leftShoulder =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.27,
+            .135,
 
-            20,
+            12,
 
-            16
+            10
 
         ),
 
-        monsterSkinMaterial
+        entityBodyMaterial
 
     );
 
 
-cranium.scale.set(
+leftShoulder.scale.set(
 
-    0.89,
+    1.2,
 
-    1.18,
+    .72,
 
-    0.92
+    .92
 
 );
 
 
-cranium.position.set(
+leftShoulder.position.set(
 
-    -0.015,
+    -.34,
 
-    2.89,
+    2.20,
 
     0
 
@@ -4382,220 +4347,249 @@ cranium.position.set(
 
 
 monsterRig.add(
-    cranium
+    leftShoulder
+);
+
+
+const rightShoulder =
+    leftShoulder.clone();
+
+
+rightShoulder.position.x =
+    .34;
+
+
+rightShoulder.position.y =
+    2.18;
+
+
+monsterRig.add(
+    rightShoulder
 );
 
 
 /* ============================================================
-   MONSTER FACE
+   NECK
 ============================================================ */
 
-const face =
+const monsterNeck =
+    new THREE.Mesh(
+
+        new THREE.CylinderGeometry(
+
+            .075,
+
+            .095,
+
+            .30,
+
+            12
+
+        ),
+
+        entitySkinMaterial
+
+    );
+
+
+monsterNeck.position.set(
+
+    0,
+
+    2.41,
+
+    .015
+
+);
+
+
+monsterNeck.rotation.x =
+    .10;
+
+
+monsterRig.add(
+    monsterNeck
+);
+
+
+/* ============================================================
+   HEAD ROOT
+============================================================ */
+
+const monsterHeadPivot =
+    new THREE.Group();
+
+
+monsterHeadPivot.position.set(
+
+    0,
+
+    2.61,
+
+    -.015
+
+);
+
+
+monsterRig.add(
+    monsterHeadPivot
+);
+
+
+/* ============================================================
+   CRANIUM
+============================================================ */
+
+const monsterHead =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.235,
+            .265,
 
-            20,
+            28,
 
-            16
+            22
 
         ),
 
-        monsterSkinMaterial
+        entitySkinMaterial
 
     );
 
 
-face.scale.set(
+monsterHead.scale.set(
 
-    0.78,
+    .78,
 
-    1.10,
+    1.14,
 
-    0.34
-
-);
-
-
-face.position.set(
-
-    -0.01,
-
-    2.87,
-
-    -0.20
+    .82
 
 );
 
 
-monsterRig.add(
-    face
+monsterHead.position.set(
+
+    0,
+
+    .095,
+
+    0
+
+);
+
+
+monsterHeadPivot.add(
+    monsterHead
 );
 
 
 /* ============================================================
-   CHEEKS
+   FACE FRONT
 ============================================================ */
 
-const leftCheek =
+const monsterFace =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.05,
+            .215,
 
-            10,
+            24,
 
-            8
+            18
 
         ),
 
-        monsterSkinMaterial
+        entitySkinMaterial
 
     );
 
 
-leftCheek.scale.set(
+monsterFace.scale.set(
 
-    1.08,
+    .76,
 
-    0.78,
+    1.02,
 
-    0.80
-
-);
-
-
-leftCheek.position.set(
-
-    -0.093,
-
-    2.82,
-
-    -0.245
+    .25
 
 );
 
 
-monsterRig.add(
-    leftCheek
-);
+monsterFace.position.set(
 
+    0,
 
-const rightCheek =
-    leftCheek.clone();
+    .065,
 
-
-rightCheek.position.set(
-
-    0.067,
-
-    2.805,
-
-    -0.235
+    -.205
 
 );
 
 
-rightCheek.scale.set(
-
-    0.94,
-
-    0.84,
-
-    0.74
-
-);
-
-
-monsterRig.add(
-    rightCheek
+monsterHeadPivot.add(
+    monsterFace
 );
 
 
 /* ============================================================
-   JAW
+   BROWS
 ============================================================ */
 
-const jaw =
+const browLeft =
     new THREE.Mesh(
 
         new THREE.BoxGeometry(
 
-            0.155,
+            .115,
 
-            0.065,
+            .028,
 
-            0.105
+            .035
 
         ),
 
-        monsterSkinMaterial
+        entitySkinMaterial
 
     );
 
 
-jaw.position.set(
+browLeft.position.set(
 
-    -0.012,
+    -.072,
 
-    2.715,
+    .145,
 
-    -0.205
-
-);
-
-
-jaw.rotation.z =
-    -0.045;
-
-
-monsterRig.add(
-    jaw
-);
-
-
-/* ============================================================
-   NOSE
-============================================================ */
-
-const nose =
-    new THREE.Mesh(
-
-        new THREE.BoxGeometry(
-
-            0.032,
-
-            0.065,
-
-            0.048
-
-        ),
-
-        monsterSkinMaterial
-
-    );
-
-
-nose.position.set(
-
-    -0.012,
-
-    2.845,
-
-    -0.286
+    -.27
 
 );
 
 
-nose.rotation.x =
-    0.20;
+browLeft.rotation.z =
+    -.08;
 
 
-monsterRig.add(
-    nose
+monsterHeadPivot.add(
+    browLeft
+);
+
+
+const browRight =
+    browLeft.clone();
+
+
+browRight.position.x =
+    .067;
+
+
+browRight.rotation.z =
+    .10;
+
+
+monsterHeadPivot.add(
+    browRight
 );
 
 
@@ -4603,12 +4597,106 @@ monsterRig.add(
    EYE SOCKETS
 ============================================================ */
 
-const leftEyeSocket =
+const leftSocket =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.034,
+            .061,
+
+            16,
+
+            12
+
+        ),
+
+        entityBlackMaterial
+
+    );
+
+
+leftSocket.scale.set(
+
+    1.22,
+
+    .85,
+
+    .42
+
+);
+
+
+leftSocket.position.set(
+
+    -.083,
+
+    .105,
+
+    -.269
+
+);
+
+
+monsterHeadPivot.add(
+    leftSocket
+);
+
+
+const rightSocket =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+
+            .057,
+
+            16,
+
+            12
+
+        ),
+
+        entityBlackMaterial
+
+    );
+
+
+rightSocket.scale.set(
+
+    1.14,
+
+    .78,
+
+    .42
+
+);
+
+
+rightSocket.position.set(
+
+    .078,
+
+    .098,
+
+    -.267
+
+);
+
+
+monsterHeadPivot.add(
+    rightSocket
+);
+
+
+/* ============================================================
+   ACTUAL EYES
+============================================================ */
+
+const leftEye =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+
+            .016,
 
             10,
 
@@ -4616,91 +4704,66 @@ const leftEyeSocket =
 
         ),
 
-        monsterDetailMaterial
+        entityEyeMaterial
 
     );
 
 
-leftEyeSocket.scale.set(
+leftEye.position.set(
 
-    1.55,
+    -.081,
 
-    0.55,
+    .102,
 
-    0.45
-
-);
-
-
-leftEyeSocket.position.set(
-
-    -0.079,
-
-    2.925,
-
-    -0.276
+    -.301
 
 );
 
 
-monsterRig.add(
-    leftEyeSocket
+monsterHeadPivot.add(
+    leftEye
 );
 
 
-const rightEyeSocket =
-    leftEyeSocket.clone();
+const rightEye =
+    leftEye.clone();
 
 
-rightEyeSocket.position.set(
+rightEye.position.set(
 
-    0.044,
+    .077,
 
-    2.903,
+    .096,
 
-    -0.271
-
-);
-
-
-rightEyeSocket.scale.set(
-
-    1.08,
-
-    0.49,
-
-    0.43
+    -.299
 
 );
 
 
-monsterRig.add(
-    rightEyeSocket
+monsterHeadPivot.add(
+    rightEye
 );
 
 
 /* ============================================================
-   TINY CATCHLIGHTS
-
-   This makes the face look more human from a distance,
-   but still wrong.
+   TINY EYE REFLECTION
 ============================================================ */
 
-const eyeHighlightMaterial =
+const reflectionMaterial =
     new THREE.MeshBasicMaterial({
 
         color:
-            0x5b5b55
+            0x55554f
 
     });
 
 
-const leftEyeHighlight =
+const reflectionLeft =
     new THREE.Mesh(
 
         new THREE.SphereGeometry(
 
-            0.008,
+            .0038,
 
             6,
 
@@ -4708,44 +4771,87 @@ const leftEyeHighlight =
 
         ),
 
-        eyeHighlightMaterial
+        reflectionMaterial
 
     );
 
 
-leftEyeHighlight.position.set(
+reflectionLeft.position.set(
 
-    -0.079,
+    -.076,
 
-    2.926,
+    .108,
 
-    -0.306
-
-);
-
-
-monsterRig.add(
-    leftEyeHighlight
-);
-
-
-const rightEyeHighlight =
-    leftEyeHighlight.clone();
-
-
-rightEyeHighlight.position.set(
-
-    0.044,
-
-    2.904,
-
-    -0.301
+    -.316
 
 );
 
 
-monsterRig.add(
-    rightEyeHighlight
+monsterHeadPivot.add(
+    reflectionLeft
+);
+
+
+const reflectionRight =
+    reflectionLeft.clone();
+
+
+reflectionRight.position.set(
+
+    .081,
+
+    .102,
+
+    -.314
+
+);
+
+
+monsterHeadPivot.add(
+    reflectionRight
+);
+
+
+/* ============================================================
+   NOSE
+============================================================ */
+
+const monsterNose =
+    new THREE.Mesh(
+
+        new THREE.ConeGeometry(
+
+            .029,
+
+            .075,
+
+            8
+
+        ),
+
+        entitySkinMaterial
+
+    );
+
+
+monsterNose.rotation.x =
+    Math.PI /
+    2;
+
+
+monsterNose.position.set(
+
+    -.004,
+
+    .020,
+
+    -.288
+
+);
+
+
+monsterHeadPivot.add(
+    monsterNose
 );
 
 
@@ -4753,83 +4859,75 @@ monsterRig.add(
    MOUTH
 ============================================================ */
 
-const mouth =
+const monsterMouth =
     new THREE.Mesh(
 
         new THREE.BoxGeometry(
 
-            0.115,
+            .105,
 
-            0.014,
+            .016,
 
-            0.021
+            .018
 
         ),
 
-        monsterDetailMaterial
+        entityBlackMaterial
 
     );
 
 
-mouth.position.set(
+monsterMouth.position.set(
 
-    -0.015,
+    -.007,
 
-    2.765,
+    -.074,
 
-    -0.287
+    -.279
 
 );
 
 
-mouth.rotation.z =
-    -0.085;
+monsterMouth.rotation.z =
+    -.035;
 
 
-monsterRig.add(
-    mouth
+monsterHeadPivot.add(
+    monsterMouth
 );
 
 
-/* ============================================================
-   EYEBROW RIDGE
-============================================================ */
-
-const brow =
+const lowerLip =
     new THREE.Mesh(
 
         new THREE.BoxGeometry(
 
-            0.16,
+            .085,
 
-            0.018,
+            .013,
 
-            0.045
+            .014
 
         ),
 
-        monsterSkinMaterial
+        entitySkinMaterial
 
     );
 
 
-brow.position.set(
+lowerLip.position.set(
 
-    -0.02,
+    -.004,
 
-    2.978,
+    -.092,
 
-    -0.238
+    -.276
 
 );
 
 
-brow.rotation.z =
-    -0.03;
-
-
-monsterRig.add(
-    brow
+monsterHeadPivot.add(
+    lowerLip
 );
 
 
@@ -4837,13 +4935,14 @@ monsterRig.add(
    LIMB CREATOR
 ============================================================ */
 
-function makeLimb(
+function createEntityLimb(
     x,
     y,
     upperLength,
     lowerLength,
     upperRadius,
-    lowerRadius
+    lowerRadius,
+    lowerMaterial
 ) {
 
     const upperPivot =
@@ -4861,23 +4960,28 @@ function makeLimb(
     );
 
 
+    monsterRig.add(
+        upperPivot
+    );
+
+
     const upper =
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
 
-                upperRadius,
-
                 upperRadius *
-                0.88,
+                .82,
+
+                upperRadius,
 
                 upperLength,
 
-                7
+                10
 
             ),
 
-            monsterBodyMaterial
+            entityBodyMaterial
 
         );
 
@@ -4897,15 +5001,16 @@ function makeLimb(
 
             new THREE.SphereGeometry(
 
-                upperRadius,
+                upperRadius *
+                .92,
 
-                7,
+                10,
 
-                6
+                8
 
             ),
 
-            monsterBodyMaterial
+            entityBodyMaterial
 
         );
 
@@ -4927,23 +5032,28 @@ function makeLimb(
         -upperLength;
 
 
+    upperPivot.add(
+        lowerPivot
+    );
+
+
     const lower =
         new THREE.Mesh(
 
             new THREE.CylinderGeometry(
 
-                lowerRadius,
-
                 lowerRadius *
-                0.78,
+                .78,
+
+                lowerRadius,
 
                 lowerLength,
 
-                7
+                10
 
             ),
 
-            monsterBodyMaterial
+            lowerMaterial
 
         );
 
@@ -4958,25 +5068,19 @@ function makeLimb(
     );
 
 
-    upperPivot.add(
-        lowerPivot
-    );
-
-
-    monsterRig.add(
-        upperPivot
-    );
-
-
     return {
 
         upperPivot:
-
             upperPivot,
 
         lowerPivot:
+            lowerPivot,
 
-            lowerPivot
+        upper:
+            upper,
+
+        lower:
+            lower
 
     };
 
@@ -4988,47 +5092,153 @@ function makeLimb(
 ============================================================ */
 
 const leftArm =
-    makeLimb(
+    createEntityLimb(
 
-        -0.35,
+        -.34,
 
-        2.26,
+        2.17,
 
-        1.07,
+        .95,
 
-        1.18,
+        .98,
 
-        0.065,
+        .067,
 
-        0.045
+        .058,
+
+        entitySkinMaterial
 
     );
 
 
 const rightArm =
-    makeLimb(
+    createEntityLimb(
 
-        0.35,
+        .34,
 
-        2.25,
+        2.15,
 
-        1.02,
+        .98,
 
-        1.24,
+        1.01,
 
-        0.065,
+        .067,
 
-        0.043
+        .058,
+
+        entitySkinMaterial
 
     );
 
 
 leftArm.upperPivot.rotation.z =
-    0.20;
+    .075;
 
 
 rightArm.upperPivot.rotation.z =
-    -0.15;
+    -.075;
+
+
+/* ============================================================
+   HAND CREATOR
+============================================================ */
+
+function createEntityHand() {
+
+    const hand =
+        new THREE.Group();
+
+
+    const palm =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+
+                .105,
+
+                14,
+
+                12
+
+            ),
+
+            entitySkinMaterial
+
+        );
+
+
+    palm.scale.set(
+
+        .70,
+
+        1.60,
+
+        .70
+
+    );
+
+
+    palm.position.y =
+        -.11;
+
+
+    hand.add(
+        palm
+    );
+
+
+    const thumb =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+
+                .042,
+
+                10,
+
+                8
+
+            ),
+
+            entitySkinMaterial
+
+        );
+
+
+    thumb.scale.set(
+
+        .8,
+
+        1.4,
+
+        .75
+
+    );
+
+
+    thumb.position.set(
+
+        .075,
+
+        -.08,
+
+        -.01
+
+    );
+
+
+    thumb.rotation.z =
+        -.42;
+
+
+    hand.add(
+        thumb
+    );
+
+
+    return hand;
+
+}
 
 
 /* ============================================================
@@ -5036,36 +5246,11 @@ rightArm.upperPivot.rotation.z =
 ============================================================ */
 
 const leftHand =
-    new THREE.Mesh(
-
-        new THREE.SphereGeometry(
-
-            0.07,
-
-            7,
-
-            7
-
-        ),
-
-        monsterSkinMaterial
-
-    );
-
-
-leftHand.scale.set(
-
-    0.65,
-
-    1.7,
-
-    0.7
-
-);
+    createEntityHand();
 
 
 leftHand.position.y =
-    -1.18;
+    -.98;
 
 
 leftArm.lowerPivot.add(
@@ -5074,20 +5259,20 @@ leftArm.lowerPivot.add(
 
 
 const rightHand =
-    leftHand.clone();
+    createEntityHand();
 
 
 rightHand.position.y =
-    -1.24;
+    -1.01;
 
 
 rightHand.scale.set(
 
-    0.58,
+    .96,
 
-    1.82,
+    1.04,
 
-    0.64
+    .95
 
 );
 
@@ -5102,37 +5287,41 @@ rightArm.lowerPivot.add(
 ============================================================ */
 
 const leftLeg =
-    makeLimb(
+    createEntityLimb(
 
-        -0.13,
+        -.125,
 
-        1.02,
+        1.04,
 
-        0.95,
+        .64,
 
-        0.97,
+        .72,
 
-        0.083,
+        .084,
 
-        0.061
+        .061,
+
+        entityBodyMaterial
 
     );
 
 
 const rightLeg =
-    makeLimb(
+    createEntityLimb(
 
-        0.15,
+        .125,
 
-        1.02,
+        1.04,
 
-        1.00,
+        .66,
 
-        0.92,
+        .70,
 
-        0.083,
+        .084,
 
-        0.061
+        .061,
+
+        entityBodyMaterial
 
     );
 
@@ -5141,24 +5330,20 @@ const rightLeg =
    FEET
 ============================================================ */
 
-const footGeometry =
-    new THREE.BoxGeometry(
-
-        0.12,
-
-        0.06,
-
-        0.30
-
-    );
-
-
 const leftFoot =
     new THREE.Mesh(
 
-        footGeometry,
+        new THREE.BoxGeometry(
 
-        monsterBodyMaterial
+            .16,
+
+            .095,
+
+            .34
+
+        ),
+
+        entityBodyMaterial
 
     );
 
@@ -5167,9 +5352,9 @@ leftFoot.position.set(
 
     0,
 
-    -0.96,
+    -.73,
 
-    0.11
+    .10
 
 );
 
@@ -5184,7 +5369,7 @@ const rightFoot =
 
 
 rightFoot.position.y =
-    -0.91;
+    -.71;
 
 
 rightLeg.lowerPivot.add(
@@ -5193,11 +5378,11 @@ rightLeg.lowerPivot.add(
 
 
 /* ============================================================
-   HUNCHED POSTURE
+   HUNCH
 ============================================================ */
 
 monsterRig.rotation.x =
-    0.07;
+    .055;
 
 
 /* ============================================================
@@ -5209,12 +5394,12 @@ const monsterSpawn =
 
         Math.floor(
             GRID_WIDTH *
-            0.66
+            .66
         ),
 
         Math.floor(
             GRID_HEIGHT *
-            0.66
+            .66
         )
 
     );
@@ -5233,11 +5418,6 @@ monster.position.set(
 
 monster.visible =
     false;
-
-
-backroomsGroup.add(
-    monster
-);
 
 
 let monsterPath =
@@ -5391,6 +5571,100 @@ let cutsceneFinished =
 
 
 /* ============================================================
+   AUDIO
+============================================================ */
+
+let audioContext =
+    null;
+
+
+function startAudio() {
+
+    if (
+        audioContext
+    ) {
+
+        return;
+
+    }
+
+
+    audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+
+    const master =
+        audioContext.createGain();
+
+
+    master.gain.value =
+        .027;
+
+
+    master.connect(
+        audioContext.destination
+    );
+
+
+    const hum =
+        audioContext.createOscillator();
+
+
+    hum.type =
+        "sine";
+
+
+    hum.frequency.value =
+        60;
+
+
+    hum.connect(
+        master
+    );
+
+
+    hum.start();
+
+
+    const highHum =
+        audioContext.createOscillator();
+
+
+    const highGain =
+        audioContext.createGain();
+
+
+    highHum.type =
+        "sine";
+
+
+    highHum.frequency.value =
+        119.6;
+
+
+    highGain.gain.value =
+        .18;
+
+
+    highHum.connect(
+        highGain
+    );
+
+
+    highGain.connect(
+        master
+    );
+
+
+    highHum.start();
+
+}
+
+
+/* ============================================================
    TITLE CAMERA
 ============================================================ */
 
@@ -5406,9 +5680,6 @@ function setOfficePreviewCamera() {
 
     );
 
-
-    /* VERY IMPORTANT:
-       keep Z rotation at exactly 0 */
 
     camera.rotation.set(
 
@@ -5428,6 +5699,9 @@ function setOfficePreviewCamera() {
 ============================================================ */
 
 function beginCutscene() {
+
+    startAudio();
+
 
     mode =
         "cutscene";
@@ -5479,8 +5753,6 @@ function beginCutscene() {
     );
 
 
-    /* RESET CAMERA ROLL */
-
     camera.rotation.set(
 
         0,
@@ -5506,7 +5778,7 @@ function updateCutscene(
         delta;
 
 
-    /* Walking through office */
+    /* walking */
 
     if (
         cutsceneTime <
@@ -5514,31 +5786,38 @@ function updateCutscene(
     ) {
 
         camera.position.z =
+
             14 -
+
             cutsceneTime *
             2.5;
 
 
         camera.position.y =
+
             1.72 +
 
             Math.sin(
+
                 cutsceneTime *
                 8
+
             ) *
 
-            0.02;
+            .02;
 
 
         camera.rotation.x =
+
             Math.sin(
+
                 cutsceneTime *
                 1.4
+
             ) *
-            0.006;
 
+            .006;
 
-        /* Keep roll centered */
 
         camera.rotation.z =
             0;
@@ -5557,7 +5836,7 @@ function updateCutscene(
     }
 
 
-    /* Lights start acting strange */
+    /* flickering office */
 
     if (
         cutsceneTime >
@@ -5568,16 +5847,14 @@ function updateCutscene(
 
         if (
             Math.random() <
-            0.35
+            .35
         ) {
 
             const light =
                 officeLights[
                     Math.floor(
-
                         Math.random() *
                         officeLights.length
-
                     )
                 ];
 
@@ -5591,12 +5868,13 @@ function updateCutscene(
 
 
                 light.intensity =
+
                     Math.random() <
-                    0.5
+                    .5
 
-                        ? 0.05
+                        ? .05
 
-                        : 0.65;
+                        : .65;
 
 
                 setTimeout(
@@ -5617,20 +5895,19 @@ function updateCutscene(
         }
 
 
-        /* only a TINY shake,
-           not a permanent 35 degree roll */
-
         camera.rotation.z =
+
             (
                 Math.random() -
-                0.5
+                .5
             ) *
-            0.008;
+
+            .008;
 
     }
 
 
-    /* Noclip / fall */
+    /* fall */
 
     if (
         cutsceneTime >=
@@ -5640,27 +5917,33 @@ function updateCutscene(
     ) {
 
         const fall =
+
             (
                 cutsceneTime -
                 4.25
             ) /
-            0.8;
+
+            .8;
 
 
         camera.position.y =
+
             1.72 -
+
             fall *
             5.3;
 
 
         camera.rotation.x =
+
             fall *
-            0.9;
+            .9;
 
 
         camera.rotation.z =
+
             fall *
-            0.15;
+            .15;
 
 
         fadeLayer.style.opacity =
@@ -5704,7 +5987,7 @@ function updateCutscene(
 
 
 /* ============================================================
-   WAKE IN BACKROOMS
+   WAKE
 ============================================================ */
 
 function wakeInBackrooms() {
@@ -5740,7 +6023,7 @@ function wakeInBackrooms() {
 
         playerStart.x,
 
-        0.58,
+        .58,
 
         playerStart.z
 
@@ -5752,10 +6035,10 @@ function wakeInBackrooms() {
 
 
     pitch =
-        0.28;
+        .28;
 
 
-    /* THIS FIXES THE CAMERA TILT */
+    /* Reset accidental roll */
 
     camera.rotation.set(
 
@@ -5813,8 +6096,6 @@ function startPlaying() {
     pitch =
         0;
 
-
-    /* MAKE SURE CAMERA ROLL = 0 */
 
     camera.rotation.set(
 
@@ -5891,7 +6172,7 @@ document.addEventListener(
 
 
         const sensitivity =
-            0.0019;
+            .0019;
 
 
         yaw -=
@@ -5927,8 +6208,6 @@ document.addEventListener(
         camera.rotation.x =
             pitch;
 
-
-        /* Absolutely prevent camera roll */
 
         camera.rotation.z =
             0;
@@ -6014,7 +6293,7 @@ function hitsWall(
 
 
 /* ============================================================
-   PLAYER UPDATE
+   PLAYER
 ============================================================ */
 
 function updatePlayer(
@@ -6175,7 +6454,7 @@ function updatePlayer(
     camera.updateProjectionMatrix();
 
 
-    /* ALWAYS keep camera level */
+    /* absolutely keep roll level */
 
     camera.rotation.z =
         0;
@@ -6335,9 +6614,9 @@ function updatePlayer(
         (
             sprinting
 
-                ? 0.045
+                ? .045
 
-                : 0.027
+                : .027
         );
 
 }
@@ -6399,7 +6678,7 @@ function updateMonster(
     ) {
 
         monsterPathTimer =
-            0.5;
+            .45;
 
 
         monsterPath =
@@ -6460,7 +6739,7 @@ function updateMonster(
 
         if (
             distance <
-            0.15
+            .13
         ) {
 
             monsterPath.shift();
@@ -6474,19 +6753,19 @@ function updateMonster(
                 true;
 
 
-            const dirX =
+            const directionX =
                 dx /
                 distance;
 
 
-            const dirZ =
+            const directionZ =
                 dz /
                 distance;
 
 
             monster.position.x +=
 
-                dirX *
+                directionX *
 
                 MONSTER_SPEED *
 
@@ -6495,7 +6774,7 @@ function updateMonster(
 
             monster.position.z +=
 
-                dirZ *
+                directionZ *
 
                 MONSTER_SPEED *
 
@@ -6503,13 +6782,15 @@ function updateMonster(
 
 
             monster.rotation.y =
+
                 Math.atan2(
 
-                    dirX,
+                    directionX,
 
-                    dirZ
+                    directionZ
 
                 ) +
+
                 Math.PI;
 
         }
@@ -6517,20 +6798,17 @@ function updateMonster(
     }
 
 
-    /* ========================================================
-       LESS GOOFY / MORE UNCANNY MOVEMENT
-    ======================================================== */
-
     const time =
         performance.now() *
-        0.001;
+        .001;
 
 
-    const stride =
+    const walk =
+
         Math.sin(
 
             time *
-            6.8
+            6.1
 
         ) *
 
@@ -6539,105 +6817,62 @@ function updateMonster(
 
                 ? 1
 
-                : 0.05
+                : .025
         );
 
 
-    /* Almost no bouncing */
+    /* slight body motion */
 
     monsterRig.position.y =
-        Math.sin(
-
-            time *
-            3.4
-
-        ) *
-        0.012;
-
-
-    /* Tiny unsettling lean */
-
-    monsterRig.rotation.x =
-
-        0.07 +
 
         Math.sin(
 
             time *
-            1.6
+            3.1
 
         ) *
-        0.006;
+
+        .008;
 
 
     monsterRig.rotation.z =
+
         Math.sin(
 
             time *
-            0.9
+            .7
 
         ) *
-        0.01;
+
+        .009;
 
 
-    /* Arms */
+    monsterRig.rotation.x =
 
-    leftArm.upperPivot.rotation.x =
+        .055 +
 
-        0.12 +
+        Math.sin(
 
-        stride *
-        0.28;
-
-
-    rightArm.upperPivot.rotation.x =
-
-        0.08 -
-
-        stride *
-        0.32;
-
-
-    leftArm.lowerPivot.rotation.x =
-
-        -0.10 +
-
-        Math.max(
-
-            0,
-
-            -stride
+            time *
+            .75
 
         ) *
-        0.16;
+
+        .006;
 
 
-    rightArm.lowerPivot.rotation.x =
-
-        -0.12 +
-
-        Math.max(
-
-            0,
-
-            stride
-
-        ) *
-        0.18;
-
-
-    /* Legs */
+    /* legs */
 
     leftLeg.upperPivot.rotation.x =
 
-        -stride *
-        0.18;
+        -walk *
+        .23;
 
 
     rightLeg.upperPivot.rotation.x =
 
-        stride *
-        0.18;
+        walk *
+        .23;
 
 
     leftLeg.lowerPivot.rotation.x =
@@ -6646,10 +6881,11 @@ function updateMonster(
 
             0,
 
-            stride
+            walk
 
         ) *
-        0.10;
+
+        .15;
 
 
     rightLeg.lowerPivot.rotation.x =
@@ -6658,74 +6894,139 @@ function updateMonster(
 
             0,
 
-            -stride
+            -walk
 
         ) *
-        0.10;
+
+        .15;
 
 
-    /* Head slowly drifts like
-       it isn't perfectly attached */
+    /* long heavy arms */
 
-    cranium.rotation.z =
+    leftArm.upperPivot.rotation.x =
+
+        .055 +
+
+        walk *
+        .19;
+
+
+    rightArm.upperPivot.rotation.x =
+
+        .035 -
+
+        walk *
+        .22;
+
+
+    leftArm.lowerPivot.rotation.x =
+
+        -.05 +
+
+        Math.max(
+
+            0,
+
+            -walk
+
+        ) *
+
+        .08;
+
+
+    rightArm.lowerPivot.rotation.x =
+
+        -.035 +
+
+        Math.max(
+
+            0,
+
+            walk
+
+        ) *
+
+        .09;
+
+
+    /* head drift */
+
+    monsterHeadPivot.rotation.z =
+
         Math.sin(
 
             time *
-            0.8
+            .67
 
         ) *
-        0.025;
+
+        .032;
 
 
-    cranium.rotation.y =
-        Math.sin(
+    monsterHeadPivot.rotation.x =
 
-            time *
-            0.55
-
-        ) *
-        0.03;
-
-
-    face.rotation.z =
-        cranium.rotation.z;
-
-
-    face.rotation.y =
-        cranium.rotation.y;
-
-
-    jaw.rotation.z =
-
-        -0.045 +
+        -.05 +
 
         Math.sin(
 
             time *
-            1.3
+            .53
 
         ) *
-        0.006;
+
+        .018;
 
 
-    leftEyeSocket.rotation.z =
-        cranium.rotation.z;
+    monsterHeadPivot.rotation.y =
+
+        Math.sin(
+
+            time *
+            .43
+
+        ) *
+
+        .035;
 
 
-    rightEyeSocket.rotation.z =
-        cranium.rotation.z;
+    /* rare tiny twitch */
+
+    const twitchWave =
+
+        Math.pow(
+
+            Math.max(
+
+                0,
+
+                Math.sin(
+
+                    time *
+                    .81
+
+                )
+
+            ),
+
+            42
+
+        );
 
 
-    /* ========================================================
-       DISTANCE TO PLAYER
-    ======================================================== */
+    monsterHeadPivot.rotation.y +=
 
-    const dx =
+        twitchWave *
+        .12;
+
+
+    /* danger */
+
+    const playerDX =
         monster.position.x -
         camera.position.x;
 
 
-    const dz =
+    const playerDZ =
         monster.position.z -
         camera.position.z;
 
@@ -6733,11 +7034,11 @@ function updateMonster(
     const playerDistance =
         Math.sqrt(
 
-            dx *
-            dx +
+            playerDX *
+            playerDX +
 
-            dz *
-            dz
+            playerDZ *
+            playerDZ
 
         );
 
@@ -6748,7 +7049,7 @@ function updateMonster(
 
     if (
         playerDistance <
-        11
+        12
     ) {
 
         dangerAmount =
@@ -6756,7 +7057,7 @@ function updateMonster(
             1 -
 
             playerDistance /
-            11;
+            12;
 
     }
 
@@ -6765,14 +7066,14 @@ function updateMonster(
         String(
 
             dangerAmount *
-            0.55
+            .53
 
         );
 
 
     if (
         playerDistance <
-        0.92
+        .92
     ) {
 
         loseGame();
@@ -6783,7 +7084,7 @@ function updateMonster(
 
 
 /* ============================================================
-   LIGHT FLICKERING
+   LIGHT FLICKER
 ============================================================ */
 
 let flickerTimer =
@@ -6810,7 +7111,7 @@ function updateLights(
 
     flickerTimer =
 
-        0.1 +
+        .1 +
 
         Math.random() *
         1.7;
@@ -6818,7 +7119,7 @@ function updateLights(
 
     if (
         Math.random() >
-        0.22
+        .22
     ) {
 
         return;
@@ -6851,7 +7152,7 @@ function updateLights(
 
 
     light.intensity =
-        0.02;
+        .02;
 
 
     setTimeout(
@@ -6873,7 +7174,7 @@ function updateLights(
 
 
 /* ============================================================
-   EXIT CHECK
+   EXIT
 ============================================================ */
 
 function checkExit() {
@@ -6970,7 +7271,7 @@ function loseGame() {
 
 
     danger.style.opacity =
-        "0.85";
+        ".85";
 
 
     setTimeout(
@@ -7167,14 +7468,12 @@ function animate() {
 
             clock.getDelta(),
 
-            0.05
+            .05
 
         );
 
 
-    /* ========================================================
-       TITLE CAMERA
-    ======================================================== */
+    /* title */
 
     if (
         mode ===
@@ -7186,10 +7485,11 @@ function animate() {
             Math.sin(
 
                 performance.now() *
-                0.00035
+                .00035
 
             ) *
-            0.12;
+
+            .12;
 
 
         camera.position.y =
@@ -7199,10 +7499,11 @@ function animate() {
             Math.sin(
 
                 performance.now() *
-                0.001
+                .001
 
             ) *
-            0.01;
+
+            .01;
 
 
         const titleYaw =
@@ -7210,13 +7511,12 @@ function animate() {
             Math.sin(
 
                 performance.now() *
-                0.00045
+                .00045
 
             ) *
-            0.02;
 
+            .02;
 
-        /* NEVER carry over the cutscene roll */
 
         camera.rotation.set(
 
@@ -7231,9 +7531,7 @@ function animate() {
     }
 
 
-    /* ========================================================
-       CUTSCENE
-    ======================================================== */
+    /* cutscene */
 
     if (
         mode ===
@@ -7247,9 +7545,7 @@ function animate() {
     }
 
 
-    /* ========================================================
-       PLAYING
-    ======================================================== */
+    /* gameplay */
 
     if (
         mode ===
