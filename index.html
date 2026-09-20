@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>The Backrooms</title>
+
 <style>
-* { box-sizing: border-box; }
-html, body {
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
     margin: 0;
     width: 100%;
     height: 100%;
@@ -14,107 +20,220 @@ html, body {
     background: #000;
     font-family: Arial, Helvetica, sans-serif;
 }
-canvas { display: block; }
+
+canvas {
+    display: block;
+}
+
+/* =========================================================
+   START
+========================================================= */
 
 #startScreen {
     position: fixed;
     inset: 0;
     z-index: 100;
-    background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.3) 40%, rgba(0,0,0,0) 72%);
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0,0,0,.70) 0%,
+            rgba(0,0,0,.28) 38%,
+            rgba(0,0,0,0) 72%
+        );
 }
+
 #startContent {
     position: absolute;
     top: 34px;
     left: 34px;
     max-width: 560px;
+    pointer-events: auto;
 }
+
 #title {
     margin: 0;
-    color: #eee6b0;
+    color: #eee7b0;
     font-weight: 300;
-    font-size: clamp(44px, 6vw, 92px);
+
+    font-size:
+        clamp(
+            42px,
+            6vw,
+            92px
+        );
+
     letter-spacing: 12px;
-    text-shadow: 0 0 18px rgba(255, 240, 160, 0.18);
+
+    text-shadow:
+        0 0 18px
+        rgba(
+            255,
+            240,
+            160,
+            .18
+        );
 }
+
 #subtitle {
     margin-top: 18px;
-    color: rgba(255,255,255,.82);
+    color: rgba(255,255,255,.78);
     line-height: 1.55;
     font-size: 17px;
 }
+
 #controlsText {
     margin-top: 18px;
     color: rgba(255,255,255,.62);
     font-family: monospace;
     line-height: 1.55;
 }
-#startButton, #wakeButton, #restartButton {
+
+#startButton,
+#wakeButton,
+#restartButton {
     margin-top: 22px;
-    padding: 15px 34px;
-    border: 1px solid rgba(240,232,180,.85);
-    background: rgba(0,0,0,.58);
+
+    padding:
+        15px
+        34px;
+
+    border:
+        1px solid
+        rgba(
+            240,
+            232,
+            180,
+            .85
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .58
+        );
+
     color: white;
     font-size: 16px;
     letter-spacing: 5px;
     cursor: pointer;
 }
-#startButton:hover, #wakeButton:hover, #restartButton:hover {
-    background: rgba(78,72,40,.72);
+
+#startButton:hover,
+#wakeButton:hover,
+#restartButton:hover {
+    background:
+        rgba(
+            78,
+            72,
+            40,
+            .72
+        );
 }
+
+/* =========================================================
+   CUTSCENE
+========================================================= */
 
 .cinematicBar {
     position: fixed;
     left: 0;
     width: 100%;
     height: 8%;
-    background: #000;
+    background: black;
     z-index: 120;
     display: none;
     pointer-events: none;
 }
-#topBar { top: 0; }
-#bottomBar { bottom: 0; }
+
+#topBar {
+    top: 0;
+}
+
+#bottomBar {
+    bottom: 0;
+}
 
 #cutsceneCaption {
     position: fixed;
     left: 34px;
     bottom: 11%;
     z-index: 130;
-    color: rgba(255,255,255,.78);
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .78
+        );
+
     font-family: monospace;
     letter-spacing: 3px;
     font-size: 14px;
+
     opacity: 0;
-    transition: opacity .4s;
+
+    transition:
+        opacity
+        .4s;
+
     pointer-events: none;
 }
+
 #fadeLayer {
     position: fixed;
     inset: 0;
-    background: #000;
+    background: black;
     opacity: 0;
     z-index: 150;
     pointer-events: none;
-    transition: opacity .25s;
+
+    transition:
+        opacity
+        .25s;
 }
+
+/* =========================================================
+   WAKE
+========================================================= */
+
 #wakeScreen {
     position: fixed;
     inset: 0;
     z-index: 160;
+
     display: none;
+
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     text-align: center;
     color: white;
-    background: radial-gradient(circle, rgba(0,0,0,.15), rgba(0,0,0,.72));
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,.15),
+            rgba(0,0,0,.72)
+        );
 }
+
 #wakeText {
     color: rgba(255,255,255,.78);
     letter-spacing: 3px;
     line-height: 1.7;
     font-size: 14px;
 }
+
+/* =========================================================
+   HUD
+========================================================= */
+
 #hud {
     position: fixed;
     inset: 0;
@@ -122,27 +241,56 @@ canvas { display: block; }
     display: none;
     pointer-events: none;
 }
+
 #objective {
     position: absolute;
     top: 26px;
     right: 26px;
-    padding: 14px 34px;
-    border: 1px solid rgba(255,255,255,.24);
-    background: rgba(0,0,0,.37);
+
+    padding:
+        14px
+        34px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .24
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .37
+        );
+
     color: white;
     font-family: monospace;
     font-size: 16px;
     letter-spacing: 6px;
 }
+
 #crosshair {
     position: absolute;
     left: 50%;
     top: 50%;
+
     width: 16px;
     height: 16px;
-    transform: translate(-50%, -50%);
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
     opacity: .76;
 }
+
 #crosshair::before {
     content: "";
     position: absolute;
@@ -152,6 +300,7 @@ canvas { display: block; }
     height: 2px;
     background: white;
 }
+
 #crosshair::after {
     content: "";
     position: absolute;
@@ -161,104 +310,253 @@ canvas { display: block; }
     height: 16px;
     background: white;
 }
+
 #staminaBox {
     position: absolute;
     left: 35px;
     bottom: 30px;
     width: 360px;
 }
+
 #staminaLabel {
     margin-bottom: 10px;
     color: white;
     font-size: 15px;
     letter-spacing: 6px;
 }
+
 #staminaOuter {
     height: 24px;
     padding: 3px;
-    border: 2px solid rgba(255,255,255,.92);
-    background: rgba(0,0,0,.35);
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .92
+        );
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .35
+        );
 }
+
 #staminaInner {
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #ddca59, #fff1a2);
+
+    background:
+        linear-gradient(
+            90deg,
+            #ddca59,
+            #fff1a2
+        );
 }
+
 #pauseText {
     display: none;
+
     position: absolute;
     left: 50%;
     top: 45%;
-    transform: translate(-50%, -50%);
-    padding: 15px 22px;
-    background: rgba(0,0,0,.72);
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    padding:
+        15px
+        22px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            .72
+        );
+
     color: white;
     letter-spacing: 4px;
 }
+
+/* =========================================================
+   EFFECTS
+========================================================= */
+
 #vignette {
     position: fixed;
     inset: 0;
     z-index: 20;
     pointer-events: none;
-    box-shadow: inset 0 0 180px 40px rgba(0,0,0,.68);
+
+    box-shadow:
+        inset
+        0
+        0
+        180px
+        40px
+        rgba(
+            0,
+            0,
+            0,
+            .68
+        );
 }
+
 #grain {
     position: fixed;
     inset: 0;
     z-index: 21;
     pointer-events: none;
+
     opacity: .065;
-    background-image: repeating-radial-gradient(circle at 22% 21%, rgba(255,255,255,.22) 0px, rgba(255,255,255,.04) 1px, transparent 2px, transparent 4px);
-    mix-blend-mode: soft-light;
-    animation: grainMove .12s infinite;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at 22% 21%,
+            rgba(255,255,255,.22) 0px,
+            rgba(255,255,255,.04) 1px,
+            transparent 2px,
+            transparent 4px
+        );
+
+    mix-blend-mode:
+        soft-light;
+
+    animation:
+        grainMove
+        .12s
+        infinite;
 }
+
 @keyframes grainMove {
-    0% { transform: translate(0,0); }
-    25% { transform: translate(-2px,1px); }
-    50% { transform: translate(2px,-2px); }
-    75% { transform: translate(1px,2px); }
-    100% { transform: translate(0,0); }
+
+    0% {
+        transform:
+            translate(
+                0,
+                0
+            );
+    }
+
+    25% {
+        transform:
+            translate(
+                -2px,
+                1px
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                2px,
+                -2px
+            );
+    }
+
+    75% {
+        transform:
+            translate(
+                1px,
+                2px
+            );
+    }
+
+    100% {
+        transform:
+            translate(
+                0,
+                0
+            );
+    }
 }
+
 #danger {
     position: fixed;
     inset: 0;
     z-index: 22;
     pointer-events: none;
+
     opacity: 0;
-    background: radial-gradient(circle, transparent 35%, rgba(75,0,0,.72));
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 35%,
+            rgba(75,0,0,.72)
+        );
 }
+
+/* =========================================================
+   END
+========================================================= */
+
 #endScreen {
     position: fixed;
     inset: 0;
     z-index: 300;
+
     display: none;
+
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
     text-align: center;
     background: #020202;
     color: white;
 }
+
 #endTitle {
-    font-size: clamp(40px, 8vw, 88px);
+    font-size:
+        clamp(
+            40px,
+            8vw,
+            88px
+        );
+
     font-weight: 300;
     letter-spacing: 9px;
 }
+
 #endSub {
     margin-top: 13px;
     color: #8a8a8a;
     letter-spacing: 2px;
 }
+
 @media (max-width: 700px) {
-    #startContent { top: 20px; left: 20px; }
-    #title { letter-spacing: 7px; }
+
+    #startContent {
+        top: 20px;
+        left: 20px;
+    }
+
+    #title {
+        letter-spacing: 7px;
+    }
+
     #objective {
         top: auto;
         right: 18px;
         bottom: 110px;
         font-size: 12px;
-        padding: 12px 20px;
+
+        padding:
+            12px
+            20px;
     }
+
     #staminaBox {
         left: 20px;
         right: 20px;
@@ -268,1626 +566,6838 @@ canvas { display: block; }
 }
 </style>
 </head>
+
 <body>
 
 <div id="startScreen">
+
     <div id="startContent">
-        <h1 id="title">THE BACKROOMS</h1>
+
+        <h1 id="title">
+            THE BACKROOMS
+        </h1>
+
         <div id="subtitle">
             It was supposed to be a normal night.<br>
             You stayed at the office a little too late.
         </div>
+
         <div id="controlsText">
             WASD = MOVE<br>
             SHIFT = SPRINT<br>
             MOUSE = LOOK
         </div>
-        <button id="startButton">BEGIN</button>
+
+        <button id="startButton">
+            BEGIN
+        </button>
+
     </div>
+
 </div>
 
-<div id="topBar" class="cinematicBar"></div>
-<div id="bottomBar" class="cinematicBar"></div>
-<div id="cutsceneCaption">11:53 PM — OFFICE FLOOR 3</div>
+
+<div
+    id="topBar"
+    class="cinematicBar">
+</div>
+
+
+<div
+    id="bottomBar"
+    class="cinematicBar">
+</div>
+
+
+<div id="cutsceneCaption">
+    11:53 PM — OFFICE FLOOR 3
+</div>
+
+
 <div id="fadeLayer"></div>
 
+
 <div id="wakeScreen">
+
     <div id="wakeText">
-        YOU HIT THE FLOOR.<br><br>
+        YOU HIT THE FLOOR.
+        <br><br>
         THIS IS NOT THE OFFICE.
     </div>
-    <button id="wakeButton">GET UP</button>
+
+    <button id="wakeButton">
+        GET UP
+    </button>
+
 </div>
+
 
 <div id="hud">
-    <div id="objective">FIND THE EXIT</div>
-    <div id="crosshair"></div>
-    <div id="staminaBox">
-        <div id="staminaLabel">STAMINA</div>
-        <div id="staminaOuter"><div id="staminaInner"></div></div>
+
+    <div id="objective">
+        FIND THE EXIT
     </div>
-    <div id="pauseText">CLICK TO CONTINUE</div>
+
+    <div id="crosshair"></div>
+
+    <div id="staminaBox">
+
+        <div id="staminaLabel">
+            STAMINA
+        </div>
+
+        <div id="staminaOuter">
+
+            <div id="staminaInner"></div>
+
+        </div>
+
+    </div>
+
+    <div id="pauseText">
+        CLICK TO CONTINUE
+    </div>
+
 </div>
+
 
 <div id="vignette"></div>
+
 <div id="grain"></div>
+
 <div id="danger"></div>
 
+
 <div id="endScreen">
+
     <div id="endTitle"></div>
+
     <div id="endSub"></div>
-    <button id="restartButton">RESTART</button>
+
+    <button id="restartButton">
+        RESTART
+    </button>
+
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
 <script>
+
 /* ============================================================
    SETTINGS
 ============================================================ */
-const GRID_WIDTH = 16;
-const GRID_HEIGHT = 16;
-const CELL = 6;
-const WALL_HEIGHT = 3.7;
-const WALL_THICKNESS = 0.18;
-const PLAYER_HEIGHT = 1.66;
-const PLAYER_RADIUS = 0.32;
-const WALK_SPEED = 3.1;
-const SPRINT_SPEED = 5.45;
-const MONSTER_SPEED = 2.05;
-const EXTRA_WALL_REMOVAL = 0.42;
+
+const GRID_WIDTH =
+    16;
+
+const GRID_HEIGHT =
+    16;
+
+const CELL =
+    6;
+
+const WALL_HEIGHT =
+    3.7;
+
+const WALL_THICKNESS =
+    .18;
+
+const PLAYER_HEIGHT =
+    1.66;
+
+const PLAYER_RADIUS =
+    .32;
+
+const WALK_SPEED =
+    3.1;
+
+const SPRINT_SPEED =
+    5.45;
+
+const MONSTER_SPEED =
+    2.05;
+
+const EXTRA_WALL_REMOVAL =
+    .42;
+
 
 /* ============================================================
    UI
 ============================================================ */
-const startScreen = document.getElementById("startScreen");
-const startButton = document.getElementById("startButton");
-const topBar = document.getElementById("topBar");
-const bottomBar = document.getElementById("bottomBar");
-const cutsceneCaption = document.getElementById("cutsceneCaption");
-const fadeLayer = document.getElementById("fadeLayer");
-const wakeScreen = document.getElementById("wakeScreen");
-const wakeButton = document.getElementById("wakeButton");
-const hud = document.getElementById("hud");
-const staminaInner = document.getElementById("staminaInner");
-const pauseText = document.getElementById("pauseText");
-const danger = document.getElementById("danger");
-const endScreen = document.getElementById("endScreen");
-const endTitle = document.getElementById("endTitle");
-const endSub = document.getElementById("endSub");
-const restartButton = document.getElementById("restartButton");
+
+const startScreen =
+    document.getElementById(
+        "startScreen"
+    );
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+const topBar =
+    document.getElementById(
+        "topBar"
+    );
+
+const bottomBar =
+    document.getElementById(
+        "bottomBar"
+    );
+
+const cutsceneCaption =
+    document.getElementById(
+        "cutsceneCaption"
+    );
+
+const fadeLayer =
+    document.getElementById(
+        "fadeLayer"
+    );
+
+const wakeScreen =
+    document.getElementById(
+        "wakeScreen"
+    );
+
+const wakeButton =
+    document.getElementById(
+        "wakeButton"
+    );
+
+const hud =
+    document.getElementById(
+        "hud"
+    );
+
+const staminaInner =
+    document.getElementById(
+        "staminaInner"
+    );
+
+const pauseText =
+    document.getElementById(
+        "pauseText"
+    );
+
+const danger =
+    document.getElementById(
+        "danger"
+    );
+
+const endScreen =
+    document.getElementById(
+        "endScreen"
+    );
+
+const endTitle =
+    document.getElementById(
+        "endTitle"
+    );
+
+const endSub =
+    document.getElementById(
+        "endSub"
+    );
+
+const restartButton =
+    document.getElementById(
+        "restartButton"
+    );
+
 
 /* ============================================================
    THREE
 ============================================================ */
-const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(
-    72,
-    window.innerWidth / window.innerHeight,
-    0.08,
-    220
+const scene =
+    new THREE.Scene();
+
+
+const camera =
+    new THREE.PerspectiveCamera(
+
+        72,
+
+        window.innerWidth /
+        window.innerHeight,
+
+        .08,
+
+        220
+
+    );
+
+
+camera.rotation.order =
+    "YXZ";
+
+
+const renderer =
+    new THREE.WebGLRenderer({
+
+        antialias:
+            true,
+
+        powerPreference:
+            "high-performance"
+
+    });
+
+
+renderer.setSize(
+
+    window.innerWidth,
+
+    window.innerHeight
+
 );
-camera.rotation.order = "YXZ";
 
-const renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    powerPreference: "high-performance"
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
-renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.78;
-document.body.insertBefore(renderer.domElement, document.body.firstChild);
+
+renderer.setPixelRatio(
+
+    Math.min(
+
+        window.devicePixelRatio,
+
+        1.7
+
+    )
+
+);
+
+
+renderer.outputEncoding =
+    THREE.sRGBEncoding;
+
+
+renderer.toneMapping =
+    THREE.ACESFilmicToneMapping;
+
+
+renderer.toneMappingExposure =
+    .78;
+
+
+document.body.insertBefore(
+
+    renderer.domElement,
+
+    document.body.firstChild
+
+);
+
 
 /* ============================================================
    GROUPS
 ============================================================ */
-const officeGroup = new THREE.Group();
-const backroomsGroup = new THREE.Group();
-scene.add(officeGroup);
-scene.add(backroomsGroup);
-backroomsGroup.visible = false;
+
+const officeGroup =
+    new THREE.Group();
+
+
+const backroomsGroup =
+    new THREE.Group();
+
+
+scene.add(
+    officeGroup
+);
+
+
+scene.add(
+    backroomsGroup
+);
+
+
+backroomsGroup.visible =
+    false;
+
 
 /* ============================================================
    ATMOSPHERE
 ============================================================ */
+
 function setOfficeAtmosphere() {
-    scene.background = new THREE.Color(0x23272d);
-    scene.fog = new THREE.Fog(0x23272d, 12, 42);
+
+    scene.background =
+        new THREE.Color(
+            0x23272d
+        );
+
+
+    scene.fog =
+        new THREE.Fog(
+
+            0x23272d,
+
+            12,
+
+            42
+
+        );
+
 }
+
+
 function setBackroomsAtmosphere() {
-    scene.background = new THREE.Color(0x5b572d);
-    scene.fog = new THREE.Fog(0x625d34, 12, 56);
+
+    scene.background =
+        new THREE.Color(
+            0x5b572d
+        );
+
+
+    scene.fog =
+        new THREE.Fog(
+
+            0x625d34,
+
+            12,
+
+            56
+
+        );
+
 }
+
 
 /* ============================================================
-   TEXTURES
+   WALLPAPER
 ============================================================ */
+
 function makeWallpaperTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#b4aa4f";
-    ctx.fillRect(0, 0, 256, 256);
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
 
-    for (let x = 0; x < 256; x += 32) {
-        ctx.fillStyle = "rgba(60,55,18,.14)";
-        ctx.fillRect(x, 0, 2, 256);
 
-        for (let y = 0; y < 256; y += 32) {
-            ctx.strokeStyle = "rgba(66,60,22,.23)";
-            ctx.lineWidth = 2;
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#b4aa4f";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    for (
+        let x = 0;
+        x < 256;
+        x += 32
+    ) {
+
+        ctx.fillStyle =
+            "rgba(60,55,18,.14)";
+
+
+        ctx.fillRect(
+            x,
+            0,
+            2,
+            256
+        );
+
+
+        for (
+            let y = 0;
+            y < 256;
+            y += 32
+        ) {
+
+            ctx.strokeStyle =
+                "rgba(66,60,22,.23)";
+
+
+            ctx.lineWidth =
+                2;
+
 
             ctx.beginPath();
-            ctx.moveTo(x + 9, y + 22);
-            ctx.lineTo(x + 16, y + 9);
-            ctx.lineTo(x + 23, y + 22);
+
+
+            ctx.moveTo(
+                x + 9,
+                y + 22
+            );
+
+
+            ctx.lineTo(
+                x + 16,
+                y + 9
+            );
+
+
+            ctx.lineTo(
+                x + 23,
+                y + 22
+            );
+
+
             ctx.stroke();
 
+
             ctx.beginPath();
-            ctx.moveTo(x + 11, y + 27);
-            ctx.lineTo(x + 16, y + 18);
-            ctx.lineTo(x + 21, y + 27);
+
+
+            ctx.moveTo(
+                x + 11,
+                y + 27
+            );
+
+
+            ctx.lineTo(
+                x + 16,
+                y + 18
+            );
+
+
+            ctx.lineTo(
+                x + 21,
+                y + 27
+            );
+
+
             ctx.stroke();
+
         }
+
     }
 
-    for (let i = 0; i < 3500; i++) {
-        const value = Math.random() > .5 ? 255 : 0;
-        ctx.fillStyle = `rgba(${value},${value},${value},${Math.random() * .025})`;
-        ctx.fillRect(Math.random() * 256, Math.random() * 256, 1, 1);
+
+    for (
+        let i = 0;
+        i < 3500;
+        i++
+    ) {
+
+        const value =
+            Math.random() >
+            .5
+
+                ? 255
+
+                : 0;
+
+
+        ctx.fillStyle =
+            `rgba(${value},${value},${value},${Math.random() * .025})`;
+
+
+        ctx.fillRect(
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            256,
+
+            1,
+
+            1
+
+        );
+
     }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1.8, 1.8);
-    texture.encoding = THREE.sRGBEncoding;
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        1.8,
+        1.8
+    );
+
+
+    texture.encoding =
+        THREE.sRGBEncoding;
+
+
     return texture;
+
 }
+
+
+/* ============================================================
+   CARPET
+============================================================ */
 
 function makeCarpetTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#4e482d";
-    ctx.fillRect(0, 0, 256, 256);
-
-    for (let i = 0; i < 18000; i++) {
-        const value = 60 + Math.floor(Math.random() * 50);
-        ctx.fillStyle = `rgba(${value},${value - 8},${value - 28},.14)`;
-        ctx.fillRect(
-            Math.random() * 256,
-            Math.random() * 256,
-            Math.random() * 2 + .2,
-            Math.random() * 4 + .4
+    const canvas =
+        document.createElement(
+            "canvas"
         );
+
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#4e482d";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    for (
+        let i = 0;
+        i < 18000;
+        i++
+    ) {
+
+        const value =
+            60 +
+            Math.floor(
+                Math.random() *
+                50
+            );
+
+
+        ctx.fillStyle =
+            `rgba(${value},${value - 8},${value - 28},.14)`;
+
+
+        ctx.fillRect(
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            2 +
+            .2,
+
+            Math.random() *
+            4 +
+            .4
+
+        );
+
     }
 
-    for (let i = 0; i < 26; i++) {
-        const x = Math.random() * 256;
-        const y = Math.random() * 256;
-        const radius = Math.random() * 18 + 4;
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, "rgba(15,12,7,.08)");
-        gradient.addColorStop(1, "rgba(15,12,7,0)");
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fill();
-    }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(28, 28);
-    texture.encoding = THREE.sRGBEncoding;
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        28,
+        28
+    );
+
+
+    texture.encoding =
+        THREE.sRGBEncoding;
+
+
     return texture;
+
 }
+
+
+/* ============================================================
+   CEILING
+============================================================ */
 
 function makeCeilingTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#a59e67";
-    ctx.fillRect(0, 0, 256, 256);
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
 
-    ctx.strokeStyle = "rgba(42,38,20,.55)";
-    ctx.lineWidth = 3;
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#a59e67";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    ctx.strokeStyle =
+        "rgba(42,38,20,.55)";
+
+
+    ctx.lineWidth =
+        3;
+
+
     ctx.beginPath();
-    ctx.moveTo(128, 0);
-    ctx.lineTo(128, 256);
-    ctx.moveTo(0, 128);
-    ctx.lineTo(256, 128);
+
+
+    ctx.moveTo(
+        128,
+        0
+    );
+
+
+    ctx.lineTo(
+        128,
+        256
+    );
+
+
+    ctx.moveTo(
+        0,
+        128
+    );
+
+
+    ctx.lineTo(
+        256,
+        128
+    );
+
+
     ctx.stroke();
 
-    for (let i = 0; i < 2000; i++) {
-        ctx.fillStyle = `rgba(0,0,0,${Math.random() * .025})`;
-        ctx.fillRect(Math.random() * 256, Math.random() * 256, 1, 1);
-    }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(GRID_WIDTH * 1.5, GRID_HEIGHT * 1.5);
-    texture.encoding = THREE.sRGBEncoding;
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+
+        GRID_WIDTH *
+        1.5,
+
+        GRID_HEIGHT *
+        1.5
+
+    );
+
+
+    texture.encoding =
+        THREE.sRGBEncoding;
+
+
     return texture;
+
 }
 
-function createEntitySkinTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 512;
-    const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#8f8376";
-    ctx.fillRect(0, 0, 512, 512);
+/* ============================================================
+   MONSTER SKIN
+============================================================ */
 
-    for (let i = 0; i < 900; i++) {
-        const x = Math.random() * 512;
-        const y = Math.random() * 512;
-        const radius = 4 + Math.random() * 26;
-        const red = 92 + Math.floor(Math.random() * 60);
-        const green = 72 + Math.floor(Math.random() * 48);
-        const blue = 62 + Math.floor(Math.random() * 38);
+function makeMonsterSkinTexture() {
 
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-        gradient.addColorStop(0, `rgba(${red},${green},${blue},${.05 + Math.random() * .13})`);
-        gradient.addColorStop(1, `rgba(${red},${green},${blue},0)`);
-        ctx.fillStyle = gradient;
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        512;
+
+
+    canvas.height =
+        512;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#8f8375";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        512,
+        512
+    );
+
+
+    for (
+        let i = 0;
+        i < 1000;
+        i++
+    ) {
+
+        const x =
+            Math.random() *
+            512;
+
+
+        const y =
+            Math.random() *
+            512;
+
+
+        const size =
+            4 +
+            Math.random() *
+            25;
+
+
+        const gradient =
+            ctx.createRadialGradient(
+
+                x,
+                y,
+                0,
+
+                x,
+                y,
+                size
+
+            );
+
+
+        gradient.addColorStop(
+
+            0,
+
+            `rgba(
+                ${90 + Math.random() * 70},
+                ${65 + Math.random() * 50},
+                ${55 + Math.random() * 45},
+                ${.04 + Math.random() * .12}
+            )`
+
+        );
+
+
+        gradient.addColorStop(
+
+            1,
+
+            "rgba(50,35,30,0)"
+
+        );
+
+
+        ctx.fillStyle =
+            gradient;
+
+
         ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
+
+
+        ctx.arc(
+
+            x,
+
+            y,
+
+            size,
+
+            0,
+
+            Math.PI *
+            2
+
+        );
+
+
         ctx.fill();
+
     }
 
-    for (let i = 0; i < 42000; i++) {
-        const darkness = Math.floor(Math.random() * 50);
-        ctx.fillStyle = `rgba(${darkness},${darkness},${darkness},${Math.random() * .055})`;
-        ctx.fillRect(Math.random() * 512, Math.random() * 512, Math.random() * 2 + .4, Math.random() * 2 + .4);
+
+    for (
+        let i = 0;
+        i < 40000;
+        i++
+    ) {
+
+        const value =
+            Math.floor(
+                Math.random() *
+                70
+            );
+
+
+        ctx.fillStyle =
+            `rgba(${value},${value},${value},${Math.random() * .045})`;
+
+
+        ctx.fillRect(
+
+            Math.random() *
+            512,
+
+            Math.random() *
+            512,
+
+            1,
+
+            1
+
+        );
+
     }
 
-    for (let i = 0; i < 120; i++) {
-        ctx.fillStyle = `rgba(95,42,35,${.02 + Math.random() * .05})`;
-        ctx.beginPath();
-        ctx.arc(Math.random() * 512, Math.random() * 512, 3 + Math.random() * 12, 0, Math.PI * 2);
-        ctx.fill();
-    }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1.25, 1.25);
-    texture.encoding = THREE.sRGBEncoding;
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        1.2,
+        1.2
+    );
+
+
+    texture.encoding =
+        THREE.sRGBEncoding;
+
+
     return texture;
+
 }
 
-function createEntityBumpTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext("2d");
 
-    ctx.fillStyle = "#808080";
-    ctx.fillRect(0, 0, 256, 256);
+/* ============================================================
+   MONSTER BODY TEXTURE
+============================================================ */
 
-    for (let i = 0; i < 28000; i++) {
-        const gray = 90 + Math.floor(Math.random() * 70);
-        ctx.fillStyle = `rgb(${gray},${gray},${gray})`;
-        ctx.fillRect(Math.random() * 256, Math.random() * 256, Math.random() * 2 + .5, Math.random() * 2 + .5);
+function makeMonsterBodyTexture() {
+
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
+
+
+    canvas.width =
+        256;
+
+
+    canvas.height =
+        256;
+
+
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
+
+
+    ctx.fillStyle =
+        "#121110";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        256,
+        256
+    );
+
+
+    for (
+        let i = 0;
+        i < 18000;
+        i++
+    ) {
+
+        const value =
+            10 +
+            Math.floor(
+                Math.random() *
+                32
+            );
+
+
+        ctx.fillStyle =
+            `rgba(${value},${value},${value},${Math.random() * .12})`;
+
+
+        ctx.fillRect(
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            256,
+
+            Math.random() *
+            3 +
+            .5,
+
+            Math.random() *
+            5 +
+            .5
+
+        );
+
     }
 
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(2, 2);
+
+    const texture =
+        new THREE.CanvasTexture(
+            canvas
+        );
+
+
+    texture.wrapS =
+        THREE.RepeatWrapping;
+
+
+    texture.wrapT =
+        THREE.RepeatWrapping;
+
+
+    texture.repeat.set(
+        2,
+        3
+    );
+
+
+    texture.encoding =
+        THREE.sRGBEncoding;
+
+
     return texture;
+
 }
 
-function createEntityBodyTexture() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 256;
-    canvas.height = 256;
-    const ctx = canvas.getContext("2d");
-
-    ctx.fillStyle = "#121110";
-    ctx.fillRect(0, 0, 256, 256);
-
-    for (let i = 0; i < 19000; i++) {
-        const value = 10 + Math.floor(Math.random() * 30);
-        ctx.fillStyle = `rgba(${value},${value},${Math.max(0, value - 2)},${Math.random() * .13})`;
-        ctx.fillRect(Math.random() * 256, Math.random() * 256, Math.random() * 3 + .4, Math.random() * 5 + .4);
-    }
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.wrapS = THREE.RepeatWrapping;
-    texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(2, 3);
-    texture.encoding = THREE.sRGBEncoding;
-    return texture;
-}
 
 /* ============================================================
    OFFICE
 ============================================================ */
-const officeLights = [];
+
+const officeLights =
+    [];
+
 
 function buildOffice() {
-    const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x4a4d51, roughness: 1 });
-    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xd4d1c9, roughness: .95 });
-    const ceilingMaterial = new THREE.MeshStandardMaterial({ color: 0xcfcbbf, roughness: .92 });
-    const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x5a564d, roughness: .9 });
 
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, 56), floorMaterial);
-    floor.rotation.x = -Math.PI / 2;
-    officeGroup.add(floor);
+    const floorMaterial =
+        new THREE.MeshStandardMaterial({
 
-    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(12, 56), ceilingMaterial);
-    ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.y = 3.4;
-    officeGroup.add(ceiling);
+            color:
+                0x4a4d51,
 
-    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(.22, 3.4, 56), wallMaterial);
-    leftWall.position.set(-6, 1.7, 0);
-    officeGroup.add(leftWall);
+            roughness:
+                1
 
-    const rightWall = leftWall.clone();
-    rightWall.position.x = 6;
-    officeGroup.add(rightWall);
+        });
 
-    const farWall = new THREE.Mesh(new THREE.BoxGeometry(12, 3.4, .22), wallMaterial);
-    farWall.position.set(0, 1.7, -27.9);
-    officeGroup.add(farWall);
 
-    for (let z = -22; z <= 16; z += 7) {
-        const leftDoor = new THREE.Mesh(new THREE.BoxGeometry(.08, 2.4, 1.25), doorMaterial);
-        leftDoor.position.set(-5.88, 1.2, z);
-        officeGroup.add(leftDoor);
+    const officeWallMaterial =
+        new THREE.MeshStandardMaterial({
 
-        const rightDoor = leftDoor.clone();
-        rightDoor.position.x = 5.88;
-        officeGroup.add(rightDoor);
-    }
+            color:
+                0xd4d1c9,
 
-    officeGroup.add(new THREE.AmbientLight(0xc7cbcf, .5));
+            roughness:
+                .95
 
-    for (let z = -22; z <= 22; z += 6) {
-        const panel = new THREE.Mesh(
-            new THREE.BoxGeometry(2.2, .04, .6),
-            new THREE.MeshBasicMaterial({ color: 0xf0eedf })
+        });
+
+
+    const officeCeilingMaterial =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0xcfcbbf,
+
+            roughness:
+                .92
+
+        });
+
+
+    const doorMaterial =
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0x5a564d,
+
+            roughness:
+                .9
+
+        });
+
+
+    const floor =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+                12,
+                56
+            ),
+
+            floorMaterial
+
         );
-        panel.position.set(0, 3.28, z);
-        officeGroup.add(panel);
 
-        const light = new THREE.PointLight(0xe9e8d8, .8, 10, 1.6);
-        light.position.set(0, 3, z);
-        officeGroup.add(light);
-        officeLights.push(light);
+
+    floor.rotation.x =
+        -Math.PI /
+        2;
+
+
+    officeGroup.add(
+        floor
+    );
+
+
+    const ceiling =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+                12,
+                56
+            ),
+
+            officeCeilingMaterial
+
+        );
+
+
+    ceiling.rotation.x =
+        Math.PI /
+        2;
+
+
+    ceiling.position.y =
+        3.4;
+
+
+    officeGroup.add(
+        ceiling
+    );
+
+
+    const leftWall =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                .22,
+                3.4,
+                56
+            ),
+
+            officeWallMaterial
+
+        );
+
+
+    leftWall.position.set(
+        -6,
+        1.7,
+        0
+    );
+
+
+    officeGroup.add(
+        leftWall
+    );
+
+
+    const rightWall =
+        leftWall.clone();
+
+
+    rightWall.position.x =
+        6;
+
+
+    officeGroup.add(
+        rightWall
+    );
+
+
+    const farWall =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+                12,
+                3.4,
+                .22
+            ),
+
+            officeWallMaterial
+
+        );
+
+
+    farWall.position.set(
+        0,
+        1.7,
+        -27.9
+    );
+
+
+    officeGroup.add(
+        farWall
+    );
+
+
+    for (
+        let z = -22;
+        z <= 16;
+        z += 7
+    ) {
+
+        const leftDoor =
+            new THREE.Mesh(
+
+                new THREE.BoxGeometry(
+                    .08,
+                    2.4,
+                    1.25
+                ),
+
+                doorMaterial
+
+            );
+
+
+        leftDoor.position.set(
+            -5.88,
+            1.2,
+            z
+        );
+
+
+        officeGroup.add(
+            leftDoor
+        );
+
+
+        const rightDoor =
+            leftDoor.clone();
+
+
+        rightDoor.position.x =
+            5.88;
+
+
+        officeGroup.add(
+            rightDoor
+        );
+
     }
+
+
+    officeGroup.add(
+
+        new THREE.AmbientLight(
+            0xc7cbcf,
+            .5
+        )
+
+    );
+
+
+    for (
+        let z = -22;
+        z <= 22;
+        z += 6
+    ) {
+
+        const panel =
+            new THREE.Mesh(
+
+                new THREE.BoxGeometry(
+                    2.2,
+                    .04,
+                    .6
+                ),
+
+                new THREE.MeshBasicMaterial({
+
+                    color:
+                        0xf0eedf
+
+                })
+
+            );
+
+
+        panel.position.set(
+            0,
+            3.28,
+            z
+        );
+
+
+        officeGroup.add(
+            panel
+        );
+
+
+        const light =
+            new THREE.PointLight(
+
+                0xe9e8d8,
+
+                .8,
+
+                10,
+
+                1.6
+
+            );
+
+
+        light.position.set(
+            0,
+            3,
+            z
+        );
+
+
+        officeGroup.add(
+            light
+        );
+
+
+        officeLights.push(
+            light
+        );
+
+    }
+
 }
+
 
 /* ============================================================
    BACKROOMS MATERIALS
 ============================================================ */
-const wallMaterial = new THREE.MeshStandardMaterial({
-    map: makeWallpaperTexture(),
-    color: 0xbfb45a,
-    roughness: .95
-});
-const floorMaterial = new THREE.MeshStandardMaterial({
-    map: makeCarpetTexture(),
-    color: 0x756f45,
-    roughness: 1
-});
-const ceilingMaterial = new THREE.MeshStandardMaterial({
-    map: makeCeilingTexture(),
-    color: 0xb1a96c,
-    roughness: 1
-});
-const trimMaterial = new THREE.MeshStandardMaterial({
-    color: 0x91884a,
-    roughness: .9
-});
-const lightPanelMaterial = new THREE.MeshStandardMaterial({
-    color: 0xffffd2,
-    emissive: 0xffef98,
-    emissiveIntensity: 1.4
-});
+
+const wallMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            makeWallpaperTexture(),
+
+        color:
+            0xbfb45a,
+
+        roughness:
+            .95
+
+    });
+
+
+const floorMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            makeCarpetTexture(),
+
+        color:
+            0x756f45,
+
+        roughness:
+            1
+
+    });
+
+
+const ceilingMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            makeCeilingTexture(),
+
+        color:
+            0xb1a96c,
+
+        roughness:
+            1
+
+    });
+
+
+const trimMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:
+            0x91884a,
+
+        roughness:
+            .9
+
+    });
+
+
+const lightPanelMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:
+            0xffffd2,
+
+        emissive:
+            0xffef98,
+
+        emissiveIntensity:
+            1.4
+
+    });
+
 
 /* ============================================================
    MAZE
 ============================================================ */
-const maze = [];
-for (let y = 0; y < GRID_HEIGHT; y++) {
-    maze[y] = [];
-    for (let x = 0; x < GRID_WIDTH; x++) {
+
+const maze =
+    [];
+
+
+for (
+    let y = 0;
+    y < GRID_HEIGHT;
+    y++
+) {
+
+    maze[y] =
+        [];
+
+
+    for (
+        let x = 0;
+        x < GRID_WIDTH;
+        x++
+    ) {
+
         maze[y][x] = {
-            visited: false,
-            walls: { north: true, south: true, east: true, west: true }
+
+            visited:
+                false,
+
+            walls: {
+
+                north:
+                    true,
+
+                south:
+                    true,
+
+                east:
+                    true,
+
+                west:
+                    true
+
+            }
+
         };
+
     }
+
 }
 
-function openBetween(x1, y1, x2, y2) {
-    const dx = x2 - x1;
-    const dy = y2 - y1;
 
-    if (dx === 1) {
-        maze[y1][x1].walls.east = false;
-        maze[y2][x2].walls.west = false;
-    } else if (dx === -1) {
-        maze[y1][x1].walls.west = false;
-        maze[y2][x2].walls.east = false;
-    } else if (dy === 1) {
-        maze[y1][x1].walls.south = false;
-        maze[y2][x2].walls.north = false;
-    } else if (dy === -1) {
-        maze[y1][x1].walls.north = false;
-        maze[y2][x2].walls.south = false;
+function openBetween(
+    x1,
+    y1,
+    x2,
+    y2
+) {
+
+    const dx =
+        x2 -
+        x1;
+
+
+    const dy =
+        y2 -
+        y1;
+
+
+    if (
+        dx === 1
+    ) {
+
+        maze[y1][x1].walls.east =
+            false;
+
+
+        maze[y2][x2].walls.west =
+            false;
+
     }
+
+
+    else if (
+        dx === -1
+    ) {
+
+        maze[y1][x1].walls.west =
+            false;
+
+
+        maze[y2][x2].walls.east =
+            false;
+
+    }
+
+
+    else if (
+        dy === 1
+    ) {
+
+        maze[y1][x1].walls.south =
+            false;
+
+
+        maze[y2][x2].walls.north =
+            false;
+
+    }
+
+
+    else if (
+        dy === -1
+    ) {
+
+        maze[y1][x1].walls.north =
+            false;
+
+
+        maze[y2][x2].walls.south =
+            false;
+
+    }
+
 }
+
 
 function generateMaze() {
-    const stack = [];
-    let current = { x: 0, y: 0 };
-    maze[0][0].visited = true;
-    let count = 1;
-    const total = GRID_WIDTH * GRID_HEIGHT;
 
-    while (count < total) {
-        const options = [];
-        const x = current.x;
-        const y = current.y;
+    const stack =
+        [];
 
-        if (y > 0 && !maze[y - 1][x].visited) options.push({ x, y: y - 1 });
-        if (y < GRID_HEIGHT - 1 && !maze[y + 1][x].visited) options.push({ x, y: y + 1 });
-        if (x > 0 && !maze[y][x - 1].visited) options.push({ x: x - 1, y });
-        if (x < GRID_WIDTH - 1 && !maze[y][x + 1].visited) options.push({ x: x + 1, y });
 
-        if (options.length) {
-            const next = options[Math.floor(Math.random() * options.length)];
-            stack.push({ x, y });
-            openBetween(x, y, next.x, next.y);
-            current = next;
-            maze[current.y][current.x].visited = true;
-            count++;
-        } else {
-            current = stack.pop();
-        }
-    }
+    let current = {
 
-    for (let y = 0; y < GRID_HEIGHT; y++) {
-        for (let x = 0; x < GRID_WIDTH; x++) {
-            if (x < GRID_WIDTH - 1 && Math.random() < EXTRA_WALL_REMOVAL) {
-                maze[y][x].walls.east = false;
-                maze[y][x + 1].walls.west = false;
-            }
-            if (y < GRID_HEIGHT - 1 && Math.random() < EXTRA_WALL_REMOVAL) {
-                maze[y][x].walls.south = false;
-                maze[y + 1][x].walls.north = false;
-            }
-        }
-    }
-}
+        x:
+            0,
 
-/* ============================================================
-   POSITION HELPERS
-============================================================ */
-function cellToWorld(x, y) {
-    return {
-        x: (x - GRID_WIDTH / 2 + .5) * CELL,
-        z: (y - GRID_HEIGHT / 2 + .5) * CELL
+        y:
+            0
+
     };
-}
-function worldToCell(x, z) {
-    let cellX = Math.floor(x / CELL + GRID_WIDTH / 2);
-    let cellY = Math.floor(z / CELL + GRID_HEIGHT / 2);
 
-    cellX = Math.max(0, Math.min(GRID_WIDTH - 1, cellX));
-    cellY = Math.max(0, Math.min(GRID_HEIGHT - 1, cellY));
 
-    return { x: cellX, y: cellY };
+    maze[0][0].visited =
+        true;
+
+
+    let count =
+        1;
+
+
+    const total =
+        GRID_WIDTH *
+        GRID_HEIGHT;
+
+
+    while (
+        count <
+        total
+    ) {
+
+        const options =
+            [];
+
+
+        const x =
+            current.x;
+
+
+        const y =
+            current.y;
+
+
+        if (
+            y > 0 &&
+            !maze[y - 1][x].visited
+        ) {
+
+            options.push({
+
+                x:
+                    x,
+
+                y:
+                    y - 1
+
+            });
+
+        }
+
+
+        if (
+            y <
+            GRID_HEIGHT - 1 &&
+            !maze[y + 1][x].visited
+        ) {
+
+            options.push({
+
+                x:
+                    x,
+
+                y:
+                    y + 1
+
+            });
+
+        }
+
+
+        if (
+            x > 0 &&
+            !maze[y][x - 1].visited
+        ) {
+
+            options.push({
+
+                x:
+                    x - 1,
+
+                y:
+                    y
+
+            });
+
+        }
+
+
+        if (
+            x <
+            GRID_WIDTH - 1 &&
+            !maze[y][x + 1].visited
+        ) {
+
+            options.push({
+
+                x:
+                    x + 1,
+
+                y:
+                    y
+
+            });
+
+        }
+
+
+        if (
+            options.length
+        ) {
+
+            const next =
+                options[
+                    Math.floor(
+
+                        Math.random() *
+                        options.length
+
+                    )
+                ];
+
+
+            stack.push({
+
+                x:
+                    x,
+
+                y:
+                    y
+
+            });
+
+
+            openBetween(
+
+                x,
+
+                y,
+
+                next.x,
+
+                next.y
+
+            );
+
+
+            current =
+                next;
+
+
+            maze[
+                current.y
+            ][
+                current.x
+            ].visited =
+                true;
+
+
+            count++;
+
+        }
+
+
+        else {
+
+            current =
+                stack.pop();
+
+        }
+
+    }
+
+
+    for (
+        let y = 0;
+        y < GRID_HEIGHT;
+        y++
+    ) {
+
+        for (
+            let x = 0;
+            x < GRID_WIDTH;
+            x++
+        ) {
+
+            if (
+                x <
+                GRID_WIDTH - 1 &&
+                Math.random() <
+                EXTRA_WALL_REMOVAL
+            ) {
+
+                maze[y][x].walls.east =
+                    false;
+
+
+                maze[y][x + 1].walls.west =
+                    false;
+
+            }
+
+
+            if (
+                y <
+                GRID_HEIGHT - 1 &&
+                Math.random() <
+                EXTRA_WALL_REMOVAL
+            ) {
+
+                maze[y][x].walls.south =
+                    false;
+
+
+                maze[y + 1][x].walls.north =
+                    false;
+
+            }
+
+        }
+
+    }
+
 }
+
 
 /* ============================================================
-   WORLD BUILDING
+   COORDINATES
 ============================================================ */
-const collisionWalls = [];
-const fluorescentLights = [];
 
-function createWall(x, z, width, depth) {
-    const wall = new THREE.Mesh(
-        new THREE.BoxGeometry(width, WALL_HEIGHT, depth),
-        wallMaterial
-    );
-    wall.position.set(x, WALL_HEIGHT / 2, z);
-    backroomsGroup.add(wall);
+function cellToWorld(
+    x,
+    y
+) {
 
-    const trim = new THREE.Mesh(
-        new THREE.BoxGeometry(width, .12, depth + .04),
-        trimMaterial
+    return {
+
+        x:
+            (
+                x -
+                GRID_WIDTH /
+                2 +
+                .5
+            ) *
+            CELL,
+
+        z:
+            (
+                y -
+                GRID_HEIGHT /
+                2 +
+                .5
+            ) *
+            CELL
+
+    };
+
+}
+
+
+function worldToCell(
+    x,
+    z
+) {
+
+    let cellX =
+        Math.floor(
+
+            x /
+            CELL +
+
+            GRID_WIDTH /
+            2
+
+        );
+
+
+    let cellY =
+        Math.floor(
+
+            z /
+            CELL +
+
+            GRID_HEIGHT /
+            2
+
+        );
+
+
+    cellX =
+        Math.max(
+
+            0,
+
+            Math.min(
+
+                GRID_WIDTH - 1,
+
+                cellX
+
+            )
+
+        );
+
+
+    cellY =
+        Math.max(
+
+            0,
+
+            Math.min(
+
+                GRID_HEIGHT - 1,
+
+                cellY
+
+            )
+
+        );
+
+
+    return {
+
+        x:
+            cellX,
+
+        y:
+            cellY
+
+    };
+
+}
+
+
+/* ============================================================
+   WORLD
+============================================================ */
+
+const collisionWalls =
+    [];
+
+
+const fluorescentLights =
+    [];
+
+
+function createWall(
+    x,
+    z,
+    width,
+    depth
+) {
+
+    const wall =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                width,
+
+                WALL_HEIGHT,
+
+                depth
+
+            ),
+
+            wallMaterial
+
+        );
+
+
+    wall.position.set(
+
+        x,
+
+        WALL_HEIGHT /
+        2,
+
+        z
+
     );
-    trim.position.set(x, .06, z);
-    backroomsGroup.add(trim);
+
+
+    backroomsGroup.add(
+        wall
+    );
+
+
+    const trim =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                width,
+
+                .12,
+
+                depth +
+                .04
+
+            ),
+
+            trimMaterial
+
+        );
+
+
+    trim.position.set(
+
+        x,
+
+        .06,
+
+        z
+
+    );
+
+
+    backroomsGroup.add(
+        trim
+    );
+
 
     collisionWalls.push({
-        minX: x - width / 2,
-        maxX: x + width / 2,
-        minZ: z - depth / 2,
-        maxZ: z + depth / 2
+
+        minX:
+            x -
+            width /
+            2,
+
+        maxX:
+            x +
+            width /
+            2,
+
+        minZ:
+            z -
+            depth /
+            2,
+
+        maxZ:
+            z +
+            depth /
+            2
+
     });
+
 }
 
-function createColumn(x, z) {
-    const column = new THREE.Mesh(
-        new THREE.BoxGeometry(.72, WALL_HEIGHT, .72),
-        wallMaterial
+
+function createColumn(
+    x,
+    z
+) {
+
+    const column =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                .72,
+
+                WALL_HEIGHT,
+
+                .72
+
+            ),
+
+            wallMaterial
+
+        );
+
+
+    column.position.set(
+
+        x,
+
+        WALL_HEIGHT /
+        2,
+
+        z
+
     );
-    column.position.set(x, WALL_HEIGHT / 2, z);
-    backroomsGroup.add(column);
+
+
+    backroomsGroup.add(
+        column
+    );
+
 
     collisionWalls.push({
-        minX: x - .36,
-        maxX: x + .36,
-        minZ: z - .36,
-        maxZ: z + .36
+
+        minX:
+            x -
+            .36,
+
+        maxX:
+            x +
+            .36,
+
+        minZ:
+            z -
+            .36,
+
+        maxZ:
+            z +
+            .36
+
     });
+
 }
 
-function createFluorescent(x, z, rotation) {
-    const frame = new THREE.Mesh(
-        new THREE.BoxGeometry(2.15, .09, .62),
-        new THREE.MeshStandardMaterial({ color: 0x666043, roughness: .8 })
-    );
-    frame.position.set(x, WALL_HEIGHT - .05, z);
-    frame.rotation.y = rotation;
-    backroomsGroup.add(frame);
 
-    const panel = new THREE.Mesh(
-        new THREE.BoxGeometry(1.9, .04, .42),
-        lightPanelMaterial
-    );
-    panel.position.set(x, WALL_HEIGHT - .12, z);
-    panel.rotation.y = rotation;
-    backroomsGroup.add(panel);
+function createFluorescent(
+    x,
+    z,
+    rotation
+) {
 
-    const light = new THREE.PointLight(0xffe98d, .7, 13, 1.5);
-    light.position.set(x, WALL_HEIGHT - .45, z);
-    backroomsGroup.add(light);
-    fluorescentLights.push(light);
+    const frame =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                2.15,
+
+                .09,
+
+                .62
+
+            ),
+
+            new THREE.MeshStandardMaterial({
+
+                color:
+                    0x666043,
+
+                roughness:
+                    .8
+
+            })
+
+        );
+
+
+    frame.position.set(
+
+        x,
+
+        WALL_HEIGHT -
+        .05,
+
+        z
+
+    );
+
+
+    frame.rotation.y =
+        rotation;
+
+
+    backroomsGroup.add(
+        frame
+    );
+
+
+    const panel =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                1.9,
+
+                .04,
+
+                .42
+
+            ),
+
+            lightPanelMaterial
+
+        );
+
+
+    panel.position.set(
+
+        x,
+
+        WALL_HEIGHT -
+        .12,
+
+        z
+
+    );
+
+
+    panel.rotation.y =
+        rotation;
+
+
+    backroomsGroup.add(
+        panel
+    );
+
+
+    const light =
+        new THREE.PointLight(
+
+            0xffe98d,
+
+            .7,
+
+            13,
+
+            1.5
+
+        );
+
+
+    light.position.set(
+
+        x,
+
+        WALL_HEIGHT -
+        .45,
+
+        z
+
+    );
+
+
+    backroomsGroup.add(
+        light
+    );
+
+
+    fluorescentLights.push(
+        light
+    );
+
 }
 
-function getNeighbors(x, y) {
-    const cell = maze[y][x];
-    const neighbors = [];
-    if (!cell.walls.north && y > 0) neighbors.push({ x, y: y - 1 });
-    if (!cell.walls.south && y < GRID_HEIGHT - 1) neighbors.push({ x, y: y + 1 });
-    if (!cell.walls.east && x < GRID_WIDTH - 1) neighbors.push({ x: x + 1, y });
-    if (!cell.walls.west && x > 0) neighbors.push({ x: x - 1, y });
+
+function getNeighbors(
+    x,
+    y
+) {
+
+    const cell =
+        maze[y][x];
+
+
+    const neighbors =
+        [];
+
+
+    if (
+        !cell.walls.north &&
+        y > 0
+    ) {
+
+        neighbors.push({
+
+            x:
+                x,
+
+            y:
+                y - 1
+
+        });
+
+    }
+
+
+    if (
+        !cell.walls.south &&
+        y <
+        GRID_HEIGHT - 1
+    ) {
+
+        neighbors.push({
+
+            x:
+                x,
+
+            y:
+                y + 1
+
+        });
+
+    }
+
+
+    if (
+        !cell.walls.east &&
+        x <
+        GRID_WIDTH - 1
+    ) {
+
+        neighbors.push({
+
+            x:
+                x + 1,
+
+            y:
+                y
+
+        });
+
+    }
+
+
+    if (
+        !cell.walls.west &&
+        x > 0
+    ) {
+
+        neighbors.push({
+
+            x:
+                x - 1,
+
+            y:
+                y
+
+        });
+
+    }
+
+
     return neighbors;
+
 }
+
 
 function findFarthestCell() {
-    const queue = [{ x: 0, y: 0, distance: 0 }];
-    const visited = new Set(["0,0"]);
-    let farthest = queue[0];
 
-    while (queue.length) {
-        const current = queue.shift();
+    const queue = [
 
-        if (current.distance > farthest.distance) {
-            farthest = current;
+        {
+
+            x:
+                0,
+
+            y:
+                0,
+
+            distance:
+                0
+
         }
 
-        for (const neighbor of getNeighbors(current.x, current.y)) {
-            const key = neighbor.x + "," + neighbor.y;
-            if (visited.has(key)) continue;
-            visited.add(key);
+    ];
+
+
+    const visited =
+        new Set([
+            "0,0"
+        ]);
+
+
+    let farthest =
+        queue[0];
+
+
+    while (
+        queue.length
+    ) {
+
+        const current =
+            queue.shift();
+
+
+        if (
+            current.distance >
+            farthest.distance
+        ) {
+
+            farthest =
+                current;
+
+        }
+
+
+        for (
+            const neighbor
+            of getNeighbors(
+
+                current.x,
+
+                current.y
+
+            )
+        ) {
+
+            const key =
+                neighbor.x +
+                "," +
+                neighbor.y;
+
+
+            if (
+                visited.has(
+                    key
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            visited.add(
+                key
+            );
+
+
             queue.push({
-                x: neighbor.x,
-                y: neighbor.y,
-                distance: current.distance + 1
+
+                x:
+                    neighbor.x,
+
+                y:
+                    neighbor.y,
+
+                distance:
+                    current.distance +
+                    1
+
             });
+
         }
+
     }
+
 
     return farthest;
+
 }
+
 
 function buildBackrooms() {
+
     generateMaze();
 
-    const worldWidth = GRID_WIDTH * CELL;
-    const worldDepth = GRID_HEIGHT * CELL;
 
-    const floor = new THREE.Mesh(
-        new THREE.PlaneGeometry(worldWidth, worldDepth),
-        floorMaterial
+    const worldWidth =
+        GRID_WIDTH *
+        CELL;
+
+
+    const worldDepth =
+        GRID_HEIGHT *
+        CELL;
+
+
+    const floor =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+
+                worldWidth,
+
+                worldDepth
+
+            ),
+
+            floorMaterial
+
+        );
+
+
+    floor.rotation.x =
+        -Math.PI /
+        2;
+
+
+    backroomsGroup.add(
+        floor
     );
-    floor.rotation.x = -Math.PI / 2;
-    backroomsGroup.add(floor);
 
-    const ceiling = new THREE.Mesh(
-        new THREE.PlaneGeometry(worldWidth, worldDepth),
-        ceilingMaterial
+
+    const ceiling =
+        new THREE.Mesh(
+
+            new THREE.PlaneGeometry(
+
+                worldWidth,
+
+                worldDepth
+
+            ),
+
+            ceilingMaterial
+
+        );
+
+
+    ceiling.rotation.x =
+        Math.PI /
+        2;
+
+
+    ceiling.position.y =
+        WALL_HEIGHT;
+
+
+    backroomsGroup.add(
+        ceiling
     );
-    ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.y = WALL_HEIGHT;
-    backroomsGroup.add(ceiling);
 
-    for (let y = 0; y < GRID_HEIGHT; y++) {
-        for (let x = 0; x < GRID_WIDTH; x++) {
-            const cell = maze[y][x];
-            const position = cellToWorld(x, y);
 
-            if (cell.walls.north) {
-                createWall(position.x, position.z - CELL / 2, CELL + WALL_THICKNESS, WALL_THICKNESS);
+    for (
+        let y = 0;
+        y < GRID_HEIGHT;
+        y++
+    ) {
+
+        for (
+            let x = 0;
+            x < GRID_WIDTH;
+            x++
+        ) {
+
+            const cell =
+                maze[y][x];
+
+
+            const position =
+                cellToWorld(
+                    x,
+                    y
+                );
+
+
+            if (
+                cell.walls.north
+            ) {
+
+                createWall(
+
+                    position.x,
+
+                    position.z -
+                    CELL /
+                    2,
+
+                    CELL +
+                    WALL_THICKNESS,
+
+                    WALL_THICKNESS
+
+                );
+
             }
-            if (cell.walls.west) {
-                createWall(position.x - CELL / 2, position.z, WALL_THICKNESS, CELL + WALL_THICKNESS);
+
+
+            if (
+                cell.walls.west
+            ) {
+
+                createWall(
+
+                    position.x -
+                    CELL /
+                    2,
+
+                    position.z,
+
+                    WALL_THICKNESS,
+
+                    CELL +
+                    WALL_THICKNESS
+
+                );
+
             }
-            if (y === GRID_HEIGHT - 1 && cell.walls.south) {
-                createWall(position.x, position.z + CELL / 2, CELL + WALL_THICKNESS, WALL_THICKNESS);
+
+
+            if (
+                y ===
+                GRID_HEIGHT - 1 &&
+                cell.walls.south
+            ) {
+
+                createWall(
+
+                    position.x,
+
+                    position.z +
+                    CELL /
+                    2,
+
+                    CELL +
+                    WALL_THICKNESS,
+
+                    WALL_THICKNESS
+
+                );
+
             }
-            if (x === GRID_WIDTH - 1 && cell.walls.east) {
-                createWall(position.x + CELL / 2, position.z, WALL_THICKNESS, CELL + WALL_THICKNESS);
+
+
+            if (
+                x ===
+                GRID_WIDTH - 1 &&
+                cell.walls.east
+            ) {
+
+                createWall(
+
+                    position.x +
+                    CELL /
+                    2,
+
+                    position.z,
+
+                    WALL_THICKNESS,
+
+                    CELL +
+                    WALL_THICKNESS
+
+                );
+
             }
+
         }
+
     }
 
-    for (let y = 1; y < GRID_HEIGHT - 1; y += 2) {
-        for (let x = 1; x < GRID_WIDTH - 1; x += 2) {
-            if (Math.random() < .24) {
-                const position = cellToWorld(x, y);
-                createColumn(position.x + CELL / 2, position.z + CELL / 2);
+
+    for (
+        let y = 1;
+        y < GRID_HEIGHT - 1;
+        y += 2
+    ) {
+
+        for (
+            let x = 1;
+            x < GRID_WIDTH - 1;
+            x += 2
+        ) {
+
+            if (
+                Math.random() <
+                .24
+            ) {
+
+                const position =
+                    cellToWorld(
+                        x,
+                        y
+                    );
+
+
+                createColumn(
+
+                    position.x +
+                    CELL /
+                    2,
+
+                    position.z +
+                    CELL /
+                    2
+
+                );
+
             }
+
         }
+
     }
 
-    backroomsGroup.add(new THREE.HemisphereLight(0xbeb46a, 0x27230f, .58));
-    backroomsGroup.add(new THREE.AmbientLight(0x5d5628, .5));
 
-    for (let y = 0; y < GRID_HEIGHT; y += 3) {
-        for (let x = 0; x < GRID_WIDTH; x += 3) {
-            const position = cellToWorld(x, y);
+    backroomsGroup.add(
+
+        new THREE.HemisphereLight(
+
+            0xbeb46a,
+
+            0x27230f,
+
+            .58
+
+        )
+
+    );
+
+
+    backroomsGroup.add(
+
+        new THREE.AmbientLight(
+
+            0x5d5628,
+
+            .5
+
+        )
+
+    );
+
+
+    for (
+        let y = 0;
+        y < GRID_HEIGHT;
+        y += 3
+    ) {
+
+        for (
+            let x = 0;
+            x < GRID_WIDTH;
+            x += 3
+        ) {
+
+            const position =
+                cellToWorld(
+                    x,
+                    y
+                );
+
+
             createFluorescent(
+
                 position.x,
+
                 position.z,
-                Math.random() > .5 ? 0 : Math.PI / 2
+
+                Math.random() >
+                .5
+
+                    ? 0
+
+                    : Math.PI /
+                      2
+
             );
+
         }
+
     }
+
 }
+
 
 /* ============================================================
    BUILD LEVELS
 ============================================================ */
+
 buildOffice();
+
 buildBackrooms();
+
 
 /* ============================================================
    EXIT
 ============================================================ */
-const exitCell = findFarthestCell();
-const exitWorld = cellToWorld(exitCell.x, exitCell.y);
 
-const exitGroup = new THREE.Group();
+const exitCell =
+    findFarthestCell();
 
-const exitFrame = new THREE.Mesh(
-    new THREE.BoxGeometry(1.7, 2.8, .18),
-    new THREE.MeshStandardMaterial({ color: 0x3f3926, roughness: .9 })
+
+const exitWorld =
+    cellToWorld(
+
+        exitCell.x,
+
+        exitCell.y
+
+    );
+
+
+const exitGroup =
+    new THREE.Group();
+
+
+const exitFrame =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+
+            1.7,
+
+            2.8,
+
+            .18
+
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0x3f3926,
+
+            roughness:
+                .9
+
+        })
+
+    );
+
+
+exitFrame.position.y =
+    1.4;
+
+
+exitGroup.add(
+    exitFrame
 );
-exitFrame.position.y = 1.4;
-exitGroup.add(exitFrame);
 
-const exitDoor = new THREE.Mesh(
-    new THREE.BoxGeometry(1.42, 2.5, .22),
-    new THREE.MeshStandardMaterial({
-        color: 0x31412c,
-        emissive: 0x091509,
-        roughness: .85
-    })
+
+const exitDoor =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+
+            1.42,
+
+            2.5,
+
+            .22
+
+        ),
+
+        new THREE.MeshStandardMaterial({
+
+            color:
+                0x31412c,
+
+            emissive:
+                0x091509,
+
+            roughness:
+                .85
+
+        })
+
+    );
+
+
+exitDoor.position.y =
+    1.26;
+
+
+exitGroup.add(
+    exitDoor
 );
-exitDoor.position.y = 1.26;
-exitGroup.add(exitDoor);
 
-const exitLight = new THREE.PointLight(0x88ff72, 1.6, 8);
-exitLight.position.set(0, 1.7, .5);
-exitGroup.add(exitLight);
 
-exitGroup.position.set(exitWorld.x, 0, exitWorld.z);
-backroomsGroup.add(exitGroup);
+const exitLight =
+    new THREE.PointLight(
+
+        0x88ff72,
+
+        1.6,
+
+        8
+
+    );
+
+
+exitLight.position.set(
+
+    0,
+
+    1.7,
+
+    .5
+
+);
+
+
+exitGroup.add(
+    exitLight
+);
+
+
+exitGroup.position.set(
+
+    exitWorld.x,
+
+    0,
+
+    exitWorld.z
+
+);
+
+
+backroomsGroup.add(
+    exitGroup
+);
+
 
 /* ============================================================
    PLAYER
 ============================================================ */
-const playerStart = cellToWorld(0, 0);
 
-let yaw = Math.PI;
-let pitch = 0;
-let stamina = 100;
-let movementTime = 0;
-const keys = {};
+const playerStart =
+    cellToWorld(
+        0,
+        0
+    );
+
+
+let yaw =
+    Math.PI;
+
+
+let pitch =
+    0;
+
+
+let stamina =
+    100;
+
+
+let movementTime =
+    0;
+
+
+const keys =
+    {};
+
 
 /* ============================================================
    MONSTER MATERIALS
 ============================================================ */
-const entitySkinTexture = createEntitySkinTexture();
-const entityBumpTexture = createEntityBumpTexture();
-const entityBodyTexture = createEntityBodyTexture();
 
-const entitySkinMaterial = new THREE.MeshStandardMaterial({
-    map: entitySkinTexture,
-    bumpMap: entityBumpTexture,
-    bumpScale: .022,
-    color: 0xa89d8b,
-    roughness: .97,
-    metalness: 0
-});
-const entityBodyMaterial = new THREE.MeshStandardMaterial({
-    map: entityBodyTexture,
-    color: 0x20201d,
-    roughness: 1,
-    metalness: 0
-});
-const entityBlackMaterial = new THREE.MeshStandardMaterial({
-    color: 0x020202,
-    roughness: 1
-});
-const entityEyeMaterial = new THREE.MeshStandardMaterial({
-    color: 0x060606,
-    roughness: .2,
-    metalness: 0
-});
+const monsterSkinTexture =
+    makeMonsterSkinTexture();
+
+
+const monsterBodyTexture =
+    makeMonsterBodyTexture();
+
+
+const monsterSkinMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            monsterSkinTexture,
+
+        color:
+            0xb2a592,
+
+        roughness:
+            .98,
+
+        metalness:
+            0
+
+    });
+
+
+const monsterBodyMaterial =
+    new THREE.MeshStandardMaterial({
+
+        map:
+            monsterBodyTexture,
+
+        color:
+            0x20201e,
+
+        roughness:
+            1,
+
+        metalness:
+            0
+
+    });
+
+
+const monsterDarkMaterial =
+    new THREE.MeshStandardMaterial({
+
+        color:
+            0x030303,
+
+        roughness:
+            1
+
+    });
+
+
+/* ============================================================
+   GEOMETRY HELPER
+   TAPERED ANGULAR BOX
+============================================================ */
+
+function createTaperedBoxGeometry(
+    topWidth,
+    bottomWidth,
+    height,
+    depth,
+    segments = 4
+) {
+
+    const maxWidth =
+        Math.max(
+            topWidth,
+            bottomWidth
+        );
+
+
+    const geometry =
+        new THREE.BoxGeometry(
+
+            maxWidth,
+
+            height,
+
+            depth,
+
+            1,
+
+            segments,
+
+            1
+
+        );
+
+
+    const positions =
+        geometry.attributes.position;
+
+
+    for (
+        let i = 0;
+        i < positions.count;
+        i++
+    ) {
+
+        const x =
+            positions.getX(
+                i
+            );
+
+
+        const y =
+            positions.getY(
+                i
+            );
+
+
+        const t =
+
+            (
+                y +
+                height /
+                2
+            ) /
+
+            height;
+
+
+        const width =
+
+            bottomWidth +
+
+            (
+                topWidth -
+                bottomWidth
+            ) *
+
+            t;
+
+
+        const scale =
+            width /
+            maxWidth;
+
+
+        positions.setX(
+
+            i,
+
+            x *
+            scale
+
+        );
+
+    }
+
+
+    positions.needsUpdate =
+        true;
+
+
+    geometry.computeVertexNormals();
+
+
+    return geometry;
+
+}
+
+
+/* ============================================================
+   ANGULAR HEAD
+   ACTUAL DEFORMED TRIANGLE MESH
+============================================================ */
+
+function createMonsterHeadGeometry() {
+
+    const width =
+        .34;
+
+
+    const height =
+        .55;
+
+
+    const depth =
+        .27;
+
+
+    const geometry =
+        new THREE.BoxGeometry(
+
+            width,
+
+            height,
+
+            depth,
+
+            4,
+
+            7,
+
+            3
+
+        );
+
+
+    const positions =
+        geometry.attributes.position;
+
+
+    function widthScaleAt(
+        normalizedY
+    ) {
+
+        if (
+            normalizedY >
+            .78
+        ) {
+
+            return .62;
+
+        }
+
+
+        if (
+            normalizedY >
+            .48
+        ) {
+
+            return .90;
+
+        }
+
+
+        if (
+            normalizedY >
+            .12
+        ) {
+
+            return 1.00;
+
+        }
+
+
+        if (
+            normalizedY >
+            -.22
+        ) {
+
+            return .91;
+
+        }
+
+
+        if (
+            normalizedY >
+            -.58
+        ) {
+
+            return .70;
+
+        }
+
+
+        return .43;
+
+    }
+
+
+    function depthScaleAt(
+        normalizedY
+    ) {
+
+        if (
+            normalizedY >
+            .7
+        ) {
+
+            return .78;
+
+        }
+
+
+        if (
+            normalizedY >
+            .15
+        ) {
+
+            return .90;
+
+        }
+
+
+        if (
+            normalizedY >
+            -.35
+        ) {
+
+            return .82;
+
+        }
+
+
+        return .62;
+
+    }
+
+
+    for (
+        let i = 0;
+        i < positions.count;
+        i++
+    ) {
+
+        let x =
+            positions.getX(
+                i
+            );
+
+
+        let y =
+            positions.getY(
+                i
+            );
+
+
+        let z =
+            positions.getZ(
+                i
+            );
+
+
+        const normalizedY =
+            y /
+            (
+                height /
+                2
+            );
+
+
+        const widthScale =
+            widthScaleAt(
+                normalizedY
+            );
+
+
+        const depthScale =
+            depthScaleAt(
+                normalizedY
+            );
+
+
+        x *=
+            widthScale;
+
+
+        z *=
+            depthScale;
+
+
+        /* flatter front face */
+
+        if (
+            z <
+            0
+        ) {
+
+            z *=
+                .82;
+
+        }
+
+
+        /* slightly flatter back skull */
+
+        if (
+            z >
+            0 &&
+            normalizedY <
+            -.3
+        ) {
+
+            z *=
+                .74;
+
+        }
+
+
+        /* subtle asymmetry */
+
+        if (
+            x <
+            0 &&
+            normalizedY <
+            .1
+        ) {
+
+            x *=
+                .97;
+
+        }
+
+
+        positions.setXYZ(
+
+            i,
+
+            x,
+
+            y,
+
+            z
+
+        );
+
+    }
+
+
+    positions.needsUpdate =
+        true;
+
+
+    geometry.computeVertexNormals();
+
+
+    return geometry;
+
+}
+
+
+/* ============================================================
+   ANGULAR TORSO
+============================================================ */
+
+function createMonsterTorsoGeometry() {
+
+    const geometry =
+        new THREE.BoxGeometry(
+
+            .42,
+
+            1.05,
+
+            .22,
+
+            3,
+
+            6,
+
+            2
+
+        );
+
+
+    const positions =
+        geometry.attributes.position;
+
+
+    for (
+        let i = 0;
+        i < positions.count;
+        i++
+    ) {
+
+        let x =
+            positions.getX(
+                i
+            );
+
+
+        const y =
+            positions.getY(
+                i
+            );
+
+
+        let z =
+            positions.getZ(
+                i
+            );
+
+
+        const normalized =
+
+            (
+                y +
+                .525
+            ) /
+
+            1.05;
+
+
+        let widthScale;
+
+
+        if (
+            normalized >
+            .78
+        ) {
+
+            widthScale =
+                .98;
+
+        }
+
+
+        else if (
+            normalized >
+            .55
+        ) {
+
+            widthScale =
+                .82;
+
+        }
+
+
+        else if (
+            normalized >
+            .28
+        ) {
+
+            widthScale =
+                .56;
+
+        }
+
+
+        else {
+
+            widthScale =
+                .66;
+
+        }
+
+
+        x *=
+            widthScale;
+
+
+        z *=
+            .82;
+
+
+        positions.setXYZ(
+
+            i,
+
+            x,
+
+            y,
+
+            z
+
+        );
+
+    }
+
+
+    positions.needsUpdate =
+        true;
+
+
+    geometry.computeVertexNormals();
+
+
+    return geometry;
+
+}
+
+
+/* ============================================================
+   EYE SOCKET SHAPE
+============================================================ */
+
+function createEyeSocketGeometry(
+    mirror = 1
+) {
+
+    const shape =
+        new THREE.Shape();
+
+
+    shape.moveTo(
+        -.035,
+        .025
+    );
+
+
+    shape.lineTo(
+        .024,
+        .032
+    );
+
+
+    shape.lineTo(
+        .039,
+        .005
+    );
+
+
+    shape.lineTo(
+        .025,
+        -.037
+    );
+
+
+    shape.lineTo(
+        -.025,
+        -.041
+    );
+
+
+    shape.lineTo(
+        -.043,
+        -.008
+    );
+
+
+    shape.closePath();
+
+
+    const geometry =
+        new THREE.ShapeGeometry(
+            shape
+        );
+
+
+    if (
+        mirror <
+        0
+    ) {
+
+        geometry.scale(
+            -1,
+            1,
+            1
+        );
+
+    }
+
+
+    return geometry;
+
+}
+
 
 /* ============================================================
    MONSTER ROOT
 ============================================================ */
-const monster = new THREE.Group();
-const monsterRig = new THREE.Group();
-monster.add(monsterRig);
-backroomsGroup.add(monster);
 
-const monsterShadow = new THREE.Mesh(
-    new THREE.CircleGeometry(.52, 28),
-    new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        transparent: true,
-        opacity: .26
-    })
+const monster =
+    new THREE.Group();
+
+
+const monsterRig =
+    new THREE.Group();
+
+
+monster.add(
+    monsterRig
 );
-monsterShadow.rotation.x = -Math.PI / 2;
-monsterShadow.position.y = .012;
-monster.add(monsterShadow);
+
+
+backroomsGroup.add(
+    monster
+);
+
 
 /* ============================================================
-   BODY
+   SHADOW
 ============================================================ */
-const monsterPelvis = new THREE.Mesh(
-    new THREE.SphereGeometry(.14, 16, 12),
-    entityBodyMaterial
-);
-monsterPelvis.scale.set(1.05, .72, .74);
-monsterPelvis.position.set(0, 1.00, 0);
-monsterRig.add(monsterPelvis);
 
-const monsterAbdomen = new THREE.Mesh(
-    new THREE.CylinderGeometry(.10, .14, .70, 12),
-    entityBodyMaterial
-);
-monsterAbdomen.position.set(0, 1.38, 0);
-monsterRig.add(monsterAbdomen);
+const monsterShadow =
+    new THREE.Mesh(
 
-const monsterChest = new THREE.Mesh(
-    new THREE.CylinderGeometry(.17, .12, .76, 12),
-    entityBodyMaterial
+        new THREE.CircleGeometry(
+
+            .52,
+
+            24
+
+        ),
+
+        new THREE.MeshBasicMaterial({
+
+            color:
+                0x000000,
+
+            transparent:
+                true,
+
+            opacity:
+                .27
+
+        })
+
+    );
+
+
+monsterShadow.rotation.x =
+    -Math.PI /
+    2;
+
+
+monsterShadow.position.y =
+    .012;
+
+
+monster.add(
+    monsterShadow
 );
-monsterChest.position.set(0, 1.92, 0);
-monsterChest.scale.z = .50;
-monsterRig.add(monsterChest);
+
+
+/* ============================================================
+   TORSO
+============================================================ */
+
+const monsterTorso =
+    new THREE.Mesh(
+
+        createMonsterTorsoGeometry(),
+
+        monsterBodyMaterial
+
+    );
+
+
+monsterTorso.position.set(
+
+    0,
+
+    1.72,
+
+    0
+
+);
+
+
+monsterRig.add(
+    monsterTorso
+);
+
+
+/* ============================================================
+   HIPS
+============================================================ */
+
+const monsterHips =
+    new THREE.Mesh(
+
+        createTaperedBoxGeometry(
+
+            .25,
+
+            .20,
+
+            .24,
+
+            .18,
+
+            2
+
+        ),
+
+        monsterBodyMaterial
+
+    );
+
+
+monsterHips.position.set(
+
+    0,
+
+    1.10,
+
+    0
+
+);
+
+
+monsterRig.add(
+    monsterHips
+);
+
 
 /* ============================================================
    SHOULDERS
+   NO SPHERES
 ============================================================ */
-const shoulderBar = new THREE.Mesh(
-    new THREE.CylinderGeometry(.055, .07, .48, 10),
-    entityBodyMaterial
-);
-shoulderBar.rotation.z = Math.PI / 2;
-shoulderBar.position.set(0, 2.17, 0);
-monsterRig.add(shoulderBar);
 
-const leftShoulder = new THREE.Mesh(
-    new THREE.SphereGeometry(.09, 12, 10),
-    entityBodyMaterial
-);
-leftShoulder.scale.set(1.0, .55, .8);
-leftShoulder.position.set(-0.22, 2.13, 0.015);
-leftShoulder.rotation.z = 0.28;
-monsterRig.add(leftShoulder);
+const leftShoulder =
+    new THREE.Mesh(
 
-const rightShoulder = leftShoulder.clone();
-rightShoulder.position.set(0.22, 2.11, 0.015);
-rightShoulder.rotation.z = -0.28;
-monsterRig.add(rightShoulder);
+        new THREE.BoxGeometry(
+
+            .27,
+
+            .075,
+
+            .17
+
+        ),
+
+        monsterBodyMaterial
+
+    );
+
+
+leftShoulder.position.set(
+
+    -.20,
+
+    2.21,
+
+    0
+
+);
+
+
+leftShoulder.rotation.z =
+    -.15;
+
+
+monsterRig.add(
+    leftShoulder
+);
+
+
+const rightShoulder =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+
+            .27,
+
+            .075,
+
+            .17
+
+        ),
+
+        monsterBodyMaterial
+
+    );
+
+
+rightShoulder.position.set(
+
+    .20,
+
+    2.19,
+
+    0
+
+);
+
+
+rightShoulder.rotation.z =
+    .15;
+
+
+monsterRig.add(
+    rightShoulder
+);
+
 
 /* ============================================================
    NECK
+   SIMPLE ANGULAR COLUMN
 ============================================================ */
-const monsterNeck = new THREE.Mesh(
-    new THREE.CylinderGeometry(.055, .075, .28, 12),
-    entitySkinMaterial
+
+const monsterNeck =
+    new THREE.Mesh(
+
+        createTaperedBoxGeometry(
+
+            .11,
+
+            .14,
+
+            .31,
+
+            .12,
+
+            2
+
+        ),
+
+        monsterSkinMaterial
+
+    );
+
+
+monsterNeck.position.set(
+
+    0,
+
+    2.38,
+
+    .025
+
 );
-monsterNeck.position.set(0, 2.33, 0.03);
-monsterNeck.rotation.x = 0.12;
-monsterRig.add(monsterNeck);
+
+
+monsterNeck.rotation.x =
+    .08;
+
+
+monsterRig.add(
+    monsterNeck
+);
+
 
 /* ============================================================
-   HEAD ROOT
+   HEAD PIVOT
 ============================================================ */
-const monsterHeadPivot = new THREE.Group();
-monsterHeadPivot.position.set(0, 2.53, -0.01);
-monsterRig.add(monsterHeadPivot);
+
+const monsterHeadPivot =
+    new THREE.Group();
+
+
+monsterHeadPivot.position.set(
+
+    0,
+
+    2.68,
+
+    -.015
+
+);
+
+
+monsterRig.add(
+    monsterHeadPivot
+);
+
 
 /* ============================================================
-   CUSTOM HEAD SHAPE
+   HEAD
 ============================================================ */
-const skullProfile = [
-    new THREE.Vector2(0.040, -0.25),
-    new THREE.Vector2(0.085, -0.22),
-    new THREE.Vector2(0.120, -0.16),
-    new THREE.Vector2(0.142, -0.07),
-    new THREE.Vector2(0.136,  0.02),
-    new THREE.Vector2(0.145,  0.11),
-    new THREE.Vector2(0.136,  0.20),
-    new THREE.Vector2(0.114,  0.28),
-    new THREE.Vector2(0.070,  0.33),
-    new THREE.Vector2(0.020,  0.345)
-];
 
-const monsterHead = new THREE.Mesh(
-    new THREE.LatheGeometry(skullProfile, 32),
-    entitySkinMaterial
+const monsterHead =
+    new THREE.Mesh(
+
+        createMonsterHeadGeometry(),
+
+        monsterSkinMaterial
+
+    );
+
+
+monsterHeadPivot.add(
+    monsterHead
 );
-monsterHead.scale.set(1.0, 1.0, 0.74);
-monsterHead.position.set(0, 0.0, 0);
-monsterHeadPivot.add(monsterHead);
 
-/* ============================================================
-   FACE
-============================================================ */
-const monsterFace = new THREE.Mesh(
-    new THREE.SphereGeometry(0.145, 22, 16),
-    entitySkinMaterial
-);
-monsterFace.scale.set(0.82, 0.95, 0.12);
-monsterFace.position.set(0, -0.015, -0.145);
-monsterHeadPivot.add(monsterFace);
-
-const leftCheekbone = new THREE.Mesh(
-    new THREE.SphereGeometry(0.045, 14, 10),
-    entitySkinMaterial
-);
-leftCheekbone.scale.set(1.2, 0.48, 0.36);
-leftCheekbone.position.set(-0.082, -0.04, -0.145);
-monsterHeadPivot.add(leftCheekbone);
-
-const rightCheekbone = leftCheekbone.clone();
-rightCheekbone.position.x = 0.082;
-monsterHeadPivot.add(rightCheekbone);
-
-const templeMaterial = new THREE.MeshStandardMaterial({
-    color: 0x5f564d,
-    roughness: 1
-});
-
-const leftTemple = new THREE.Mesh(
-    new THREE.SphereGeometry(0.05, 12, 10),
-    templeMaterial
-);
-leftTemple.scale.set(0.48, 1.0, 0.25);
-leftTemple.position.set(-0.135, 0.06, -0.045);
-monsterHeadPivot.add(leftTemple);
-
-const rightTemple = leftTemple.clone();
-rightTemple.position.x = 0.135;
-monsterHeadPivot.add(rightTemple);
-
-const leftBrow = new THREE.Mesh(
-    new THREE.BoxGeometry(0.085, 0.020, 0.026),
-    entitySkinMaterial
-);
-leftBrow.position.set(-0.052, 0.055, -0.172);
-leftBrow.rotation.z = -0.15;
-monsterHeadPivot.add(leftBrow);
-
-const rightBrow = leftBrow.clone();
-rightBrow.position.set(0.052, 0.048, -0.172);
-rightBrow.rotation.z = 0.10;
-monsterHeadPivot.add(rightBrow);
 
 /* ============================================================
    EYE SOCKETS
+   FLAT POLYGONAL SHAPES
 ============================================================ */
-const leftSocket = new THREE.Mesh(
-    new THREE.SphereGeometry(0.045, 18, 14),
-    entityBlackMaterial
-);
-leftSocket.scale.set(0.95, 1.35, 0.16);
-leftSocket.position.set(-0.060, 0.005, -0.182);
-monsterHeadPivot.add(leftSocket);
 
-const rightSocket = new THREE.Mesh(
-    new THREE.SphereGeometry(0.043, 18, 14),
-    entityBlackMaterial
-);
-rightSocket.scale.set(0.95, 1.30, 0.16);
-rightSocket.position.set(0.058, 0.000, -0.181);
-monsterHeadPivot.add(rightSocket);
+const leftSocket =
+    new THREE.Mesh(
 
-const leftEye = new THREE.Mesh(
-    new THREE.SphereGeometry(0.010, 10, 8),
-    entityEyeMaterial
-);
-leftEye.position.set(-0.060, 0.000, -0.196);
-monsterHeadPivot.add(leftEye);
+        createEyeSocketGeometry(
+            1
+        ),
 
-const rightEye = leftEye.clone();
-rightEye.position.set(0.058, -0.004, -0.195);
-monsterHeadPivot.add(rightEye);
+        monsterDarkMaterial
+
+    );
+
+
+leftSocket.position.set(
+
+    -.074,
+
+    .045,
+
+    -.115
+
+);
+
+
+leftSocket.rotation.z =
+    -.08;
+
+
+monsterHeadPivot.add(
+    leftSocket
+);
+
+
+const rightSocket =
+    new THREE.Mesh(
+
+        createEyeSocketGeometry(
+            -1
+        ),
+
+        monsterDarkMaterial
+
+    );
+
+
+rightSocket.position.set(
+
+    .069,
+
+    .038,
+
+    -.115
+
+);
+
+
+rightSocket.rotation.z =
+    .05;
+
+
+monsterHeadPivot.add(
+    rightSocket
+);
+
 
 /* ============================================================
-   NOSE / MOUTH / JAW
+   NOSE
+   TINY WEDGE, NOT PINOCCHIO
 ============================================================ */
-const noseBridge = new THREE.Mesh(
-    new THREE.BoxGeometry(0.018, 0.075, 0.018),
-    entitySkinMaterial
-);
-noseBridge.position.set(-0.002, -0.035, -0.165);
-noseBridge.rotation.x = -0.10;
-monsterHeadPivot.add(noseBridge);
 
-const noseTip = new THREE.Mesh(
-    new THREE.SphereGeometry(0.020, 10, 8),
-    entitySkinMaterial
-);
-noseTip.scale.set(0.72, 0.50, 0.65);
-noseTip.position.set(-0.002, -0.078, -0.176);
-monsterHeadPivot.add(noseTip);
+const noseGeometry =
+    new THREE.BufferGeometry();
 
-const mouthMaterial = new THREE.MeshBasicMaterial({ color: 0x090706 });
-const monsterMouth = new THREE.Mesh(
-    new THREE.BoxGeometry(0.062, 0.008, 0.010),
-    mouthMaterial
-);
-monsterMouth.position.set(-0.006, -0.132, -0.160);
-monsterMouth.rotation.z = -0.05;
-monsterHeadPivot.add(monsterMouth);
 
-const monsterJaw = new THREE.Mesh(
-    new THREE.SphereGeometry(0.082, 16, 12),
-    entitySkinMaterial
-);
-monsterJaw.scale.set(0.78, 0.36, 0.50);
-monsterJaw.position.set(0, -0.155, -0.030);
-monsterHeadPivot.add(monsterJaw);
+noseGeometry.setAttribute(
 
-const monsterChin = new THREE.Mesh(
-    new THREE.SphereGeometry(0.040, 12, 10),
-    entitySkinMaterial
+    "position",
+
+    new THREE.Float32BufferAttribute(
+
+        [
+
+            -.014, .018,  0,
+             .014, .018,  0,
+             0,   -.026, -.026,
+
+            -.014, .018,  0,
+             0,   -.026, -.026,
+            -.012,-.025,  0,
+
+             .014, .018,  0,
+             .012,-.025,  0,
+             0,   -.026, -.026
+
+        ],
+
+        3
+
+    )
+
 );
-monsterChin.scale.set(0.95, 0.48, 0.42);
-monsterChin.position.set(0, -0.185, -0.060);
-monsterHeadPivot.add(monsterChin);
+
+
+noseGeometry.computeVertexNormals();
+
+
+const monsterNose =
+    new THREE.Mesh(
+
+        noseGeometry,
+
+        monsterSkinMaterial
+
+    );
+
+
+monsterNose.position.set(
+
+    0,
+
+    -.015,
+
+    -.121
+
+);
+
+
+monsterHeadPivot.add(
+    monsterNose
+);
+
 
 /* ============================================================
-   LIMB HELPER
+   MOUTH
 ============================================================ */
-function createEntityLimb(x, y, upperLength, lowerLength, upperRadius, lowerRadius, lowerMaterial) {
-    const upperPivot = new THREE.Group();
-    upperPivot.position.set(x, y, 0);
-    monsterRig.add(upperPivot);
 
-    const upper = new THREE.Mesh(
-        new THREE.CylinderGeometry(upperRadius * .82, upperRadius, upperLength, 10),
-        entityBodyMaterial
+const monsterMouth =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+
+            .072,
+
+            .008,
+
+            .008
+
+        ),
+
+        monsterDarkMaterial
+
     );
-    upper.position.y = -upperLength / 2;
-    upperPivot.add(upper);
 
-    const joint = new THREE.Mesh(
-        new THREE.SphereGeometry(upperRadius * .92, 10, 8),
-        entityBodyMaterial
+
+monsterMouth.position.set(
+
+    -.004,
+
+    -.092,
+
+    -.116
+
+);
+
+
+monsterMouth.rotation.z =
+    -.035;
+
+
+monsterHeadPivot.add(
+    monsterMouth
+);
+
+
+/* ============================================================
+   LIMB CREATOR
+   ANGULAR BOX LIMBS
+============================================================ */
+
+function createMonsterLimb(
+    x,
+    y,
+    upperLength,
+    lowerLength,
+    upperTopWidth,
+    upperBottomWidth,
+    lowerTopWidth,
+    lowerBottomWidth,
+    lowerMaterial
+) {
+
+    const upperPivot =
+        new THREE.Group();
+
+
+    upperPivot.position.set(
+
+        x,
+
+        y,
+
+        0
+
     );
-    joint.position.y = -upperLength;
-    upperPivot.add(joint);
 
-    const lowerPivot = new THREE.Group();
-    lowerPivot.position.y = -upperLength;
-    upperPivot.add(lowerPivot);
 
-    const lower = new THREE.Mesh(
-        new THREE.CylinderGeometry(lowerRadius * .78, lowerRadius, lowerLength, 10),
-        lowerMaterial
+    monsterRig.add(
+        upperPivot
     );
-    lower.position.y = -lowerLength / 2;
-    lowerPivot.add(lower);
 
-    return { upperPivot, lowerPivot, upper, lower };
+
+    const upper =
+        new THREE.Mesh(
+
+            createTaperedBoxGeometry(
+
+                upperTopWidth,
+
+                upperBottomWidth,
+
+                upperLength,
+
+                .12,
+
+                3
+
+            ),
+
+            monsterBodyMaterial
+
+        );
+
+
+    upper.position.y =
+        -upperLength /
+        2;
+
+
+    upperPivot.add(
+        upper
+    );
+
+
+    const lowerPivot =
+        new THREE.Group();
+
+
+    lowerPivot.position.y =
+        -upperLength;
+
+
+    upperPivot.add(
+        lowerPivot
+    );
+
+
+    const lower =
+        new THREE.Mesh(
+
+            createTaperedBoxGeometry(
+
+                lowerTopWidth,
+
+                lowerBottomWidth,
+
+                lowerLength,
+
+                .105,
+
+                3
+
+            ),
+
+            lowerMaterial
+
+        );
+
+
+    lower.position.y =
+        -lowerLength /
+        2;
+
+
+    lowerPivot.add(
+        lower
+    );
+
+
+    return {
+
+        upperPivot,
+
+        lowerPivot,
+
+        upper,
+
+        lower
+
+    };
+
 }
+
 
 /* ============================================================
    ARMS
 ============================================================ */
-const leftArm = createEntityLimb(-0.23, 2.13, 0.88, 0.96, 0.050, 0.045, entitySkinMaterial);
-const rightArm = createEntityLimb(0.23, 2.11, 0.90, 0.98, 0.050, 0.045, entitySkinMaterial);
 
-leftArm.upperPivot.rotation.z = 0.09;
-rightArm.upperPivot.rotation.z = -0.09;
+const leftArm =
+    createMonsterLimb(
+
+        -.27,
+
+        2.16,
+
+        .83,
+
+        .89,
+
+        .10,
+
+        .075,
+
+        .074,
+
+        .055,
+
+        monsterSkinMaterial
+
+    );
+
+
+const rightArm =
+    createMonsterLimb(
+
+        .27,
+
+        2.14,
+
+        .86,
+
+        .91,
+
+        .10,
+
+        .075,
+
+        .074,
+
+        .055,
+
+        monsterSkinMaterial
+
+    );
+
+
+leftArm.upperPivot.rotation.z =
+    .08;
+
+
+rightArm.upperPivot.rotation.z =
+    -.08;
+
 
 /* ============================================================
    HANDS
+   SMALL ANGULAR PALMS + FINGERS
 ============================================================ */
-function createEntityHand(mirror = 1) {
-    const hand = new THREE.Group();
 
-    const palm = new THREE.Mesh(
-        new THREE.SphereGeometry(.078, 14, 12),
-        entitySkinMaterial
+function createMonsterHand(
+    mirror
+) {
+
+    const hand =
+        new THREE.Group();
+
+
+    const palm =
+        new THREE.Mesh(
+
+            createTaperedBoxGeometry(
+
+                .085,
+
+                .065,
+
+                .18,
+
+                .07,
+
+                2
+
+            ),
+
+            monsterSkinMaterial
+
+        );
+
+
+    palm.position.y =
+        -.09;
+
+
+    hand.add(
+        palm
     );
-    palm.scale.set(.78, 1.38, .60);
-    palm.position.y = -.095;
-    hand.add(palm);
 
-    const thumb = new THREE.Mesh(
-        new THREE.SphereGeometry(.026, 10, 8),
-        entitySkinMaterial
+
+    for (
+        let i = 0;
+        i < 3;
+        i++
+    ) {
+
+        const finger =
+            new THREE.Mesh(
+
+                new THREE.BoxGeometry(
+
+                    .015,
+
+                    .12 +
+                    i *
+                    .006,
+
+                    .018
+
+                ),
+
+                monsterSkinMaterial
+
+            );
+
+
+        finger.position.set(
+
+            (
+                i -
+                1
+            ) *
+            .024,
+
+            -.21,
+
+            0
+
+        );
+
+
+        hand.add(
+            finger
+        );
+
+    }
+
+
+    const thumb =
+        new THREE.Mesh(
+
+            new THREE.BoxGeometry(
+
+                .018,
+
+                .10,
+
+                .022
+
+            ),
+
+            monsterSkinMaterial
+
+        );
+
+
+    thumb.position.set(
+
+        .055 *
+        mirror,
+
+        -.135,
+
+        0
+
     );
-    thumb.scale.set(.82, 1.15, .72);
-    thumb.position.set(.055 * mirror, -.075, -.005);
-    thumb.rotation.z = -.40 * mirror;
-    hand.add(thumb);
 
-    const finger1 = new THREE.Mesh(
-        new THREE.CylinderGeometry(.010, .012, .11, 8),
-        entitySkinMaterial
+
+    thumb.rotation.z =
+        -.42 *
+        mirror;
+
+
+    hand.add(
+        thumb
     );
-    finger1.position.set(-.020, -.13, 0);
-    hand.add(finger1);
 
-    const finger2 = finger1.clone();
-    finger2.position.x = 0;
-    finger2.scale.y = 1.08;
-    hand.add(finger2);
-
-    const finger3 = finger1.clone();
-    finger3.position.x = .020;
-    finger3.scale.y = .96;
-    hand.add(finger3);
 
     return hand;
+
 }
 
-const leftHand = createEntityHand(-1);
-leftHand.position.y = -.96;
-leftArm.lowerPivot.add(leftHand);
 
-const rightHand = createEntityHand(1);
-rightHand.position.y = -.99;
-rightArm.lowerPivot.add(rightHand);
+const leftHand =
+    createMonsterHand(
+        -1
+    );
+
+
+leftHand.position.y =
+    -.89;
+
+
+leftArm.lowerPivot.add(
+    leftHand
+);
+
+
+const rightHand =
+    createMonsterHand(
+        1
+    );
+
+
+rightHand.position.y =
+    -.91;
+
+
+rightArm.lowerPivot.add(
+    rightHand
+);
+
 
 /* ============================================================
    LEGS
 ============================================================ */
-const leftLeg = createEntityLimb(-.115, 1.04, .64, .72, .078, .058, entityBodyMaterial);
-const rightLeg = createEntityLimb(.115, 1.04, .66, .70, .078, .058, entityBodyMaterial);
+
+const leftLeg =
+    createMonsterLimb(
+
+        -.11,
+
+        1.10,
+
+        .62,
+
+        .70,
+
+        .13,
+
+        .095,
+
+        .095,
+
+        .07,
+
+        monsterBodyMaterial
+
+    );
+
+
+const rightLeg =
+    createMonsterLimb(
+
+        .11,
+
+        1.10,
+
+        .64,
+
+        .68,
+
+        .13,
+
+        .095,
+
+        .095,
+
+        .07,
+
+        monsterBodyMaterial
+
+    );
+
 
 /* ============================================================
    FEET
 ============================================================ */
-const leftFoot = new THREE.Mesh(
-    new THREE.BoxGeometry(.15, .09, .32),
-    entityBodyMaterial
+
+const leftFoot =
+    new THREE.Mesh(
+
+        new THREE.BoxGeometry(
+
+            .14,
+
+            .09,
+
+            .31
+
+        ),
+
+        monsterBodyMaterial
+
+    );
+
+
+leftFoot.position.set(
+
+    0,
+
+    -.70,
+
+    .095
+
 );
-leftFoot.position.set(0, -.72, .10);
-leftLeg.lowerPivot.add(leftFoot);
 
-const rightFoot = leftFoot.clone();
-rightFoot.position.y = -.70;
-rightLeg.lowerPivot.add(rightFoot);
+
+leftLeg.lowerPivot.add(
+    leftFoot
+);
+
+
+const rightFoot =
+    leftFoot.clone();
+
+
+rightFoot.position.y =
+    -.68;
+
+
+rightLeg.lowerPivot.add(
+    rightFoot
+);
+
 
 /* ============================================================
-   HUNCH
+   POSTURE
 ============================================================ */
-monsterRig.rotation.x = .055;
+
+monsterRig.rotation.x =
+    .055;
+
 
 /* ============================================================
-   MONSTER SPAWN
+   SPAWN
 ============================================================ */
-const monsterSpawn = cellToWorld(Math.floor(GRID_WIDTH * .66), Math.floor(GRID_HEIGHT * .66));
-monster.position.set(monsterSpawn.x, 0, monsterSpawn.z);
-monster.visible = false;
 
-let monsterPath = [];
-let monsterPathTimer = 0;
-let monsterActiveTimer = 10;
+const monsterSpawn =
+    cellToWorld(
+
+        Math.floor(
+
+            GRID_WIDTH *
+            .66
+
+        ),
+
+        Math.floor(
+
+            GRID_HEIGHT *
+            .66
+
+        )
+
+    );
+
+
+monster.position.set(
+
+    monsterSpawn.x,
+
+    0,
+
+    monsterSpawn.z
+
+);
+
+
+monster.visible =
+    false;
+
+
+let monsterPath =
+    [];
+
+
+let monsterPathTimer =
+    0;
+
+
+let monsterActiveTimer =
+    10;
+
 
 /* ============================================================
    PATHFINDING
 ============================================================ */
-function findPath(start, target) {
-    const queue = [{ x: start.x, y: start.y, path: [] }];
-    const visited = new Set([`${start.x},${start.y}`]);
 
-    while (queue.length) {
-        const current = queue.shift();
+function findPath(
+    start,
+    target
+) {
 
-        if (current.x === target.x && current.y === target.y) {
+    const queue = [
+
+        {
+
+            x:
+                start.x,
+
+            y:
+                start.y,
+
+            path:
+                []
+
+        }
+
+    ];
+
+
+    const visited =
+        new Set([
+
+            start.x +
+            "," +
+            start.y
+
+        ]);
+
+
+    while (
+        queue.length
+    ) {
+
+        const current =
+            queue.shift();
+
+
+        if (
+            current.x ===
+            target.x &&
+            current.y ===
+            target.y
+        ) {
+
             return current.path;
+
         }
 
-        for (const neighbor of getNeighbors(current.x, current.y)) {
-            const key = `${neighbor.x},${neighbor.y}`;
-            if (visited.has(key)) continue;
-            visited.add(key);
+
+        for (
+            const neighbor
+            of getNeighbors(
+
+                current.x,
+
+                current.y
+
+            )
+        ) {
+
+            const key =
+                neighbor.x +
+                "," +
+                neighbor.y;
+
+
+            if (
+                visited.has(
+                    key
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            visited.add(
+                key
+            );
+
+
             queue.push({
-                x: neighbor.x,
-                y: neighbor.y,
-                path: [...current.path, neighbor]
+
+                x:
+                    neighbor.x,
+
+                y:
+                    neighbor.y,
+
+                path: [
+
+                    ...current.path,
+
+                    neighbor
+
+                ]
+
             });
+
         }
+
     }
 
+
     return [];
+
 }
+
 
 /* ============================================================
    GAME STATE
 ============================================================ */
-let mode = "title";
-let cutsceneTime = 0;
-let cutsceneFinished = false;
+
+let mode =
+    "title";
+
+
+let cutsceneTime =
+    0;
+
+
+let cutsceneFinished =
+    false;
+
 
 /* ============================================================
    AUDIO
 ============================================================ */
-let audioContext = null;
+
+let audioContext =
+    null;
+
 
 function startAudio() {
-    if (audioContext) return;
 
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    if (
+        audioContext
+    ) {
 
-    const master = audioContext.createGain();
-    master.gain.value = .027;
-    master.connect(audioContext.destination);
+        return;
 
-    const hum = audioContext.createOscillator();
-    hum.type = "sine";
-    hum.frequency.value = 60;
-    hum.connect(master);
+    }
+
+
+    audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+
+    const master =
+        audioContext.createGain();
+
+
+    master.gain.value =
+        .027;
+
+
+    master.connect(
+        audioContext.destination
+    );
+
+
+    const hum =
+        audioContext.createOscillator();
+
+
+    hum.type =
+        "sine";
+
+
+    hum.frequency.value =
+        60;
+
+
+    hum.connect(
+        master
+    );
+
+
     hum.start();
 
-    const highHum = audioContext.createOscillator();
-    const highGain = audioContext.createGain();
-    highHum.type = "sine";
-    highHum.frequency.value = 119.6;
-    highGain.gain.value = .18;
-    highHum.connect(highGain);
-    highGain.connect(master);
+
+    const highHum =
+        audioContext.createOscillator();
+
+
+    const highGain =
+        audioContext.createGain();
+
+
+    highHum.type =
+        "sine";
+
+
+    highHum.frequency.value =
+        119.6;
+
+
+    highGain.gain.value =
+        .18;
+
+
+    highHum.connect(
+        highGain
+    );
+
+
+    highGain.connect(
+        master
+    );
+
+
     highHum.start();
+
 }
+
 
 /* ============================================================
-   CAMERA / CUTSCENE
+   CAMERA
 ============================================================ */
+
 function setOfficePreviewCamera() {
-    camera.position.set(0, 1.72, 13);
-    camera.rotation.set(0, 0, 0);
+
+    camera.position.set(
+
+        0,
+
+        1.72,
+
+        13
+
+    );
+
+
+    camera.rotation.set(
+
+        0,
+
+        0,
+
+        0
+
+    );
+
 }
+
+
+/* ============================================================
+   CUTSCENE
+============================================================ */
 
 function beginCutscene() {
+
     startAudio();
-    mode = "cutscene";
-    cutsceneTime = 0;
-    cutsceneFinished = false;
 
-    startScreen.style.display = "none";
-    topBar.style.display = "block";
-    bottomBar.style.display = "block";
-    cutsceneCaption.style.opacity = "1";
 
-    officeGroup.visible = true;
-    backroomsGroup.visible = false;
+    mode =
+        "cutscene";
+
+
+    cutsceneTime =
+        0;
+
+
+    cutsceneFinished =
+        false;
+
+
+    startScreen.style.display =
+        "none";
+
+
+    topBar.style.display =
+        "block";
+
+
+    bottomBar.style.display =
+        "block";
+
+
+    cutsceneCaption.style.opacity =
+        "1";
+
+
+    officeGroup.visible =
+        true;
+
+
+    backroomsGroup.visible =
+        false;
+
+
     setOfficeAtmosphere();
 
-    camera.position.set(0, 1.72, 14);
-    camera.rotation.set(0, 0, 0);
+
+    camera.position.set(
+
+        0,
+
+        1.72,
+
+        14
+
+    );
+
+
+    camera.rotation.set(
+
+        0,
+
+        0,
+
+        0
+
+    );
+
 }
 
-function updateCutscene(delta) {
-    cutsceneTime += delta;
 
-    if (cutsceneTime < 3.8) {
-        camera.position.z = 14 - cutsceneTime * 2.5;
-        camera.position.y = 1.72 + Math.sin(cutsceneTime * 8) * .02;
-        camera.rotation.x = Math.sin(cutsceneTime * 1.4) * .006;
-        camera.rotation.z = 0;
+function updateCutscene(
+    delta
+) {
 
-        if (cutsceneTime > 2.1) {
-            cutsceneCaption.style.opacity = "0";
+    cutsceneTime +=
+        delta;
+
+
+    if (
+        cutsceneTime <
+        3.8
+    ) {
+
+        camera.position.z =
+
+            14 -
+
+            cutsceneTime *
+            2.5;
+
+
+        camera.position.y =
+
+            1.72 +
+
+            Math.sin(
+
+                cutsceneTime *
+                8
+
+            ) *
+
+            .02;
+
+
+        camera.rotation.x =
+
+            Math.sin(
+
+                cutsceneTime *
+                1.4
+
+            ) *
+
+            .006;
+
+
+        camera.rotation.z =
+            0;
+
+
+        if (
+            cutsceneTime >
+            2.1
+        ) {
+
+            cutsceneCaption.style.opacity =
+                "0";
+
         }
+
     }
 
-    if (cutsceneTime > 3.3 && cutsceneTime < 4.25) {
-        if (Math.random() < .35) {
-            const light = officeLights[Math.floor(Math.random() * officeLights.length)];
-            if (light) {
-                const original = light.intensity;
-                light.intensity = Math.random() < .5 ? .05 : .65;
-                setTimeout(() => { light.intensity = original; }, 50);
+
+    if (
+        cutsceneTime >
+        3.3 &&
+        cutsceneTime <
+        4.25
+    ) {
+
+        if (
+            Math.random() <
+            .35
+        ) {
+
+            const light =
+                officeLights[
+                    Math.floor(
+
+                        Math.random() *
+                        officeLights.length
+
+                    )
+                ];
+
+
+            if (
+                light
+            ) {
+
+                const original =
+                    light.intensity;
+
+
+                light.intensity =
+
+                    Math.random() <
+                    .5
+
+                        ? .05
+
+                        : .65;
+
+
+                setTimeout(
+
+                    () => {
+
+                        light.intensity =
+                            original;
+
+                    },
+
+                    50
+
+                );
+
             }
+
         }
 
-        camera.rotation.z = (Math.random() - .5) * .008;
+
+        camera.rotation.z =
+
+            (
+                Math.random() -
+                .5
+            ) *
+
+            .008;
+
     }
 
-    if (cutsceneTime >= 4.25 && cutsceneTime < 5.05) {
-        const fall = (cutsceneTime - 4.25) / .8;
-        camera.position.y = 1.72 - fall * 5.3;
-        camera.rotation.x = fall * .9;
-        camera.rotation.z = fall * .15;
-        fadeLayer.style.opacity = String(Math.min(1, fall * 1.4));
+
+    if (
+        cutsceneTime >=
+        4.25 &&
+        cutsceneTime <
+        5.05
+    ) {
+
+        const fall =
+
+            (
+                cutsceneTime -
+                4.25
+            ) /
+
+            .8;
+
+
+        camera.position.y =
+
+            1.72 -
+
+            fall *
+            5.3;
+
+
+        camera.rotation.x =
+
+            fall *
+            .9;
+
+
+        camera.rotation.z =
+
+            fall *
+            .15;
+
+
+        fadeLayer.style.opacity =
+            String(
+
+                Math.min(
+
+                    1,
+
+                    fall *
+                    1.4
+
+                )
+
+            );
+
     }
 
-    if (cutsceneTime >= 5.05 && !cutsceneFinished) {
-        cutsceneFinished = true;
-        setTimeout(wakeInBackrooms, 600);
+
+    if (
+        cutsceneTime >=
+        5.05 &&
+        !cutsceneFinished
+    ) {
+
+        cutsceneFinished =
+            true;
+
+
+        setTimeout(
+
+            wakeInBackrooms,
+
+            600
+
+        );
+
     }
+
 }
+
+
+/* ============================================================
+   WAKE
+============================================================ */
 
 function wakeInBackrooms() {
-    mode = "wake";
-    officeGroup.visible = false;
-    backroomsGroup.visible = true;
+
+    mode =
+        "wake";
+
+
+    officeGroup.visible =
+        false;
+
+
+    backroomsGroup.visible =
+        true;
+
+
     setBackroomsAtmosphere();
 
-    topBar.style.display = "none";
-    bottomBar.style.display = "none";
-    cutsceneCaption.style.opacity = "0";
 
-    camera.position.set(playerStart.x, .58, playerStart.z);
-    yaw = Math.PI;
-    pitch = .28;
-    camera.rotation.set(pitch, yaw, 0);
+    topBar.style.display =
+        "none";
 
-    wakeScreen.style.display = "flex";
 
-    setTimeout(() => {
-        fadeLayer.style.opacity = "0";
-    }, 40);
+    bottomBar.style.display =
+        "none";
+
+
+    cutsceneCaption.style.opacity =
+        "0";
+
+
+    camera.position.set(
+
+        playerStart.x,
+
+        .58,
+
+        playerStart.z
+
+    );
+
+
+    yaw =
+        Math.PI;
+
+
+    pitch =
+        .28;
+
+
+    camera.rotation.set(
+
+        pitch,
+
+        yaw,
+
+        0
+
+    );
+
+
+    wakeScreen.style.display =
+        "flex";
+
+
+    setTimeout(
+
+        () => {
+
+            fadeLayer.style.opacity =
+                "0";
+
+        },
+
+        40
+
+    );
+
 }
+
+
+/* ============================================================
+   START PLAYING
+============================================================ */
 
 function startPlaying() {
-    mode = "playing";
-    wakeScreen.style.display = "none";
-    hud.style.display = "block";
-    camera.position.y = PLAYER_HEIGHT;
-    pitch = 0;
-    camera.rotation.set(0, yaw, 0);
+
+    mode =
+        "playing";
+
+
+    wakeScreen.style.display =
+        "none";
+
+
+    hud.style.display =
+        "block";
+
+
+    camera.position.y =
+        PLAYER_HEIGHT;
+
+
+    pitch =
+        0;
+
+
+    camera.rotation.set(
+
+        0,
+
+        yaw,
+
+        0
+
+    );
+
+
     renderer.domElement.requestPointerLock();
+
 }
+
 
 /* ============================================================
    INPUT
 ============================================================ */
-document.addEventListener("keydown", event => {
-    keys[event.code] = true;
-});
-document.addEventListener("keyup", event => {
-    keys[event.code] = false;
-});
-document.addEventListener("mousemove", event => {
-    if (document.pointerLockElement !== renderer.domElement || mode !== "playing") return;
 
-    const sensitivity = .0019;
-    yaw -= event.movementX * sensitivity;
-    pitch -= event.movementY * sensitivity;
-    pitch = Math.max(-1.42, Math.min(1.42, pitch));
+document.addEventListener(
 
-    camera.rotation.y = yaw;
-    camera.rotation.x = pitch;
-    camera.rotation.z = 0;
-});
+    "keydown",
+
+    event => {
+
+        keys[event.code] =
+            true;
+
+    }
+
+);
+
+
+document.addEventListener(
+
+    "keyup",
+
+    event => {
+
+        keys[event.code] =
+            false;
+
+    }
+
+);
+
+
+document.addEventListener(
+
+    "mousemove",
+
+    event => {
+
+        if (
+            document.pointerLockElement !==
+            renderer.domElement ||
+            mode !==
+            "playing"
+        ) {
+
+            return;
+
+        }
+
+
+        const sensitivity =
+            .0019;
+
+
+        yaw -=
+            event.movementX *
+            sensitivity;
+
+
+        pitch -=
+            event.movementY *
+            sensitivity;
+
+
+        pitch =
+            Math.max(
+
+                -1.42,
+
+                Math.min(
+
+                    1.42,
+
+                    pitch
+
+                )
+
+            );
+
+
+        camera.rotation.y =
+            yaw;
+
+
+        camera.rotation.x =
+            pitch;
+
+
+        camera.rotation.z =
+            0;
+
+    }
+
+);
+
 
 /* ============================================================
    COLLISION
 ============================================================ */
-function hitsWall(x, z) {
-    for (const wall of collisionWalls) {
-        const closestX = Math.max(wall.minX, Math.min(x, wall.maxX));
-        const closestZ = Math.max(wall.minZ, Math.min(z, wall.maxZ));
 
-        const dx = x - closestX;
-        const dz = z - closestZ;
+function hitsWall(
+    x,
+    z
+) {
 
-        if (dx * dx + dz * dz < PLAYER_RADIUS * PLAYER_RADIUS) {
+    for (
+        const wall
+        of collisionWalls
+    ) {
+
+        const closestX =
+            Math.max(
+
+                wall.minX,
+
+                Math.min(
+
+                    x,
+
+                    wall.maxX
+
+                )
+
+            );
+
+
+        const closestZ =
+            Math.max(
+
+                wall.minZ,
+
+                Math.min(
+
+                    z,
+
+                    wall.maxZ
+
+                )
+
+            );
+
+
+        const dx =
+            x -
+            closestX;
+
+
+        const dz =
+            z -
+            closestZ;
+
+
+        if (
+            dx *
+            dx +
+
+            dz *
+            dz <
+
+            PLAYER_RADIUS *
+            PLAYER_RADIUS
+        ) {
+
             return true;
+
         }
+
     }
+
+
     return false;
+
 }
 
+
 /* ============================================================
-   PLAYER UPDATE
+   PLAYER
 ============================================================ */
-function updatePlayer(delta) {
-    if (document.pointerLockElement !== renderer.domElement) return;
 
-    let forward = 0;
-    let sideways = 0;
+function updatePlayer(
+    delta
+) {
 
-    if (keys.KeyW) forward++;
-    if (keys.KeyS) forward--;
-    if (keys.KeyD) sideways++;
-    if (keys.KeyA) sideways--;
+    if (
+        document.pointerLockElement !==
+        renderer.domElement
+    ) {
 
-    const moving = forward !== 0 || sideways !== 0;
-    const sprinting = moving && forward > 0 && stamina > 0 && (keys.ShiftLeft || keys.ShiftRight);
-    const speed = sprinting ? SPRINT_SPEED : WALK_SPEED;
-
-    if (sprinting) stamina -= delta * 21;
-    else stamina += delta * 13;
-
-    stamina = Math.max(0, Math.min(100, stamina));
-    staminaInner.style.width = stamina + "%";
-
-    const targetFov = sprinting ? 77 : 72;
-    camera.fov += (targetFov - camera.fov) * Math.min(delta * 7, 1);
-    camera.updateProjectionMatrix();
-    camera.rotation.z = 0;
-
-    if (!moving) {
-        camera.position.y += (PLAYER_HEIGHT - camera.position.y) * Math.min(delta * 8, 1);
         return;
+
     }
 
-    const length = Math.sqrt(forward * forward + sideways * sideways);
-    forward /= length;
-    sideways /= length;
 
-    const sin = Math.sin(yaw);
-    const cos = Math.cos(yaw);
+    let forward =
+        0;
 
-    const dx = (-sin * forward + cos * sideways) * speed * delta;
-    const dz = (-cos * forward - sin * sideways) * speed * delta;
 
-    const nextX = camera.position.x + dx;
-    if (!hitsWall(nextX, camera.position.z)) camera.position.x = nextX;
+    let sideways =
+        0;
 
-    const nextZ = camera.position.z + dz;
-    if (!hitsWall(camera.position.x, nextZ)) camera.position.z = nextZ;
 
-    movementTime += delta * (sprinting ? 12 : 8);
-    camera.position.y = PLAYER_HEIGHT + Math.sin(movementTime) * (sprinting ? .045 : .027);
+    if (
+        keys.KeyW
+    ) {
+
+        forward++;
+
+    }
+
+
+    if (
+        keys.KeyS
+    ) {
+
+        forward--;
+
+    }
+
+
+    if (
+        keys.KeyD
+    ) {
+
+        sideways++;
+
+    }
+
+
+    if (
+        keys.KeyA
+    ) {
+
+        sideways--;
+
+    }
+
+
+    const moving =
+
+        forward !== 0 ||
+
+        sideways !== 0;
+
+
+    const sprinting =
+
+        moving &&
+
+        forward > 0 &&
+
+        stamina > 0 &&
+
+        (
+            keys.ShiftLeft ||
+            keys.ShiftRight
+        );
+
+
+    const speed =
+
+        sprinting
+
+            ? SPRINT_SPEED
+
+            : WALK_SPEED;
+
+
+    if (
+        sprinting
+    ) {
+
+        stamina -=
+            delta *
+            21;
+
+    }
+
+
+    else {
+
+        stamina +=
+            delta *
+            13;
+
+    }
+
+
+    stamina =
+        Math.max(
+
+            0,
+
+            Math.min(
+
+                100,
+
+                stamina
+
+            )
+
+        );
+
+
+    staminaInner.style.width =
+        stamina +
+        "%";
+
+
+    const targetFov =
+
+        sprinting
+
+            ? 77
+
+            : 72;
+
+
+    camera.fov +=
+
+        (
+            targetFov -
+            camera.fov
+        ) *
+
+        Math.min(
+
+            delta *
+            7,
+
+            1
+
+        );
+
+
+    camera.updateProjectionMatrix();
+
+
+    camera.rotation.z =
+        0;
+
+
+    if (
+        !moving
+    ) {
+
+        camera.position.y +=
+
+            (
+                PLAYER_HEIGHT -
+                camera.position.y
+            ) *
+
+            Math.min(
+
+                delta *
+                8,
+
+                1
+
+            );
+
+
+        return;
+
+    }
+
+
+    const length =
+        Math.sqrt(
+
+            forward *
+            forward +
+
+            sideways *
+            sideways
+
+        );
+
+
+    forward /=
+        length;
+
+
+    sideways /=
+        length;
+
+
+    const sin =
+        Math.sin(
+            yaw
+        );
+
+
+    const cos =
+        Math.cos(
+            yaw
+        );
+
+
+    const dx =
+
+        (
+            -sin *
+            forward +
+
+            cos *
+            sideways
+        ) *
+
+        speed *
+
+        delta;
+
+
+    const dz =
+
+        (
+            -cos *
+            forward -
+
+            sin *
+            sideways
+        ) *
+
+        speed *
+
+        delta;
+
+
+    const nextX =
+        camera.position.x +
+        dx;
+
+
+    if (
+        !hitsWall(
+
+            nextX,
+
+            camera.position.z
+
+        )
+    ) {
+
+        camera.position.x =
+            nextX;
+
+    }
+
+
+    const nextZ =
+        camera.position.z +
+        dz;
+
+
+    if (
+        !hitsWall(
+
+            camera.position.x,
+
+            nextZ
+
+        )
+    ) {
+
+        camera.position.z =
+            nextZ;
+
+    }
+
+
+    movementTime +=
+
+        delta *
+
+        (
+            sprinting
+
+                ? 12
+
+                : 8
+        );
+
+
+    camera.position.y =
+
+        PLAYER_HEIGHT +
+
+        Math.sin(
+
+            movementTime
+
+        ) *
+
+        (
+            sprinting
+
+                ? .045
+
+                : .027
+        );
+
 }
 
+
 /* ============================================================
-   MONSTER UPDATE
+   MONSTER
 ============================================================ */
-function updateMonster(delta) {
-    monsterActiveTimer -= delta;
-    if (monsterActiveTimer > 0) return;
 
-    monster.visible = true;
+function updateMonster(
+    delta
+) {
 
-    const playerCell = worldToCell(camera.position.x, camera.position.z);
-    const monsterCell = worldToCell(monster.position.x, monster.position.z);
+    monsterActiveTimer -=
+        delta;
 
-    monsterPathTimer -= delta;
-    if (monsterPathTimer <= 0) {
-        monsterPathTimer = .45;
-        monsterPath = findPath(monsterCell, playerCell);
+
+    if (
+        monsterActiveTimer >
+        0
+    ) {
+
+        return;
+
     }
 
-    let moving = false;
 
-    if (monsterPath.length) {
-        const next = monsterPath[0];
-        const target = cellToWorld(next.x, next.y);
-        const dx = target.x - monster.position.x;
-        const dz = target.z - monster.position.z;
-        const distance = Math.sqrt(dx * dx + dz * dz);
+    monster.visible =
+        true;
 
-        if (distance < .13) {
+
+    const playerCell =
+        worldToCell(
+
+            camera.position.x,
+
+            camera.position.z
+
+        );
+
+
+    const monsterCell =
+        worldToCell(
+
+            monster.position.x,
+
+            monster.position.z
+
+        );
+
+
+    monsterPathTimer -=
+        delta;
+
+
+    if (
+        monsterPathTimer <=
+        0
+    ) {
+
+        monsterPathTimer =
+            .45;
+
+
+        monsterPath =
+            findPath(
+
+                monsterCell,
+
+                playerCell
+
+            );
+
+    }
+
+
+    let moving =
+        false;
+
+
+    if (
+        monsterPath.length
+    ) {
+
+        const next =
+            monsterPath[0];
+
+
+        const target =
+            cellToWorld(
+
+                next.x,
+
+                next.y
+
+            );
+
+
+        const dx =
+            target.x -
+            monster.position.x;
+
+
+        const dz =
+            target.z -
+            monster.position.z;
+
+
+        const distance =
+            Math.sqrt(
+
+                dx *
+                dx +
+
+                dz *
+                dz
+
+            );
+
+
+        if (
+            distance <
+            .13
+        ) {
+
             monsterPath.shift();
-        } else {
-            moving = true;
-            const directionX = dx / distance;
-            const directionZ = dz / distance;
 
-            monster.position.x += directionX * MONSTER_SPEED * delta;
-            monster.position.z += directionZ * MONSTER_SPEED * delta;
-
-            monster.rotation.y = Math.atan2(directionX, directionZ) + Math.PI;
         }
+
+
+        else {
+
+            moving =
+                true;
+
+
+            const directionX =
+                dx /
+                distance;
+
+
+            const directionZ =
+                dz /
+                distance;
+
+
+            monster.position.x +=
+
+                directionX *
+
+                MONSTER_SPEED *
+
+                delta;
+
+
+            monster.position.z +=
+
+                directionZ *
+
+                MONSTER_SPEED *
+
+                delta;
+
+
+            monster.rotation.y =
+
+                Math.atan2(
+
+                    directionX,
+
+                    directionZ
+
+                ) +
+
+                Math.PI;
+
+        }
+
     }
 
-    const time = performance.now() * .001;
-    const walk = Math.sin(time * 6.1) * (moving ? 1 : .025);
 
-    monsterRig.position.y = Math.sin(time * 3.1) * .008;
-    monsterRig.rotation.z = Math.sin(time * .7) * .009;
-    monsterRig.rotation.x = .055 + Math.sin(time * .75) * .006;
+    const time =
+        performance.now() *
+        .001;
 
-    leftLeg.upperPivot.rotation.x = -walk * .23;
-    rightLeg.upperPivot.rotation.x = walk * .23;
 
-    leftLeg.lowerPivot.rotation.x = Math.max(0, walk) * .15;
-    rightLeg.lowerPivot.rotation.x = Math.max(0, -walk) * .15;
+    const walk =
 
-    leftArm.upperPivot.rotation.x = .055 + walk * .19;
-    rightArm.upperPivot.rotation.x = .035 - walk * .22;
+        Math.sin(
 
-    leftArm.lowerPivot.rotation.x = -.05 + Math.max(0, -walk) * .08;
-    rightArm.lowerPivot.rotation.x = -.035 + Math.max(0, walk) * .09;
+            time *
+            6
 
-    monsterHeadPivot.rotation.z = Math.sin(time * 0.55) * 0.018;
-    monsterHeadPivot.rotation.x = -0.03 + Math.sin(time * 0.42) * 0.010;
-    monsterHeadPivot.rotation.y = Math.sin(time * 0.31) * 0.018;
+        ) *
 
-    const twitch = Math.pow(Math.max(0, Math.sin(time * .81)), 42);
-    monsterHeadPivot.rotation.y += twitch * .12;
+        (
+            moving
 
-    const dx = monster.position.x - camera.position.x;
-    const dz = monster.position.z - camera.position.z;
-    const distance = Math.sqrt(dx * dx + dz * dz);
+                ? 1
 
-    let dangerAmount = 0;
-    if (distance < 12) dangerAmount = 1 - distance / 12;
-    danger.style.opacity = String(dangerAmount * .53);
+                : .02
+        );
 
-    if (distance < .92) loseGame();
+
+    monsterRig.position.y =
+
+        Math.sin(
+
+            time *
+            2.9
+
+        ) *
+
+        .006;
+
+
+    monsterRig.rotation.z =
+
+        Math.sin(
+
+            time *
+            .65
+
+        ) *
+
+        .006;
+
+
+    monsterRig.rotation.x =
+
+        .055 +
+
+        Math.sin(
+
+            time *
+            .7
+
+        ) *
+
+        .004;
+
+
+    leftLeg.upperPivot.rotation.x =
+
+        -walk *
+        .22;
+
+
+    rightLeg.upperPivot.rotation.x =
+
+        walk *
+        .22;
+
+
+    leftLeg.lowerPivot.rotation.x =
+
+        Math.max(
+
+            0,
+
+            walk
+
+        ) *
+
+        .13;
+
+
+    rightLeg.lowerPivot.rotation.x =
+
+        Math.max(
+
+            0,
+
+            -walk
+
+        ) *
+
+        .13;
+
+
+    leftArm.upperPivot.rotation.x =
+
+        .04 +
+
+        walk *
+        .17;
+
+
+    rightArm.upperPivot.rotation.x =
+
+        .03 -
+
+        walk *
+        .19;
+
+
+    leftArm.lowerPivot.rotation.x =
+
+        -.04 +
+
+        Math.max(
+
+            0,
+
+            -walk
+
+        ) *
+
+        .07;
+
+
+    rightArm.lowerPivot.rotation.x =
+
+        -.03 +
+
+        Math.max(
+
+            0,
+
+            walk
+
+        ) *
+
+        .07;
+
+
+    /* subtle head motion */
+
+    monsterHeadPivot.rotation.z =
+
+        Math.sin(
+
+            time *
+            .55
+
+        ) *
+
+        .014;
+
+
+    monsterHeadPivot.rotation.x =
+
+        -.025 +
+
+        Math.sin(
+
+            time *
+            .42
+
+        ) *
+
+        .008;
+
+
+    monsterHeadPivot.rotation.y =
+
+        Math.sin(
+
+            time *
+            .31
+
+        ) *
+
+        .014;
+
+
+    /* occasional twitch */
+
+    const twitch =
+
+        Math.pow(
+
+            Math.max(
+
+                0,
+
+                Math.sin(
+
+                    time *
+                    .79
+
+                )
+
+            ),
+
+            46
+
+        );
+
+
+    monsterHeadPivot.rotation.y +=
+
+        twitch *
+        .09;
+
+
+    const dx =
+        monster.position.x -
+        camera.position.x;
+
+
+    const dz =
+        monster.position.z -
+        camera.position.z;
+
+
+    const playerDistance =
+        Math.sqrt(
+
+            dx *
+            dx +
+
+            dz *
+            dz
+
+        );
+
+
+    let dangerAmount =
+        0;
+
+
+    if (
+        playerDistance <
+        12
+    ) {
+
+        dangerAmount =
+
+            1 -
+
+            playerDistance /
+            12;
+
+    }
+
+
+    danger.style.opacity =
+        String(
+
+            dangerAmount *
+            .53
+
+        );
+
+
+    if (
+        playerDistance <
+        .92
+    ) {
+
+        loseGame();
+
+    }
+
 }
 
+
 /* ============================================================
-   LIGHT FLICKER
+   PATHFINDING
 ============================================================ */
-let flickerTimer = 0;
 
-function updateLights(delta) {
-    flickerTimer -= delta;
-    if (flickerTimer > 0) return;
+function findPath(
+    start,
+    target
+) {
 
-    flickerTimer = .1 + Math.random() * 1.7;
-    if (Math.random() > .22) return;
+    const queue = [
 
-    const light = fluorescentLights[Math.floor(Math.random() * fluorescentLights.length)];
-    if (!light) return;
+        {
 
-    const original = light.intensity;
-    light.intensity = .02;
-    setTimeout(() => {
-        light.intensity = original;
-    }, 50 + Math.random() * 100);
+            x:
+                start.x,
+
+            y:
+                start.y,
+
+            path:
+                []
+
+        }
+
+    ];
+
+
+    const visited =
+        new Set([
+
+            start.x +
+            "," +
+            start.y
+
+        ]);
+
+
+    while (
+        queue.length
+    ) {
+
+        const current =
+            queue.shift();
+
+
+        if (
+            current.x ===
+            target.x &&
+            current.y ===
+            target.y
+        ) {
+
+            return current.path;
+
+        }
+
+
+        for (
+            const neighbor
+            of getNeighbors(
+
+                current.x,
+
+                current.y
+
+            )
+        ) {
+
+            const key =
+                neighbor.x +
+                "," +
+                neighbor.y;
+
+
+            if (
+                visited.has(
+                    key
+                )
+            ) {
+
+                continue;
+
+            }
+
+
+            visited.add(
+                key
+            );
+
+
+            queue.push({
+
+                x:
+                    neighbor.x,
+
+                y:
+                    neighbor.y,
+
+                path: [
+
+                    ...current.path,
+
+                    neighbor
+
+                ]
+
+            });
+
+        }
+
+    }
+
+
+    return [];
+
 }
 
+
 /* ============================================================
-   EXIT CHECK
+   LIGHTS
 ============================================================ */
+
+let flickerTimer =
+    0;
+
+
+function updateLights(
+    delta
+) {
+
+    flickerTimer -=
+        delta;
+
+
+    if (
+        flickerTimer >
+        0
+    ) {
+
+        return;
+
+    }
+
+
+    flickerTimer =
+
+        .1 +
+
+        Math.random() *
+        1.7;
+
+
+    if (
+        Math.random() >
+        .22
+    ) {
+
+        return;
+
+    }
+
+
+    const light =
+        fluorescentLights[
+            Math.floor(
+
+                Math.random() *
+                fluorescentLights.length
+
+            )
+        ];
+
+
+    if (
+        !light
+    ) {
+
+        return;
+
+    }
+
+
+    const original =
+        light.intensity;
+
+
+    light.intensity =
+        .02;
+
+
+    setTimeout(
+
+        () => {
+
+            light.intensity =
+                original;
+
+        },
+
+        50 +
+        Math.random() *
+        100
+
+    );
+
+}
+
+
+/* ============================================================
+   EXIT
+============================================================ */
+
 function checkExit() {
-    const dx = camera.position.x - exitGroup.position.x;
-    const dz = camera.position.z - exitGroup.position.z;
-    if (dx * dx + dz * dz < 2.2) winGame();
+
+    const dx =
+        camera.position.x -
+        exitGroup.position.x;
+
+
+    const dz =
+        camera.position.z -
+        exitGroup.position.z;
+
+
+    if (
+        dx *
+        dx +
+
+        dz *
+        dz <
+
+        2.2
+    ) {
+
+        winGame();
+
+    }
+
 }
+
 
 /* ============================================================
    END STATES
 ============================================================ */
-function winGame() {
-    if (mode === "end") return;
 
-    mode = "end";
+function winGame() {
+
+    if (
+        mode ===
+        "end"
+    ) {
+
+        return;
+
+    }
+
+
+    mode =
+        "end";
+
+
     document.exitPointerLock();
-    hud.style.display = "none";
-    endScreen.style.display = "flex";
-    endTitle.textContent = "YOU ESCAPED";
-    endTitle.style.color = "#d9ffc7";
-    endSub.textContent = "At least... you think you did.";
+
+
+    hud.style.display =
+        "none";
+
+
+    endScreen.style.display =
+        "flex";
+
+
+    endTitle.textContent =
+        "YOU ESCAPED";
+
+
+    endTitle.style.color =
+        "#d9ffc7";
+
+
+    endSub.textContent =
+        "At least... you think you did.";
+
 }
+
 
 function loseGame() {
-    if (mode === "end") return;
 
-    mode = "end";
+    if (
+        mode ===
+        "end"
+    ) {
+
+        return;
+
+    }
+
+
+    mode =
+        "end";
+
+
     document.exitPointerLock();
-    danger.style.opacity = ".85";
 
-    setTimeout(() => {
-        hud.style.display = "none";
-        endScreen.style.display = "flex";
-        endTitle.textContent = "YOU WERE FOUND";
-        endTitle.style.color = "#912727";
-        endSub.textContent = "Something almost human was wandering the halls.";
-    }, 280);
+
+    danger.style.opacity =
+        ".85";
+
+
+    setTimeout(
+
+        () => {
+
+            hud.style.display =
+                "none";
+
+
+            endScreen.style.display =
+                "flex";
+
+
+            endTitle.textContent =
+                "YOU WERE FOUND";
+
+
+            endTitle.style.color =
+                "#912727";
+
+
+            endSub.textContent =
+                "Something almost human was wandering the halls.";
+
+        },
+
+        280
+
+    );
+
 }
+
 
 /* ============================================================
    BUTTONS
 ============================================================ */
-startButton.addEventListener("click", beginCutscene);
-wakeButton.addEventListener("click", startPlaying);
-restartButton.addEventListener("click", () => location.reload());
+
+startButton.addEventListener(
+
+    "click",
+
+    beginCutscene
+
+);
+
+
+wakeButton.addEventListener(
+
+    "click",
+
+    startPlaying
+
+);
+
+
+restartButton.addEventListener(
+
+    "click",
+
+    () => {
+
+        location.reload();
+
+    }
+
+);
+
 
 /* ============================================================
    POINTER LOCK
 ============================================================ */
-renderer.domElement.addEventListener("click", () => {
-    if (mode === "playing" && document.pointerLockElement !== renderer.domElement) {
-        renderer.domElement.requestPointerLock();
-    }
-});
 
-document.addEventListener("pointerlockchange", () => {
-    if (mode !== "playing") return;
-    pauseText.style.display =
-        document.pointerLockElement === renderer.domElement ? "none" : "block";
-});
+renderer.domElement.addEventListener(
+
+    "click",
+
+    () => {
+
+        if (
+            mode ===
+            "playing" &&
+            document.pointerLockElement !==
+            renderer.domElement
+        ) {
+
+            renderer.domElement.requestPointerLock();
+
+        }
+
+    }
+
+);
+
+
+document.addEventListener(
+
+    "pointerlockchange",
+
+    () => {
+
+        if (
+            mode !==
+            "playing"
+        ) {
+
+            return;
+
+        }
+
+
+        pauseText.style.display =
+
+            document.pointerLockElement ===
+            renderer.domElement
+
+                ? "none"
+
+                : "block";
+
+    }
+
+);
+
 
 /* ============================================================
    RESIZE
 ============================================================ */
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+
+window.addEventListener(
+
+    "resize",
+
+    () => {
+
+        camera.aspect =
+
+            window.innerWidth /
+
+            window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+
+            window.innerWidth,
+
+            window.innerHeight
+
+        );
+
+    }
+
+);
+
 
 /* ============================================================
-   INITIAL STATE
+   INITIAL
 ============================================================ */
-officeGroup.visible = true;
-backroomsGroup.visible = false;
+
+officeGroup.visible =
+    true;
+
+
+backroomsGroup.visible =
+    false;
+
+
 setOfficeAtmosphere();
+
+
 setOfficePreviewCamera();
+
 
 /* ============================================================
    MAIN LOOP
 ============================================================ */
-const clock = new THREE.Clock();
+
+const clock =
+    new THREE.Clock();
+
 
 function animate() {
-    requestAnimationFrame(animate);
 
-    const delta = Math.min(clock.getDelta(), .05);
+    requestAnimationFrame(
+        animate
+    );
 
-    if (mode === "title") {
-        camera.position.x = Math.sin(performance.now() * .00035) * .12;
-        camera.position.y = 1.72 + Math.sin(performance.now() * .001) * .01;
 
-        const titleYaw = Math.sin(performance.now() * .00045) * .02;
-        camera.rotation.set(0, titleYaw, 0);
+    const delta =
+        Math.min(
+
+            clock.getDelta(),
+
+            .05
+
+        );
+
+
+    if (
+        mode ===
+        "title"
+    ) {
+
+        camera.position.x =
+
+            Math.sin(
+
+                performance.now() *
+                .00035
+
+            ) *
+
+            .12;
+
+
+        camera.position.y =
+
+            1.72 +
+
+            Math.sin(
+
+                performance.now() *
+                .001
+
+            ) *
+
+            .01;
+
+
+        const titleYaw =
+
+            Math.sin(
+
+                performance.now() *
+                .00045
+
+            ) *
+
+            .02;
+
+
+        camera.rotation.set(
+
+            0,
+
+            titleYaw,
+
+            0
+
+        );
+
     }
 
-    if (mode === "cutscene") updateCutscene(delta);
 
-    if (mode === "playing") {
-        updatePlayer(delta);
-        updateMonster(delta);
-        updateLights(delta);
+    if (
+        mode ===
+        "cutscene"
+    ) {
+
+        updateCutscene(
+            delta
+        );
+
+    }
+
+
+    if (
+        mode ===
+        "playing"
+    ) {
+
+        updatePlayer(
+            delta
+        );
+
+
+        updateMonster(
+            delta
+        );
+
+
+        updateLights(
+            delta
+        );
+
+
         checkExit();
+
     }
 
-    renderer.render(scene, camera);
+
+    renderer.render(
+
+        scene,
+
+        camera
+
+    );
+
 }
 
+
 animate();
+
 </script>
+
 </body>
 </html>
